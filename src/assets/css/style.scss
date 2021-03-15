@@ -48,10 +48,11 @@
 
 // тексовые поля
 input[type=text],
+input[type=email],
 input[type=password] {
     border: none;
     /* background: blueviolet; */
-    width: 85%;
+    width: calc(100vw - 50px);
     height: 30px;
     border-bottom: 2px solid #B6B6B6;
     outline: none;
@@ -66,6 +67,20 @@ input[type=password] {
         border-bottom: 2px solid #FF5656;
         caret-color: #FF5656;
     }
+}
+
+.errorInputText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 12px;
+  color: #FF5656;
+  width: calc(100vw - 50px);
+  text-align: left;
+  margin-left: 25px;
+  margin-right: 25px;
+  transform: translateY(-70%);
 }
 
 
