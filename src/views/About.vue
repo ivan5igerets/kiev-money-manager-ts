@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <!-- <h1>This is an about page</h1>
 
     <h2>Тут собраны компоненты приложения</h2>
 
@@ -24,8 +24,27 @@
       <div class="center">
         <input type="checkbox" id="cbx" style="display:none"/>
         <label for="cbx" class="toggle"><span></span></label>    
-      </div>
+      </div> -->
 
       <!-- <input type="number"> -->
+
+    <ProgressBar />
+
+
   </div>
 </template>
+
+
+<script lang="ts">
+import { component } from 'node_modules/vue/types/umd';
+import {Component, Vue} from 'vue-property-decorator'
+import ProgressBar from '../components/ProrgessBar.vue'
+
+@Component({
+  components: {
+    ProgressBar,
+  }
+})
+export default class Template extends Vue {
+}
+</script>
