@@ -42,9 +42,9 @@ export default class Template extends Vue {
 
     sendData(): void {
 
-        // if (!this.validation()) {
-        //     return
-        // }
+        if (!this.validation()) {
+            return
+        }
 
         const btn = this.$refs.button as HTMLButtonElement;
         btn.disabled = true;
@@ -55,14 +55,11 @@ export default class Template extends Vue {
         }) 
         .then(res => {
             btn.disabled = false
-            console.log(res.data)
-
             localStorage.setItem('token', res.data.token)
             this.$router.push('/')
             })
         .catch(err => {
             btn.disabled = false
-            // console.error(err.response.data.errors)
             this.parsingErrors(err.response.data.errors)
             })
     }
@@ -72,9 +69,9 @@ export default class Template extends Vue {
         let out = true
         this.email = this.email.trim();
 
-        if (this.email.length < 6) {
+        if (this.email.length == 0) {
             this.isEmailError = true;
-            this.emailErrorText = 'Длинна e-mail должна быть не менее 6 символов'
+            this.emailErrorText = 'Это обязательное поле'
             out = false;
         } else {
             this.isEmailError = false;
@@ -82,9 +79,9 @@ export default class Template extends Vue {
 
         this.password = this.password.trim();
 
-        if (this.password.length < 6) {
+        if (this.password.length < 8) {
             this.isPasswordError = true;
-            this.passwordErrorText = 'Длинна пароля должна быть не менее 6 символов'
+            this.passwordErrorText = 'Длинна пароля должна быть не менее 8 символов'
             out = false;
         } else {
             this.isPasswordError = false;
