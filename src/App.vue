@@ -8,6 +8,33 @@
   </div>
 </template>
 
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator'
+import authApi from '@/api/auth'
+
+@Component
+export default class Template extends Vue {
+  
+  getUser() {
+    authApi.getUser()
+    .then(res => {
+      // localStorage.setItem('token', res.data.token)
+      // this.$router.push('/')
+        console.log(res.data);
+      })
+    .catch(err => {
+      console.log(err.response.data.errors);
+      this.$router.push('/auth')
+      })
+  }
+
+  mounted() {
+    this.getUser();
+  }
+
+}
+</script>
+
 <style lang="scss">
 * {
   margin: 0;

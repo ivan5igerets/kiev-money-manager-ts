@@ -8,7 +8,12 @@ const login = credentials => {
     return axios.post('api/user/login', credentials)
 }
 
+const getUser = () => {
+    return axios.get('api/user')
+}
+
 export default {
     register, 
     login,
+    getUser,
 }

@@ -91,15 +91,18 @@ export default class Template extends Vue {
     }
 
     parsingErrors(errors: []): void {
-        console.error(errors)
-
-        this.isEmailError = true;
-        this.emailErrorText = 'Проверьте коретность вашего логина'
-
-        this.isPasswordError = true;
-        this.passwordErrorText = 'Проверьте коретность вашего пароля'
-
-
+        for(const item in errors) {
+            switch(item) {
+                case 'email':
+                    this.isEmailError = true;
+                    this.emailErrorText = errors[item][0];
+                    break;
+                case 'password':
+                    this.isPasswordError = true;
+                    this.passwordErrorText = errors[item][0];
+                    break;
+            }
+        }
     }
 }
 </script>
