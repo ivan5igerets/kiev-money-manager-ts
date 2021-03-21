@@ -1,5 +1,4 @@
 <template>
-
   <div class="css-main-container">
     <div class="css-header">
       <div class="css-page-title">Настройки</div>
@@ -55,7 +54,7 @@
  .css-setting-item {
    display: flex;
    flex-flow: row;
-   margin-top: 30px;
+   margin: 15px;
  }
 
  .css-setting-name {
@@ -66,6 +65,5 @@
 
  .css-setting-value {
    margin-left: auto;
-   margin-right: 20px;
  }
 </style>
