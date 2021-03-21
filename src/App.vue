@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <router-view/>
+    <!-- <router-view/> -->
+    <component :is="layout">
+    </component>
   </div>
 </template>
 
@@ -12,9 +10,30 @@
 import {Component, Vue} from 'vue-property-decorator'
 import authApi from '@/api/auth'
 
-@Component
+import empty from '@/layouts/empty.vue'
+import additional from '@/layouts/additional.vue'
+import mainn from '@/layouts/main.vue'
+
+@Component({
+  components: {
+    empty,
+    additional,
+    mainn,
+  }
+})
 export default class Template extends Vue {
   
+  // computed: {
+  //   layout() {
+  //     return this.$route.meta.layout
+  //   }
+  // }
+
+  get layout(): string {
+    console.log(this.$route.meta.layout);
+    return this.$route.meta.layout;
+  }
+
   getUser() {
     authApi.getUser()
     .then(res => {
