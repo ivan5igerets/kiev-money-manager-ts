@@ -6,7 +6,10 @@
     <div class="сss-profile-container">
       <div><input type="text" name="name" placeholder="Имя" /></div>
       <div><input type="email" name="login" placeholder="E-mail" /></div>
-      <div class="css-password"><p style="font-size: 14px;">Пароль</p> <router-link class="css-password-change" to="#"> Изменить </router-link></div>
+      <div class="css-password">
+        <p style="font-size: 14px;">Пароль</p>
+        <router-link class="css-password-change" to="#"> Изменить </router-link>
+      </div>
     </div>
   </div>
 </template>
