@@ -30,12 +30,12 @@
 <style>
 
 .css-page-title {
-  padding-top: 15px;
-  padding-left: 10px;
   font-family: Inter, serif;
   font-size: 18px;
   font-style: normal;
   font-weight: normal;
+  padding-left: 10px;
+  padding-top: 15px;
 }
  .css-header {
    background-color: #EDEDED;
@@ -52,6 +52,7 @@
  .css-setting-name {
    font-size: 14px;
    margin-left: 10px;
+   text-align: left;
  }
 
  .css-setting-value {
