@@ -23,6 +23,15 @@
           <label for="cbx1" class="toggle"><span></span></label>
         </div>
       </label>
+      <label class="css-setting-item">
+        <div class="css-setting-name">
+          Отображать кнопку "Добавить операцию" в главном меню
+        </div>
+        <div class="css-setting-value">
+          <input type="checkbox" class="type-checkbox" id="cbx2" style="display:none"/>
+          <label for="cbx2" class="toggle"><span></span></label>
+        </div>
+      </label>
     </div>
   </div>
 </template>
