@@ -146,7 +146,7 @@ $gray: #EDEDED;
   }
 }
 
-#cbx:checked + .toggle {
+.css-type-checkbox:checked + .toggle {
   &:before {
     background: $primary-light;
   }
