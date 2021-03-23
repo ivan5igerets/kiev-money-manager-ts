@@ -44,7 +44,7 @@
  .css-setting-item {
    display: flex;
    flex-flow: row;
-   margin-top: 30px;
+   margin: 15px;
  }
 
  .css-setting-name {
@@ -55,6 +55,5 @@
 
  .css-setting-value {
    margin-left: auto;
-   margin-right: 20px;
  }
 </style>
