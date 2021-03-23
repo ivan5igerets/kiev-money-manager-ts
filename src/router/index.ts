@@ -37,6 +37,7 @@ const routes: Array<RouteConfig> = [
     path: '/settings',
     name: 'Settings',
     meta: {
+      title: 'Настройки',
       layout: 'mainn'
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
