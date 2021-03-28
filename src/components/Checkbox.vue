@@ -1,6 +1,13 @@
 <template>
   <div>
-    <input :id="id"  type="checkbox" class="css-type-checkbox" style="display:none"/>
+    <input
+      v-bind:id="id"
+      v-on:change="$emit('change',  $event)"
+      type="checkbox"
+      :checked="checked"
+      class="css-type-checkbox"
+      style="display:none"
+    />
     <label :for="id" class="toggle"><span></span></label>
   </div>
 </template>
@@ -10,6 +17,10 @@
     props: {
       id: {
         type: String,
+        required: true
+      },
+      checked: {
+        type: Boolean,
         required: true
       }
     }

@@ -25,7 +25,6 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    // работает
     path: '/auth',
     name: 'Auth',
     meta: {

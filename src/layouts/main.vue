@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
   .css-header {
     background-color: #EDEDED;
     height: 50px;
@@ -21,10 +24,12 @@ export default {
   }
 
   .css-page-title {
-    font-family: Inter, serif;
-    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 450;
+    line-height: 16px;
+    color: #000000;
+    font-size: 18px;
     padding-left: 10px;
     padding-top: 15px;
   }
