@@ -1,31 +1,28 @@
+
 <template>
-  <div>
-    <div class="css-header">
-      <div class="css-page-title">{{$route.meta.title}}</div>
-    </div>
-    <router-view />
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer
+        v-model="drawer"
+        app
+    >
+      <!--  -->
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <router-view></router-view>
+
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
-  name: "MainLayout",
-};
+  data: () => ({ drawer: null }),
+}
 </script>
-
-<style>
-  .css-header {
-    background-color: #EDEDED;
-    height: 50px;
-    text-align: left;
-  }
-
-  .css-page-title {
-    font-family: Inter, serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: normal;
-    padding-left: 10px;
-    padding-top: 15px;
-  }
-</style>

@@ -1,19 +1,9 @@
-// import axios from '@/api/axios'
+import axios from '@/api/axios'
 
-// axios.defults.
-
-const getUser = () => {
+const settings = credentials => {
+  return axios.put('api/user/settings', credentials)
 }
 
-// const register = credentials => {
-//     return axios.post('api/user/register', credentials)
-// }
-
-// const login = credentials => {
-//     return axios.post('api/user/login', credentials)
-// }
-
 export default {
-    // register, 
-    // login,
+  settings
 }
