@@ -11,7 +11,5 @@ const settings = credentials => {
 
 export default {
   updateProfile,
-    // register, 
-    // login,
-  settings
+  settings,
 }
