@@ -163,6 +163,7 @@ export default class Template extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
 .signIn {
     // background: red;
     height: calc(100vh - 215px);

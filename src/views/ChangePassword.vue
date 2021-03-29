@@ -1,54 +1,138 @@
 <template>
   <div class="css-main-container">
-    <div class="сss-profile-container">
-      <!-- <div><input type="text" name="name" placeholder="Имя" /></div> -->
 
-      <div><input type="password" name="oldPassword" placeholder="Введите старый пароль" /></div>
-      <div><input type="password" name="newPassword" placeholder="Введите новый пароль" /></div>
-      <div><input type="password" name="newPassword2" placeholder="Подтвердите новый пароль" /></div>
+    <form class="changePassForm" id="change_password" @submit.prevent="changePassword">
 
-      <!-- <div class="css-password"> -->
-        <!-- <p style="font-size: 14px;">Пароль</p> -->
-        <!-- <router-link class="css-password-change" to="#"> Изменить </router-link> -->
-      <!-- </div> -->
+      <!-- <div class="input">
+        <input type="password" :class="{error: isOLdPasswordError}" v-model="oldPassword" name="oldPassword" placeholder="Введите старый пароль" />
+        <div v-show="isOldPasswordError" class="errorInputText" ref="passwordErrorText"> {{ oldPasswordErrorText }} </div>  
+      </div> -->
+
+      <div class="input-wrap">
+        <input type="password" :class="{inp_error: isOldPasswordError}" v-model="oldPassword" name="oldPassword" placeholder="Введите старый пароль" />
+        <div v-show="isOldPasswordError" class="errorInputText" ref="passwordErrorText"> {{ oldPasswordErrorText }} </div>  
+      </div>
+      
+      <div class="input-wrap">
+        <input type="password" :class="{inp_error: isNewPassword2Error}" v-model="newPassword" name="newPassword" placeholder="Введите новый пароль" />
+        <div v-show="isNewPasswordError" class="errorInputText" ref="passwordErrorText"> {{ newPasswordErrorText }} </div>  
+      </div>
+      
+      <div class="input-wrap">
+        <input type="password" :class="{inp_error: isNewPassword2Error}" v-model="newPassword2" name="newPassword2" placeholder="Подтвердите новый пароль" />
+        <div v-show="isNewPassword2Error" class="errorInputText" ref="passwordErrorText"> {{ newPassword2ErrorText }} </div>
+      </div>
+    </form>
+
+    <div>
+        <button ref="button" form="change_password" class="saveForm"> Сохранить </button>
     </div>
+
   </div>
 </template>
 
-<style>
-  .css-page-title {
-    font-family: Inter, serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: normal;
-    padding-left: 10px;
-    padding-top: 15px;
-  }
-  .css-header {
-    background-color: #EDEDED;
-    height: 50px;
-    text-align: left;
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class ChangePassword extends Vue {
+
+  private oldPassword = '';
+  private newPassword = '';
+  private newPassword2 = '';
+
+  isOldPasswordError = false;
+  oldPasswordErrorText = ''
+
+  isNewPasswordError = false;
+  newPasswordErrorText = '';
+
+  isNewPassword2Error = false;
+  newPassword2ErrorText = '';
+
+  private changePassword(): void {
+    // console.log('ij ns');
+
+    if (this.validation()) {
+      // console.log('2344qrfa');
+      console.log(this.oldPassword);
+      console.log(this.newPassword);
+      console.log(this.newPassword2);
+    }
+    
   }
 
-  .сss-profile-container {
-    text-align: left;
-    padding: 0 15px 0 15px;
-  }
+  validation(): boolean {
 
-  .сss-profile-container div {
-    margin-top: 15px;
-  }
+        let out = true;
 
-  .css-password {
-    display: flex;
-    font-size: 14px;
-  }
+        this.oldPassword = this.oldPassword.trim();
+        if (this.oldPassword.length < 8) {
+            this.isOldPasswordError = true;
+            this.oldPasswordErrorText = 'Длинна пароля должна быть не менее 8 символов'
+            out = false;
+        } else {
+            this.isOldPasswordError = false;
+        }
 
-  .css-password p {
-    color: #B6B6B6;
-  }
+        this.newPassword = this.newPassword.trim();
+        this.newPassword2 = this.newPassword2.trim();
 
-  .css-password-change {
-    margin-left: 5px;
+        if (this.newPassword.length < 8) {
+            this.isNewPasswordError = true;
+            this.newPasswordErrorText = 'Длинна пароля должна быть не менее 8 символов'
+            out = false;
+        } else {
+            this.isNewPasswordError = false;
+        }
+
+        if (this.newPassword2.length < 8) {
+            this.isNewPassword2Error = true;
+            this.newPassword2ErrorText = 'Длинна пароля должна быть не менее 8 символов'
+            out = false;
+        } else {
+            this.isNewPassword2Error = false;
+        }
+
+        if (this.newPassword.length > 7 && this.newPassword2.length > 7) {
+            if (this.newPassword2 != this.newPassword) {
+                this.isNewPasswordError = true;
+                this.isNewPassword2Error = true;
+
+                this.newPasswordErrorText = 'Пароли должны совпадать'
+                this.newPassword2ErrorText = 'Пароли должны совпадать'
+                out = false;
+            } else {
+                this.isNewPasswordError = false;
+                this.isNewPassword2Error = false;
+            }
+        }
+
+        return out
+    }
+
+  
+}
+</script>
+
+<style lang="scss" scoped>
+
+// .input-wrap {
+//   margin-bottom: 20px;
+//   margin-top: 20px;
+// }
+
+.changePassForm {
+  margin-top: 20px;
+}
+
+input {
+  margin: 15px;
+}
+
+  button {
+    position: absolute;
+    left: 20px;
+    bottom: 10px;
   }
 </style>

@@ -67,6 +67,11 @@ input[type=password] {
         border-bottom: 2px solid #FF5656;
         caret-color: #FF5656;
     }
+
+    &.inp_error {
+        border-bottom: 2px solid #FF5656;
+        caret-color: #FF5656;
+    }
 }
 
 .errorInputText {
