@@ -46,9 +46,19 @@ const routes: Array<RouteConfig> = [
     path: '/profile',
     name: 'Profile',
     meta: {
+      title: 'Профиль',
       layout: 'mainn'
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
+  },
+  {
+    path: '/change_password',
+    name: 'ChangePassword',
+    meta: {
+      title: 'Изменение пароля',
+      layout: 'mainn'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
   },
 ]
 

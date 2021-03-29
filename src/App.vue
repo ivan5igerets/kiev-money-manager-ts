@@ -8,6 +8,9 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+const auth = namespace('auth')
+
 import authApi from '@/api/auth'
 
 import empty from '@/layouts/empty.vue'
@@ -23,11 +26,11 @@ import mainn from '@/layouts/main.vue'
 })
 export default class Template extends Vue {
   
-  // computed: {
-  //   layout() {
-  //     return this.$route.meta.layout
-  //   }
-  // }
+  @auth.Mutation
+  private setName!: (newName: string) => void
+
+  @auth.Mutation
+  private setEmail!: (newName: string) => void
 
   get layout(): string {
     console.log(this.$route.meta.layout);
@@ -37,9 +40,10 @@ export default class Template extends Vue {
   getUser() {
     authApi.getUser()
     .then(res => {
-      // localStorage.setItem('token', res.data.token)
-      // this.$router.push('/')
         console.log(res.data);
+
+        this.setName(res.data.name);
+        this.setEmail(res.data.email);
       })
     .catch(err => {
       console.log(err.response.data.errors);

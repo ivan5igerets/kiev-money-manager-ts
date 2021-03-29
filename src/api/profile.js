@@ -1,8 +1,9 @@
-// import axios from '@/api/axios'
+import axios from '@/api/axios'
 
 // axios.defults.
 
-const getUser = () => {
+const updateProfile = parameters => {
+    return axios.put('api/user/profile', parameters)
 }
 
 // const register = credentials => {
@@ -14,6 +15,7 @@ const getUser = () => {
 // }
 
 export default {
+    updateProfile
     // register, 
     // login,
 }
