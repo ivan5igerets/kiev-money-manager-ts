@@ -12,8 +12,13 @@ const getUser = () => {
     return axios.get('api/user')
 }
 
+const changePassword = credentials => {
+    return axios.put('api/user/password', credentials)
+}
+
 export default {
     register, 
     login,
     getUser,
+    changePassword,
 }

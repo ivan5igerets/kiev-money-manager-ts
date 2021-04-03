@@ -3,11 +3,6 @@
 
     <form class="changePassForm" id="change_password" @submit.prevent="changePassword">
 
-      <!-- <div class="input">
-        <input type="password" :class="{error: isOLdPasswordError}" v-model="oldPassword" name="oldPassword" placeholder="Введите старый пароль" />
-        <div v-show="isOldPasswordError" class="errorInputText" ref="passwordErrorText"> {{ oldPasswordErrorText }} </div>  
-      </div> -->
-
       <div class="input-wrap">
         <input type="password" :class="{inp_error: isOldPasswordError}" v-model="oldPassword" name="oldPassword" placeholder="Введите старый пароль" />
         <div v-show="isOldPasswordError" class="errorInputText" ref="passwordErrorText"> {{ oldPasswordErrorText }} </div>  
@@ -33,6 +28,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import authApi from '../api/auth'
 
 @Component
 export default class ChangePassword extends Vue {
@@ -58,6 +54,18 @@ export default class ChangePassword extends Vue {
       console.log(this.oldPassword);
       console.log(this.newPassword);
       console.log(this.newPassword2);
+
+      authApi.changePassword({
+        "password_old": this.oldPassword,
+        "password_new": this.newPassword,
+        "password_new_confirmation": this.newPassword2,
+      })
+      .then(res => {
+        console.log('+',res.data);
+      })
+      .catch(err => {
+        console.log('-',err.response.data.errors);
+      })
     }
     
   }

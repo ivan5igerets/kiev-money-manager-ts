@@ -4,8 +4,83 @@
     <v-navigation-drawer
         v-model="drawer"
         app
+        width="300"
     >
-      <!--  -->
+
+      <div class="top-part">
+
+        <img src="../assets/images/logo2.png" alt="">
+
+        <div class="user-info">
+
+          <div class="field">test</div>
+          <div class="field">test@dd.cc</div>
+
+        </div>
+
+        <!-- шо ты? -->
+
+      </div>
+
+      <div class="body-part">
+
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group
+            v-model="selectedItem"
+            color="primary"
+          >
+            <v-list-item
+              v-for="(item, i) in items"
+              @click="moveTo(item.route)"
+              :key="i"
+            >
+              <!-- <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon> -->
+
+              <v-list-item-avatar>
+                <!-- <img :src="item.icon" alt=""> -->
+                <v-img :src="item.icon"></v-img>
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+
+        <div class="footer">
+          <v-divider></v-divider>
+
+          <v-list
+            nav
+            dense
+          >
+            <v-list-item-group
+              color="red"
+            >
+              <v-list-item>
+        
+                <v-list-item-avatar>
+                  <v-img src="../assets/images/logout.png"></v-img>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="'logout'"></v-list-item-title>
+                </v-list-item-content>
+
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+
+      </div>
+
     </v-navigation-drawer>
 
     <v-app-bar app>
@@ -23,6 +98,82 @@
 
 <script>
 export default {
-  data: () => ({ drawer: null }),
+  data: () => ({ 
+    drawer: null,
+    selectedItem: null,
+    items: [
+      { text: 'Профиль', icon: require('@/assets/images/profile.png'), route: 'profile' },
+      { text: 'Настройки', icon: require('@/assets/images/settings.png'), route: 'settings'},
+    ],
+    }),
+    methods: {
+      moveTo(route) {
+        console.log('шо ты?', route);
+        setTimeout(() => {
+          this.selectedItem = null
+          this.drawer = null
+          this.$router.push(route)
+        }, 300)
+      }
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+.top-part {
+  background: #FFD630;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  padding: 20px;
+
+  img {
+    margin-right: 20px;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .field {
+      text-align: left;
+
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 23px;
+
+      color: #000000;
+    }
+  }
+
+}
+
+.body-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+.v-list-item__title {
+  text-align: left;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #000000;
+}
+// .v-list__tile__content{ 
+//   text-align: left;
+// }
+</style>
