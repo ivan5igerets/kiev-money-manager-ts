@@ -3,7 +3,6 @@
   <v-form
     v-else
     ref="form"
-    class="сss-profile-container pa-4"
     lazy-validation
   >
     <div class="сss-profile-container pa-4">
