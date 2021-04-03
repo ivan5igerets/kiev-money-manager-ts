@@ -1,18 +1,16 @@
 <template>
   <loader v-if="loading" />
   <v-form v-else ref="form" class="pa-4" lazy-validation id="category_add">
-    <div class="pa-4">
-      <v-text-field
-        :error-messages="error_message"
-        :rules="rules"
-        label="Название категории"
-      ></v-text-field>
-      <v-select
-          :clearable="true"
-          :items="a_groups"
-          label="Группы"
-      ></v-select>
-    </div>
+    <v-text-field
+      :error-messages="error_message"
+      :rules="rules"
+      label="Название категории"
+    ></v-text-field>
+    <v-select
+        :clearable="true"
+        :items="a_groups"
+        label="Группы"
+    ></v-select>
   </v-form>
 </template>
 
