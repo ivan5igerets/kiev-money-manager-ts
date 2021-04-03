@@ -25,8 +25,7 @@
       <div class="body-part">
 
         <v-list
-          nav
-          dense
+          flat
         >
           <v-list-item-group
             v-model="selectedItem"
@@ -58,8 +57,7 @@
           <v-divider></v-divider>
 
           <v-list
-            nav
-            dense
+            flat
           >
             <v-list-item-group
               color="red"
