@@ -57,6 +57,7 @@ export default {
     },
 
     errorShow(a_errors) {
+      this.errorReset()
       for(const s_field in a_errors) {
         switch(s_field) {
           case 'name':
@@ -73,8 +74,6 @@ export default {
       if(!this.$refs.form.validate())
         return;
 
-      this.errorReset()
-
       profileApi.updateProfile({
         name: this.name,
         email: this.email
@@ -82,8 +81,7 @@ export default {
         this.$router.push('operation-history-day')
       })
       .catch(o_response => {
-        const a_errors = o_response.response.data.errors;
-        this.errorShow(a_errors)
+        this.errorShow(o_response.response.data.errors)
       })
     }
   }

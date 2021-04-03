@@ -10,7 +10,12 @@ const settings = credentials => {
   return axios.put('api/user/settings', credentials)
 }
 
+const changePassword = credentials => {
+  return axios.put('api/user/password', credentials)
+}
+
 export default {
   updateProfile,
   settings,
+  changePassword
 }

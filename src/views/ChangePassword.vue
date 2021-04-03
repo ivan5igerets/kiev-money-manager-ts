@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import authApi from '../api/auth'
+import profileApi from '../api/profile'
 
 @Component
 export default class ChangePassword extends Vue {
@@ -46,25 +46,53 @@ export default class ChangePassword extends Vue {
   isNewPassword2Error = false;
   newPassword2ErrorText = '';
 
+  private errorReset(): void {
+    this.isNewPassword2Error = false;
+    this.isNewPasswordError = false;
+    this.isOldPasswordError = false;
+    this.newPassword2ErrorText = '';
+    this.newPasswordErrorText = '';
+    this.oldPasswordErrorText = '';
+  }
+
+  private errorShow(a_errors: []): void {
+    this.errorReset();
+
+    for(const s_field in a_errors) {
+      switch(s_field) {
+        case 'password_old':
+          this.isOldPasswordError = true;
+          this.oldPasswordErrorText = a_errors[s_field][0];
+          break;
+        case 'password_new':
+          this.isNewPasswordError = true;
+          this.newPasswordErrorText = a_errors[s_field][0];
+          break;
+        case 'password_new_confirmation':
+          this.isNewPassword2Error = true;
+          this.newPassword2ErrorText = a_errors[s_field][0];
+          break;
+      }
+    }
+  }
+
   private changePassword(): void {
-    // console.log('ij ns');
 
     if (this.validation()) {
-      // console.log('2344qrfa');
       console.log(this.oldPassword);
       console.log(this.newPassword);
       console.log(this.newPassword2);
 
-      authApi.changePassword({
+      profileApi.changePassword({
         "password_old": this.oldPassword,
         "password_new": this.newPassword,
         "password_new_confirmation": this.newPassword2,
       })
       .then(res => {
-        console.log('+',res.data);
+        this.$router.push('Profile')
       })
       .catch(err => {
-        console.log('-',err.response.data.errors);
+        this.errorShow(err.response.data.errors)
       })
     }
     
