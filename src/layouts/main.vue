@@ -9,7 +9,10 @@
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-btn v-if="$route.meta.is_back" icon @click="back">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
     </v-app-bar>
@@ -38,6 +41,12 @@
 
 <script>
 export default {
-  data: () => ({ drawer: null }),
+  data: () => ({ drawer: null}),
+
+  methods: {
+    back() {
+      this.$router.go(-1)
+    }
+  }
 }
 </script>

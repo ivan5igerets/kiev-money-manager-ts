@@ -56,7 +56,7 @@ export default class Template extends Vue {
         .then(res => {
             btn.disabled = false
             localStorage.setItem('token', res.data.token)
-            this.$router.push('/')
+            this.$router.push('/reports/operation-history-day')
             })
         .catch(err => {
             btn.disabled = false

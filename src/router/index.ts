@@ -43,6 +43,7 @@ const routes: Array<RouteConfig> = [
     path: '/change_password',
     name: 'ChangePassword',
     meta: {
+      is_back: true,
       title: 'Изменение пароля',
       layout: 'mainn'
     },

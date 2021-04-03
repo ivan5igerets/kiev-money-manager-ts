@@ -47,10 +47,29 @@ export default {
   },
 
   methods: {
+    errorReset() {
+      this.name_error_message = '';
+      this.email_error_message = '';
+    },
+
+    errorShow(a_errors) {
+      for(const s_field in a_errors) {
+        switch(s_field) {
+          case 'name':
+            this.name_error_message = a_errors[s_field][0];
+            break;
+          case 'email':
+            this.email_error_message = a_errors[s_field][0];
+            break;
+        }
+      }
+    },
+
     update() {
       if(!this.$refs.form.validate())
         return;
 
+      this.errorReset()
       clearTimeout(this.i_timeout)
 
       this.i_timeout = setTimeout(() => {
@@ -60,17 +79,7 @@ export default {
           email: this.email
         }).catch(o_response => {
           const a_errors = o_response.response.data.errors;
-
-          for(const s_field in a_errors) {
-            switch(s_field) {
-              case 'name':
-                this.name_error_message = a_errors[s_field][0];
-                break;
-              case 'email':
-                this.email_error_message = a_errors[s_field][0];
-                break;
-            }
-          }
+          this.errorShow(a_errors)
         })
       }, 1000);
     },
