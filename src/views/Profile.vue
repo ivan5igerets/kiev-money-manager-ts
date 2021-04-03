@@ -78,7 +78,7 @@ export default {
         name: this.name,
         email: this.email
       }).then(() => {
-        this.$router.push('operation-history-day')
+        this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

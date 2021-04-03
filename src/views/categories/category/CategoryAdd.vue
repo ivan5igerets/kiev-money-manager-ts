@@ -8,6 +8,7 @@
         label="Название категории"
       ></v-text-field>
       <v-select
+          :clearable="true"
           :items="a_groups"
           label="Группы"
       ></v-select>
