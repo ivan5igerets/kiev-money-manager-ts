@@ -1,137 +1,97 @@
 <template>
-  <div class="css-main-container">
-    <div class="сss-profile-container">
+  <loader v-if="loading" />
+  <v-form
+    v-else
+    ref="form"
+    class="сss-profile-container pa-4"
+    lazy-validation
+  >
+    <div class="сss-profile-container pa-4">
 
-      <form id="profile" @submit.prevent="changeData">
-
-        <div><input v-model="nameL" type="text" name="name" placeholder="Имя" /></div>
-
-        <div><input v-model="emailL" type="email" name="login" placeholder="E-mail" /></div>
-
-        <div class="css-password">
-          <p style="font-size: 14px;">Пароль</p>
-          <router-link class="css-password-change" to="/change_password"> Изменить </router-link>
-        </div>
-
-      </form>
-
-      <div>
-          <button ref="button" form="profile" class="saveForm"> Сохранить </button>
+      <name v-model="name" v-bind:name="name" v-bind:error_message="name_error_message" @input="update"/>
+      <email v-model="email" v-bind:email="email" v-bind:error_message="email_error_message" @input="update"/>
+      <div class="css-password">
+        <div><p class="body-1 css-password-label">Пароль</p></div>
+        <div><router-link :to="{name: 'ChangePassword'}">Изменить</router-link></div>
       </div>
-
     </div>
-  </div>
+  </v-form>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+<script>
+
+import name from '@/components/field/name'
+import email from '@/components/field/email'
+import loader from '@/components/Loader'
+
+import authApi from '@/api/auth'
 import profileApi from '@/api/profile'
-import { namespace } from 'vuex-class'
-const auth = namespace('auth')
 
-@Component
-export default class Profile extends Vue {
+export default {
+  components: {
+    name,email, loader
+  },
 
-  private nameL = '';
-  private emailL = '';
+  data() {
+    return {
+      email: '',
+      email_error_message: '',
+      i_timeout: 0,
+      loading: true,
+      name: '',
+      name_error_message: '',
+    };
+  },
 
-  @auth.State
-  private name!: string;
-
-  @auth.State
-  private email!: string;
-
-  @auth.Mutation
-  private setName!: (newName: string) => void
-
-  @auth.Mutation
-  private setEmail!: (newName: string) => void
-
-  created() {
-    this.nameL = this.name;
-    this.emailL = this.email;
-  }
-
-  private changeData(): void {
-
-    profileApi.updateProfile({
-      name: this.nameL,
-      email: this.emailL
+  mounted() {
+    authApi.getUser().then(response =>
+    {
+      this.loading = false
+      this.name = response.data.name
+      this.email = response.data.email
     })
-    .then (res => {
-      if (this.nameL !== this.name) {
-        this.setName(this.nameL)
-      }
+  },
 
-      if (this.emailL !== this.email) {
-        this.setEmail(this.emailL)
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  methods: {
+    update() {
+      if(!this.$refs.form.validate())
+        return;
 
-    // if (this.nameL !== this.name) {
-    //   this.setName(this.nameL)
-    // }
+      clearTimeout(this.i_timeout)
 
-    // if (this.emailL !== this.email) {
-    //   this.setEmail(this.emailL)
-    // }
-  }
+      this.i_timeout = setTimeout(() => {
 
-  @Watch('name')
-  private watchName(newName: string ) {
-    this.nameL = newName
-  }
+        profileApi.updateProfile({
+          name: this.name,
+          email: this.email
+        }).catch(o_response => {
+          const a_errors = o_response.response.data.errors;
 
-  @Watch('email')
-  private watchEmail(newEmail: string ) {
-    this.emailL = newEmail
+          for(const s_field in a_errors) {
+            switch(s_field) {
+              case 'name':
+                this.name_error_message = a_errors[s_field][0];
+                break;
+              case 'email':
+                this.email_error_message = a_errors[s_field][0];
+                break;
+            }
+          }
+        })
+      }, 1000);
+    },
   }
 }
+
 </script>
 
 <style>
-  .css-page-title {
-    font-family: Inter, serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: normal;
-    padding-left: 10px;
-    padding-top: 15px;
-  }
-  .css-header {
-    background-color: #EDEDED;
-    height: 50px;
-    text-align: left;
-  }
+.css-password {
+  display: flex;
+}
 
-  .сss-profile-container {
-    text-align: left;
-    padding: 0 15px 0 15px;
-  }
-
-  .сss-profile-container div {
-    margin-top: 20px;
-  }
-
-  .css-password {
-    display: flex;
-    font-size: 14px;
-  }
-
-  .css-password p {
-    color: #B6B6B6;
-  }
-
-  .css-password-change {
-    margin-left: 5px;
-  }
-
-  button {
-    position: absolute;
-    left: 20px;
-    bottom: 10px;
-  }
+.css-password-label {
+  margin-right: 4px;
+  color: grey;
+}
 </style>
