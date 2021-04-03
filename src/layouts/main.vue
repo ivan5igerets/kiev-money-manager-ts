@@ -93,12 +93,12 @@
 
     </v-main>
 
-    <v-bottom-navigation grow value="0" color="primary" v-if="$route.meta.is_nav_menu">
-      <v-btn>
+    <v-bottom-navigation grow color="primary" v-if="$route.meta.is_nav_menu">
+      <v-btn :to="{name: 'OperationHistoryDay'}">
         <span>Главная</span>
         <v-icon>mdi-credit-card</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{name: 'Categories'}">
         <span>Категории</span>
         <v-icon>mdi-view-list</v-icon>
       </v-btn>

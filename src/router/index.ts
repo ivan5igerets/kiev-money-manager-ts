@@ -52,6 +52,26 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
   },
   {
+    path: '/categories',
+    name: 'Categories',
+    meta: {
+      is_nav_menu: true,
+      title: 'Категории',
+      layout: 'mainn'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/categories/Categories.vue')
+  },
+  {
+    path: '/category-add',
+    name: 'CategoryAdd',
+    meta: {
+      is_back: true,
+      title: 'Добавить категорию',
+      layout: 'mainn'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/categories/category/CategoryAdd.vue')
+  },
+  {
     path: '/operation-history-day',
     name: 'OperationHistoryDay',
     meta: {

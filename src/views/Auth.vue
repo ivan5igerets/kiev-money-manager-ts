@@ -85,7 +85,15 @@ export default class Template extends Vue {
 
 <style lang="scss" scoped>
 .auth {
-    
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: #2c3e50;
+  font-family: 'Rubik', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+
     &_top {
         margin-top: 20px;
         margin-bottom: 5px;

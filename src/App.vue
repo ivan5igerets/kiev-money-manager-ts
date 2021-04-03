@@ -63,15 +63,6 @@ export default class Template extends Vue {
 * {
   margin: 0;
 }
-#app {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  color: #2c3e50;
-  font-family: 'Rubik', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  text-align: center;
-}
 
 #nav {
   padding: 30px;
