@@ -48,6 +48,16 @@ const routes: Array<RouteConfig> = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
   },
+  {
+    path: '/reports/operation-history-day',
+    name: 'OperationHistoryDay',
+    meta: {
+      is_nav_menu: true,
+      title: 'Главная',
+      layout: 'mainn'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/reports/OperationHistoryDay.vue')
+  },
 ]
 
 const router = new VueRouter({

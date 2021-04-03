@@ -18,6 +18,21 @@
       <router-view></router-view>
 
     </v-main>
+
+    <v-bottom-navigation grow value="0" color="primary" v-if="$route.meta.is_nav_menu">
+      <v-btn>
+        <span>Главная</span>
+        <v-icon>mdi-credit-card</v-icon>
+      </v-btn>
+      <v-btn>
+        <span>Категории</span>
+        <v-icon>mdi-view-list</v-icon>
+      </v-btn>
+      <v-btn>
+        <span>Диаграмма</span>
+        <v-icon>mdi-chart-arc</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 
