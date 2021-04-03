@@ -9,12 +9,6 @@
         label="Переносить остаток на следующий месяц"
       ></v-switch>
       <v-switch
-        id="show_button_add_operation_nav_menu"
-        v-model="show_button_add_operation_nav_menu"
-        @change="setupChange('show_button_add_operation_nav_menu', show_button_add_operation_nav_menu)"
-        label="Отображать кнопку 'Добавить' в главном меню"
-      ></v-switch>
-      <v-switch
         id="enable_budget_mode"
         @change="setupChange('enable_budget_mode', enable_budget_mode)"
         v-model="enable_budget_mode"

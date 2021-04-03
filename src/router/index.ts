@@ -25,6 +25,7 @@ const routes: Array<RouteConfig> = [
     path: '/settings',
     name: 'Settings',
     meta: {
+      is_back: true,
       title: 'Настройки',
       layout: 'mainn'
     },
@@ -34,6 +35,7 @@ const routes: Array<RouteConfig> = [
     path: '/profile',
     name: 'Profile',
     meta: {
+      is_back: true,
       title: 'Профиль',
       layout: 'mainn'
     },
@@ -50,7 +52,7 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
   },
   {
-    path: '/reports/operation-history-day',
+    path: '/operation-history-day',
     name: 'OperationHistoryDay',
     meta: {
       is_nav_menu: true,

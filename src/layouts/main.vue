@@ -18,8 +18,6 @@
 
         </div>
 
-        <!-- шо ты? -->
-
       </div>
 
       <div class="body-part">
@@ -40,9 +38,9 @@
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon> -->
 
-              <v-list-item-avatar>
+              <v-list-item-avatar width="30" min-width="30">
                 <!-- <img :src="item.icon" alt=""> -->
-                <v-img :src="item.icon"></v-img>
+                <v-img :src="item.icon" height="30" width="30" min-width="30"></v-img>
               </v-list-item-avatar>
 
               <v-list-item-content>
@@ -187,7 +185,7 @@ export default {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 21px;
 
   color: #000000;

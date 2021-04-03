@@ -1,36 +1,40 @@
 <template>
   <loader v-if="loading" />
-  <v-form v-else ref="form" lazy-validation>
+  <v-form v-else ref="form" lazy-validation id="profile" @submit.prevent="profileUpdate">
     <div class="сss-profile-container pa-4">
-      <name v-model="name" v-bind:name="name" v-bind:error_message="name_error_message" @input="update"/>
-      <email v-model="email" v-bind:email="email" v-bind:error_message="email_error_message" @input="update"/>
+      <name v-model="name" v-bind:name="name" v-bind:error_message="name_error_message"/>
+      <email v-model="email" v-bind:email="email" v-bind:error_message="email_error_message"/>
       <div class="css-password">
         <div><p class="body-1 css-password-label">Пароль</p></div>
         <div><router-link :to="{name: 'ChangePassword'}">Изменить</router-link></div>
       </div>
     </div>
+    <button_save_form id_form="profile"/>
   </v-form>
 </template>
 
 <script>
 
-import name from '@/components/field/name'
-import email from '@/components/field/email'
+import button_save_form from '@/components/ButtonSaveForm'
+import email from '@/components/field/Email'
 import loader from '@/components/Loader'
+import name from '@/components/field/Name'
 
 import authApi from '@/api/auth'
 import profileApi from '@/api/profile'
 
 export default {
   components: {
-    name,email, loader
+    button_save_form,
+    email,
+    loader,
+    name
   },
 
   data() {
     return {
       email: '',
       email_error_message: '',
-      i_timeout: 0,
       loading: true,
       name: '',
       name_error_message: '',
@@ -65,24 +69,23 @@ export default {
       }
     },
 
-    update() {
+    profileUpdate() {
       if(!this.$refs.form.validate())
         return;
 
       this.errorReset()
-      clearTimeout(this.i_timeout)
 
-      this.i_timeout = setTimeout(() => {
-
-        profileApi.updateProfile({
-          name: this.name,
-          email: this.email
-        }).catch(o_response => {
-          const a_errors = o_response.response.data.errors;
-          this.errorShow(a_errors)
-        })
-      }, 1000);
-    },
+      profileApi.updateProfile({
+        name: this.name,
+        email: this.email
+      }).then(() => {
+        this.$router.push('operation-history-day')
+      })
+      .catch(o_response => {
+        const a_errors = o_response.response.data.errors;
+        this.errorShow(a_errors)
+      })
+    }
   }
 }
 
