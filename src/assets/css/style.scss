@@ -1,77 +1,77 @@
 
 // кнопки
 .saveForm {
-    height: 50px;
-    width: 90%;
-    background: #FFD630;
-    border-radius: 5px;
-    outline: none;
-    color: white;
-    font-size: 16px;
-    border: none;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    cursor: pointer;
-    transition: .2s;
+  height: 50px;
+  width: 90%;
+  background: #FFD630;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: .2s;
 
-    &:hover {
-        background: #ffcc00;
-    }
+  &:hover {
+    background: #ffcc00;
+  }
 
-    &:active {
-        background: #eebe00;
-    }
-    // font-weight: bold;
+  &:active {
+    background: #eebe00;
+  }
+  // font-weight: bold;
 }
 
 .circle {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    padding: 6px;
-    outline: none;
-    background: #FFD630;
-    border: 1px solid #FFD630;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  padding: 6px;
+  outline: none;
+  background: #FFD630;
+  border: 1px solid #FFD630;
 
-    &_img {
-        width: 50px;
-        height: 50px;
-    }
+  &_img {
+    width: 50px;
+    height: 50px;
+  }
 
-    &:hover {
-        background: #ffcc00;
-    }
+  &:hover {
+    background: #ffcc00;
+  }
 
-    &:active {
-        background: #eebe00;
-    }
+  &:active {
+    background: #eebe00;
+  }
 }
 
 // тексовые поля
 input[type=text],
 input[type=email],
 input[type=password] {
-    border: none;
-    /* background: blueviolet; */
-    width: calc(100vw - 50px);
-    height: 30px;
-    border-bottom: 2px solid #B6B6B6;
-    outline: none;
-    font-size: 16px;
+  border: none;
+  /* background: blueviolet; */
+  width: calc(100vw - 50px);
+  height: 30px;
+  border-bottom: 2px solid #B6B6B6;
+  outline: none;
+  font-size: 16px;
 
-    &:focus {
-        border-bottom: 2px solid #FFF84D;
-        caret-color: #FFF84D;
-    }
+  &:focus {
+    border-bottom: 2px solid #FFF84D;
+    caret-color: #FFF84D;
+  }
 
-    &.error {
-        border-bottom: 2px solid #FF5656;
-        caret-color: #FF5656;
-    }
+  &.error {
+    border-bottom: 2px solid #FF5656;
+    caret-color: #FF5656;
+  }
 
-    &.inp_error {
-        border-bottom: 2px solid #FF5656;
-        caret-color: #FF5656;
-    }
+  &.inp_error {
+    border-bottom: 2px solid #FF5656;
+    caret-color: #FF5656;
+  }
 }
 
 .errorInputText {
@@ -90,13 +90,13 @@ input[type=password] {
 
 
 a {
-    color: #FFF84D;
-    text-decoration: none;
+  color: #FFF84D;
+  text-decoration: none;
 }
 
 
 
-// checkbox 
+// checkbox
 $primary: #FFD630;
 $primary-light: #FFF84D;
 $gray: #EDEDED;
@@ -170,7 +170,11 @@ $gray: #EDEDED;
 }
 //centering toggle
 .center {
-//   position: absolute;
-//   top: calc(50% - 10px);
-//   left: calc(50% - 20px);
+  //   position: absolute;
+  //   top: calc(50% - 10px);
+  //   left: calc(50% - 20px);
+}
+
+a{
+  text-decoration: none;
 }

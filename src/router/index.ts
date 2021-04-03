@@ -43,10 +43,21 @@ const routes: Array<RouteConfig> = [
     path: '/change_password',
     name: 'ChangePassword',
     meta: {
+      is_back: true,
       title: 'Изменение пароля',
       layout: 'mainn'
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
+  },
+  {
+    path: '/reports/operation-history-day',
+    name: 'OperationHistoryDay',
+    meta: {
+      is_nav_menu: true,
+      title: 'Главная',
+      layout: 'mainn'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/reports/OperationHistoryDay.vue')
   },
 ]
 
