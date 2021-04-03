@@ -1,12 +1,7 @@
 <template>
   <loader v-if="loading" />
-  <v-form
-    v-else
-    ref="form"
-    lazy-validation
-  >
+  <v-form v-else ref="form" lazy-validation>
     <div class="сss-profile-container pa-4">
-
       <name v-model="name" v-bind:name="name" v-bind:error_message="name_error_message" @input="update"/>
       <email v-model="email" v-bind:email="email" v-bind:error_message="email_error_message" @input="update"/>
       <div class="css-password">
