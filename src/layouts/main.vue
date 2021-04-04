@@ -13,8 +13,8 @@
 
         <div class="user-info">
 
-          <div class="field">test</div>
-          <div class="field">test@dd.cc</div>
+          <div class="field"> {{ name }} </div>
+          <div class="field"> {{ email }} </div>
 
         </div>
 
@@ -60,7 +60,7 @@
             <v-list-item-group
               color="red"
             >
-              <v-list-item>
+              <v-list-item @click="logout">
         
                 <v-list-item-avatar>
                   <v-img src="../assets/images/logout.png"></v-img>
@@ -111,6 +111,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   data: () => ({ 
     drawer: null,
@@ -119,20 +121,31 @@ export default {
       { text: 'Профиль', icon: require('@/assets/images/profile.png'), route: 'profile' },
       { text: 'Настройки', icon: require('@/assets/images/settings.png'), route: 'settings'},
     ],
-    }),
-    methods: {
-      moveTo(route) {
-        console.log('шо ты?', route);
-        setTimeout(() => {
-          this.selectedItem = null
-          this.drawer = null
-          this.$router.push(route)
-        }, 300)
-      },
-       back() {
+  }),
+
+  methods: {
+    moveTo(route) {
+      console.log('шо ты?', route);
+      setTimeout(() => {
+        this.selectedItem = null
+        this.drawer = null
+        this.$router.push(route)
+      }, 300)
+    },
+    back() {
       this.$router.go(-1)
+    },
+    logout() {
+      this.$router.push({name: 'Auth'})
     }
-    }
+  },
+
+  computed: {
+    ...mapState('auth',{
+      name:'name',
+      email:'email'
+    })
+  }
 }
 </script>
 
