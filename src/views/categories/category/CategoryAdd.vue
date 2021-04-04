@@ -2,6 +2,7 @@
   <loader v-if="loading" />
   <v-form v-else ref="form" class="pa-4" lazy-validation id="category_add">
     <v-text-field
+      aria-autocomplete="none"
       :error-messages="error_message"
       :rules="rules"
       label="Название категории"
@@ -31,7 +32,7 @@ export default {
       error_message: '',
       loading: true,
       rules: [
-        value => !!value || 'Поле не может быть пустым.'
+        value => !!value || 'Поле не может быть пустым'
       ],
     }
   },

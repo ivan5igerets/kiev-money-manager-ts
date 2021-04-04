@@ -81,7 +81,7 @@ export default {
         console.log(res);
         this.setName(this.name)
         this.setEmail(this.email)
-        // this.$router.go(-1)
+        this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

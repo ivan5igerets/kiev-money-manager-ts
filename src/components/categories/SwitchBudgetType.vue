@@ -1,33 +1,51 @@
 <template>
-  <div class="css-switch-container">
-    <div class="css-switch-button-container">
-      <label class="css-switch-button">
-        <input checked="checked" type="radio" name="is_percent" value="0">
-        <span class="radio"></span>
-        <span class="css-switch-button-block css-switch-button-first">₴</span>
-      </label>
-      <label class="css-switch-button">
-        <input checked="checked" type="radio" name="is_percent" value="1">
-        <span class="radio"></span>
-        <span class="css-switch-button-block">%</span>
-      </label>
+  <v-form ref="form" v-model="valid">
+    <div class="css-switch-container">
+      <div class="css-switch-button-container">
+        <label class="css-switch-button">
+          <input type="radio" v-model.number="is_percent" name="is_percent" value="0" v-on:change="validate">
+          <span class="radio"></span>
+          <span class="css-switch-button-block css-switch-button-first">₴</span>
+        </label>
+        <label class="css-switch-button">
+          <input type="radio" v-model.number="is_percent" name="is_percent" value="1" v-on:change="validate">
+          <span class="radio"></span>
+          <span class="css-switch-button-block">%</span>
+        </label>
+      </div>
+      <div class="css-budget-value">
+        <v-text-field
+          :rules="rules"
+          aria-autocomplete="none"
+          label="Бюджет"
+          type="number"
+          v-model.number="m_budget"
+        >
+        </v-text-field>
+      </div>
     </div>
-    <div class="css-budget-value">
-      <v-text-field :rules="rules" type="number" label="Бюджет"></v-text-field>
-    </div>
-  </div>
+  </v-form>
 </template>
 
 <script>
   export default {
     data() {
       return {
+        is_percent: 0,
+        m_budget: 0,
+        valid: true,
         rules: [
           value => {
-            const pattern = /^([0-9]|[1-9]((\d{1,8})+)?)(\.\d{1,2})?$/
-            return pattern.test(value) || 'Введена некорректная сумма бюджета.'
+            const pattern = this.is_percent === 1 ? /^(\d{1,2}(\.\d{1,2})?|100)$/ : /^([0-9]|[1-9]((\d{1,8})+)?)(\.\d{1,2})?$/
+            return pattern.test(value) || 'Введена некорректная сумма бюджета'
           }
         ],
+      }
+    },
+
+    methods: {
+      validate() {
+        this.$refs.form.validate()
       }
     }
   }
