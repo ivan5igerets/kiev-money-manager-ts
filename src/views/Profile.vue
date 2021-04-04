@@ -1,5 +1,5 @@
 <template>
-  <loader v-if="loading" />
+  <loader v-if="isLoading" />
   <v-form v-else ref="form" lazy-validation id="profile" @submit.prevent="profileUpdate">
     <div class="сss-profile-container pa-4">
       <name v-model="name" v-bind:name="name" v-bind:error_message="name_error_message"/>
@@ -19,8 +19,8 @@ import button_save_form from '@/components/ButtonSaveForm'
 import email from '@/components/field/Email'
 import loader from '@/components/Loader'
 import name from '@/components/field/Name'
+import {mapState} from 'vuex'
 
-import authApi from '@/api/auth'
 import profileApi from '@/api/profile'
 
 export default {
@@ -33,21 +33,9 @@ export default {
 
   data() {
     return {
-      email: '',
       email_error_message: '',
-      loading: true,
-      name: '',
       name_error_message: '',
     };
-  },
-
-  mounted() {
-    authApi.getUser().then(response =>
-    {
-      this.loading = false
-      this.name = response.data.name
-      this.email = response.data.email
-    })
   },
 
   methods: {
@@ -84,6 +72,14 @@ export default {
         this.errorShow(o_response.response.data.errors)
       })
     }
+  },
+
+  computed: {
+    ...mapState('auth',{
+      name:'name',
+      email:'email',
+      isLoading: 'isLoading',
+    })
   }
 }
 

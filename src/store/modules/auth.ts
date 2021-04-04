@@ -1,10 +1,10 @@
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
-// import authApi from '@/api/auth'
 
 @Module({namespaced: true, name: 'auth'})
 class Auth extends VuexModule {
     public name = '';
     public email = '';
+    public isLoading = true;
 
     @Mutation
     public setName(newName: string): void {
@@ -14,6 +14,11 @@ class Auth extends VuexModule {
     @Mutation
     public setEmail(newEmail: string): void {
         this.email = newEmail; 
+    }
+
+    @Mutation
+    public loadingToggle(newValue: boolean): void {
+        this.isLoading = newValue;
     }
 
 }

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <router-view/> -->
     <component :is="layout">
     </component>
   </div>
@@ -31,6 +30,9 @@ export default class Template extends Vue {
 
   @auth.Mutation
   private setEmail!: (newName: string) => void
+  
+  @auth.Mutation
+  private loadingToggle!: (newValue: boolean) => void
 
   get layout(): string {
     console.log(this.$route.meta.layout);
@@ -38,16 +40,19 @@ export default class Template extends Vue {
   }
 
   getUser() {
+    this.loadingToggle(true);
     authApi.getUser()
     .then(res => {
         console.log(res.data);
 
         this.setName(res.data.name);
         this.setEmail(res.data.email);
+        this.loadingToggle(false);
       })
     .catch(err => {
       console.log(err.response.data.errors);
       this.$router.push('/auth')
+      this.loadingToggle(false);
       })
   }
 
