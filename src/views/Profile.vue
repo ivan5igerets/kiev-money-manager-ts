@@ -19,7 +19,7 @@ import button_save_form from '@/components/ButtonSaveForm'
 import email from '@/components/field/Email'
 import loader from '@/components/Loader'
 import name from '@/components/field/Name'
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 import profileApi from '@/api/profile'
 
@@ -33,12 +33,24 @@ export default {
 
   data() {
     return {
+      name: '',
+      email: '',
       email_error_message: '',
       name_error_message: '',
     };
   },
 
+  mounted() {
+    this.updateComponentData();
+  },
+
   methods: {
+
+    updateComponentData() {
+      this.name = this.nameS;
+      this.email = this.emailS;
+    },
+
     errorReset() {
       this.name_error_message = '';
       this.email_error_message = '';
@@ -65,19 +77,35 @@ export default {
       profileApi.updateProfile({
         name: this.name,
         email: this.email
-      }).then(() => {
-        this.$router.go(-1)
+      }).then((res) => {
+        console.log(res);
+        this.setName(this.name)
+        this.setEmail(this.email)
+        // this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)
       })
+    },
+
+    ...mapMutations({
+      setName: "auth/setName",
+      setEmail: "auth/setEmail",
+    }),
+  },
+
+  watch: {
+    isLoading: function(newVal) {
+      if (!newVal) {
+        this.updateComponentData();
+      }
     }
   },
 
   computed: {
     ...mapState('auth',{
-      name:'name',
-      email:'email',
+      nameS:'name',
+      emailS:'email',
       isLoading: 'isLoading',
     })
   }
