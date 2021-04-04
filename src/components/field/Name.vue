@@ -12,8 +12,7 @@
 export default {
   props: ['name', 'error_message'],
 
-  data()
-  {
+  data() {
     return {
       rules: [
         value => !!value || 'Поле не может быть пустым.',
