@@ -16,9 +16,9 @@
 <script>
 
 import button_save_form from '@/components/ButtonSaveForm'
-import email from '@/components/field/Email'
+import email from '@/components/profile/Email'
 import loader from '@/components/Loader'
-import name from '@/components/field/Name'
+import name from '@/components/profile/Name'
 import {mapState, mapMutations} from 'vuex'
 
 import profileApi from '@/api/profile'

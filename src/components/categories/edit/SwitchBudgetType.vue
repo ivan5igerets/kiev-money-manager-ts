@@ -6,7 +6,6 @@
           <input
             :checked="a_budget.is_percent ? 'checked' : ''"
             class="css-percent-input-radio"
-            name="is_percent"
             type="radio"
             v-on:change="update"
             value="0"
@@ -20,7 +19,6 @@
             :checked="a_budget.is_percent ? 'checked' : ''"
             class="css-percent-input-radio"
             type="radio"
-            name="is_percent"
             value="1"
             v-on:change="update"
             v-model.number="is_percent"
@@ -31,6 +29,7 @@
       </div>
       <div class="css-budget-value">
         <v-text-field
+          :error-messages="error_message"
           :rules="rules"
           :value="a_budget.m_budget"
           aria-autocomplete="none"
@@ -47,7 +46,16 @@
 
 <script>
   export default {
-    props: ['a_budget'],
+    props: {
+      a_budget: {
+        type: Object,
+        required: true,
+      },
+      error_message: {
+        type: String,
+        required: true,
+      }
+    },
 
     data() {
       return {

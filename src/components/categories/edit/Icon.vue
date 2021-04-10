@@ -67,9 +67,14 @@
 
 <script>
 export default {
-  props: ['a_icon'],
+  props: {
+    a_icon: {
+      type: Object,
+      required: true,
+    }
+  },
 
-  data () {
+  data() {
     return {
       dialog: false,
       color_select: this.a_icon.s_icon_color,
