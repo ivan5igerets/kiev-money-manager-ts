@@ -14,10 +14,7 @@
           :to="{name: tile.to}"
         >
           <v-list-item-avatar>
-            <v-avatar
-                size="32px"
-                tile
-            >
+            <v-avatar size="32px" tile>
               <v-icon color="primary">{{tile.icon}}</v-icon>
             </v-avatar>
           </v-list-item-avatar>

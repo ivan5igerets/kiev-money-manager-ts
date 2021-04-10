@@ -1,14 +1,30 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <div class="css-switch-container">
-      <div class="css-switch-button-container">
-        <label class="css-switch-button">
-          <input type="radio" v-model.number="is_percent" name="is_percent" value="0" v-on:change="validate">
+    <div class="d-flex justify-center align-center">
+      <div class="d-flex mr-2">
+        <label>
+          <input
+            :checked="a_budget.is_percent ? 'checked' : ''"
+            class="css-percent-input-radio"
+            name="is_percent"
+            type="radio"
+            v-on:change="update"
+            value="0"
+            v-model.number="is_percent"
+          >
           <span class="radio"></span>
           <span class="css-switch-button-block css-switch-button-first">₴</span>
         </label>
-        <label class="css-switch-button">
-          <input type="radio" v-model.number="is_percent" name="is_percent" value="1" v-on:change="validate">
+        <label>
+          <input
+            :checked="a_budget.is_percent ? 'checked' : ''"
+            class="css-percent-input-radio"
+            type="radio"
+            name="is_percent"
+            value="1"
+            v-on:change="update"
+            v-model.number="is_percent"
+          >
           <span class="radio"></span>
           <span class="css-switch-button-block">%</span>
         </label>
@@ -16,9 +32,11 @@
       <div class="css-budget-value">
         <v-text-field
           :rules="rules"
+          :value="a_budget.m_budget"
           aria-autocomplete="none"
           label="Бюджет"
           type="number"
+          v-on:input="update"
           v-model.number="m_budget"
         >
         </v-text-field>
@@ -29,6 +47,8 @@
 
 <script>
   export default {
+    props: ['a_budget'],
+
     data() {
       return {
         is_percent: 0,
@@ -36,7 +56,7 @@
         valid: true,
         rules: [
           value => {
-            const pattern = this.is_percent === 1 ? /^(\d{1,2}(\.\d{1,2})?|100)$/ : /^([0-9]|[1-9]((\d{1,8})+)?)(\.\d{1,2})?$/
+            const pattern = this.is_percent ? /^(\d{1,2}(\.\d{1,2})?|100)$/ : /^([0-9]|[1-9]((\d{1,8})+)?)(\.\d{1,2})?$/
             return pattern.test(value) || 'Введена некорректная сумма бюджета'
           }
         ],
@@ -44,8 +64,9 @@
     },
 
     methods: {
-      validate() {
+      update() {
         this.$refs.form.validate()
+        this.$emit('input', {'m_budget': this.m_budget, 'is_percent': Boolean(this.is_percent)})
       }
     }
   }
@@ -54,21 +75,6 @@
 
 <style>
 
-.css-switch-container {
-  align-items: center;
-  display:flex;
-  justify-content: center;
-}
-
-.css-switch-button-container {
-  flex: 1 2 100px;
-}
-
-.css-switch-button {
-  cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
-}
 :checked+.radio+.css-switch-button-block {
   background: #FFD630;
   border-color: #FFD630;
@@ -76,7 +82,7 @@
   transition: all .4s;
 }
 
-.css-switch-button > input[type=radio] {
+.css-percent-input-radio {
   opacity: 0;
   position: absolute;
 }
@@ -89,7 +95,6 @@
   font-size: 14pt;
   height: 31px;
   line-height: 31px;
-  margin: 5px 0;
   text-align: center;
   width: 35px;
   transition: all .4s;

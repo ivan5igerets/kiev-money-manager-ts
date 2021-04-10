@@ -35,7 +35,6 @@ export default class Template extends Vue {
   private loadingToggle!: (newValue: boolean) => void
 
   get layout(): string {
-    console.log(this.$route.meta.layout);
     return this.$route.meta.layout;
   }
 
@@ -43,8 +42,6 @@ export default class Template extends Vue {
     this.loadingToggle(true);
     authApi.getUser()
     .then(res => {
-        console.log(res.data);
-
         this.setName(res.data.name);
         this.setEmail(res.data.email);
         this.loadingToggle(false);

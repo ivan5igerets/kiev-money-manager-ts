@@ -78,7 +78,6 @@ export default {
         name: this.name,
         email: this.email
       }).then((res) => {
-        console.log(res);
         this.setName(this.name)
         this.setEmail(this.email)
         this.$router.go(-1)
