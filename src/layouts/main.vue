@@ -175,6 +175,11 @@ export default {
       font-size: 20px;
       line-height: 23px;
 
+      width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
       color: #000000;
     }
   }
