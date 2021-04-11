@@ -10,7 +10,7 @@
         v-model="text_category"
       />
     </div>
-    <switch_budget_type v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
+    <category_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
     <v-select :clearable="true" :items="a_groups" label="Группа" v-model="k_category_group"></v-select>
     <button_save_form id_form="category_add"/>
   </v-form>
@@ -18,10 +18,10 @@
 
 <script>
 import button_save_form from '@/components/ButtonSaveForm'
+import category_budget from '@/components/categories/edit/Budget'
 import category_icon from '@/components/categories/edit/Icon'
 import category_name from '@/components/categories/edit/Name'
 import loader from '@/components/Loader'
-import switch_budget_type from '@/components/categories/edit/SwitchBudgetType'
 
 import categoryApi from '@/api/category'
 import groupsApi from '@/api/groups'
@@ -29,18 +29,18 @@ import groupsApi from '@/api/groups'
 export default {
   components: {
     button_save_form,
+    category_budget,
     category_icon,
     category_name,
     loader,
-    switch_budget_type,
   },
   data() {
     return {
       a_budget: {'is_percent': 0, 'm_budget': 0},
       a_groups: [],
       a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
-      error_message_name: '',
       error_message_budget: '',
+      error_message_name: '',
       k_category_group: '',
       loading: true,
       text_category: '',

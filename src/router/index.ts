@@ -82,24 +82,24 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/categories/category/CategoryEdit.vue')
   },
   {
-    path: '/category-group-add',
-    name: 'CategoryGroupAdd',
+    path: '/group-add',
+    name: 'GroupAdd',
     meta: {
       is_back: true,
       title: 'Добавить группу',
       layout: 'mainn'
     },
-    component: () => import('../views/categories/group/CategoryGroupAdd.vue')
+    component: () => import('../views/categories/group/GroupAdd.vue')
   },
   {
-    path: '/category-group-edit/:k_category_group',
-    name: 'CategoryGroupEdit',
+    path: '/group-edit/:k_category_group',
+    name: 'GroupEdit',
     meta: {
       is_back: true,
       title: 'Редактирование группы',
       layout: 'mainn'
     },
-    component: () => import('../views/categories/group/CategoryGroupEdit.vue')
+    component: () => import('../views/categories/group/GroupEdit.vue')
   },
   {
     path: '/operation-history-day',

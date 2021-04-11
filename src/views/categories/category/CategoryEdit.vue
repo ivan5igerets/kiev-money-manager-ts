@@ -10,7 +10,7 @@
         v-model="text_category"
       />
     </div>
-   <switch_budget_type
+   <category_budget
      v-bind:a_budget="a_budget"
      v-bind:error_message="error_message_budget"
      v-model="a_budget"
@@ -28,10 +28,10 @@
 
 <script>
 import button_save_form from '@/components/ButtonSaveForm'
+import category_budget from '@/components/categories/edit/Budget'
 import category_icon from '@/components/categories/edit/Icon'
 import category_name from '@/components/categories/edit/Name'
 import loader from '@/components/Loader'
-import switch_budget_type from '@/components/categories/edit/SwitchBudgetType'
 
 import categoryApi from '@/api/category'
 import groupsApi from '@/api/groups'
@@ -39,10 +39,10 @@ import groupsApi from '@/api/groups'
 export default {
   components: {
     button_save_form,
+    category_budget,
     category_icon,
     category_name,
     loader,
-    switch_budget_type,
   },
   data() {
     return {
@@ -58,18 +58,13 @@ export default {
   },
 
   mounted() {
-
-    const a_promise = [groupsApi.get()];
-    a_promise.push(categoryApi.get(this.$route.params.k_category));
-
-    Promise.all(a_promise).then(a_response => {
+    Promise.all([groupsApi.get(), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
       const a_category_info = a_response[1].data;
 
       this.a_budget.is_percent = a_category_info.m_budget_percent !== 0 ? 1 : 0
       this.a_budget.m_budget = a_category_info.m_budget_percent || a_category_info.m_budget_float
       this.a_icon.s_icon_color = a_category_info.s_icon_color
       this.a_icon.s_icon_class = a_category_info.s_icon_class
-
       this.text_category = a_category_info.text_category;
 
       a_response[0].data.forEach((a_group) => {

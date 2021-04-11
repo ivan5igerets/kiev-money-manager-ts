@@ -10,12 +10,10 @@
         v-model="text_group"
       />
     </div>
-    <switch_budget_type v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
+    <group_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
     <v-select
-      :error-messages="error_message_category"
       :items="a_categories_select"
       :rules="a_categories_rules"
-      :value="a_categories"
       label="Категории"
       multiple
       v-model="a_categories"
@@ -26,21 +24,21 @@
 
 <script>
 import button_save_form from '@/components/ButtonSaveForm'
+import group_budget from '@/components/categories/edit/Budget'
 import group_icon from '@/components/categories/edit/Icon'
 import group_name from '@/components/categories/edit/Name'
 import loader from '@/components/Loader'
-import switch_budget_type from '@/components/categories/edit/SwitchBudgetType'
 
 import groupApi from '@/api/group'
-import groupCategoriesApi from '@/api/groupCategories'
+import categoriesApi from '@/api/categories'
 
 export default {
   components: {
     button_save_form,
+    group_budget,
     group_icon,
     group_name,
     loader,
-    switch_budget_type,
   },
   data() {
     return {
@@ -51,29 +49,14 @@ export default {
       a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
       error_message_budget: '',
       error_message_name: '',
-      error_message_category: '',
       loading: true,
       text_group: '',
     }
   },
 
   mounted() {
-    const a_group_categories_promise = groupCategoriesApi.get({
-      is_income: 0,
-      k_category_group: this.$route.params.k_category_group,
-    });
-
-    Promise.all([groupApi.get(this.$route.params.k_category_group), a_group_categories_promise]).then(a_response => {
-      const a_group_info = a_response[0].data
-
-      this.a_categories = a_group_info.a_category
-      this.a_budget.is_percent = a_group_info.m_budget_percent !== 0 ? 1 : 0
-      this.a_budget.m_budget = a_group_info.m_budget_percent || a_group_info.m_budget_float
-      this.a_icon.s_icon_color = a_group_info.s_icon_color
-      this.a_icon.s_icon_class = a_group_info.s_icon_class
-      this.text_group = a_group_info.text_group
-
-      a_response[1].data.forEach((a_group) => {
+    categoriesApi.get().then(a_response => {
+      a_response.data.forEach((a_group) => {
         this.a_categories_select.push({
           'text': a_group['text_category'],
           'value': a_group['k_category']
@@ -87,7 +70,6 @@ export default {
     errorReset() {
       this.error_message_budget = '';
       this.error_message_name = '';
-      this.error_message_category = '';
     },
 
     errorShow(a_errors) {
@@ -101,9 +83,6 @@ export default {
           case 'text_group':
             this.error_message_name = a_errors[s_field][0];
             break;
-          case 'a_category':
-            this.error_message_category = a_errors[s_field][0];
-            break;
         }
       }
     },
@@ -112,7 +91,7 @@ export default {
       if(!this.$refs.form.validate())
         return;
 
-      groupApi.put(this.$route.params.k_category_group, {
+      groupApi.post({
         a_category: this.a_categories,
         is_income: 0,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
