@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     meta: {
       layout: 'empty'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/Auth.vue')
+    component: () => import('../views/Auth.vue')
   },
   {
     path: '/settings',
@@ -29,7 +29,7 @@ const routes: Array<RouteConfig> = [
       title: 'Настройки',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+    component: () => import('../views/Settings.vue')
   },
   {
     path: '/profile',
@@ -39,7 +39,7 @@ const routes: Array<RouteConfig> = [
       title: 'Профиль',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
+    component: () => import('../views/Profile.vue')
   },
   {
     path: '/change_password',
@@ -49,7 +49,7 @@ const routes: Array<RouteConfig> = [
       title: 'Изменение пароля',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
+    component: () => import('../views/ChangePassword.vue')
   },
   {
     path: '/categories',
@@ -59,7 +59,7 @@ const routes: Array<RouteConfig> = [
       title: 'Категории',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/categories/Categories.vue')
+    component: () => import('../views/categories/Categories.vue')
   },
   {
     path: '/category-add',
@@ -69,7 +69,37 @@ const routes: Array<RouteConfig> = [
       title: 'Добавить категорию',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/categories/category/CategoryAdd.vue')
+    component: () => import('../views/categories/category/CategoryAdd.vue')
+  },
+  {
+    path: '/category-edit/:k_category',
+    name: 'CategoryEdit',
+    meta: {
+      is_back: true,
+      title: 'Редактирование категории',
+      layout: 'mainn'
+    },
+    component: () => import('../views/categories/category/CategoryEdit.vue')
+  },
+  {
+    path: '/group-add',
+    name: 'GroupAdd',
+    meta: {
+      is_back: true,
+      title: 'Добавить группу',
+      layout: 'mainn'
+    },
+    component: () => import('../views/categories/group/GroupAdd.vue')
+  },
+  {
+    path: '/group-edit/:k_category_group',
+    name: 'GroupEdit',
+    meta: {
+      is_back: true,
+      title: 'Редактирование группы',
+      layout: 'mainn'
+    },
+    component: () => import('../views/categories/group/GroupEdit.vue')
   },
   {
     path: '/operation-history-day',
@@ -79,7 +109,7 @@ const routes: Array<RouteConfig> = [
       title: 'Главная',
       layout: 'mainn'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/reports/OperationHistoryDay.vue')
+    component: () => import('../views/reports/OperationHistoryDay.vue')
   },
 ]
 

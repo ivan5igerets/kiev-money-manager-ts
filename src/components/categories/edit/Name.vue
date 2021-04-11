@@ -3,10 +3,9 @@
     :error-messages="error_message"
     :label="text_label"
     :rules="a_rules"
-    autocomplete="off"
-    @input="$emit('input', text_name)"
     :value="text_value"
-    v-model="text_name"
+    autocomplete="off"
+    @input="input"
   ></v-text-field>
 </template>
 
@@ -30,8 +29,13 @@ export default {
   data() {
     return {
       a_rules: [value => !!value || 'Поле не может быть пустым'],
-      text_name: '',
     }
   },
+
+  methods: {
+    input(value) {
+      this.$emit('input', value)
+    }
+  }
 }
 </script>

@@ -10,8 +10,18 @@
         v-model="text_category"
       />
     </div>
-    <category_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
-    <v-select :clearable="true" :items="a_groups" label="Группа" v-model="k_category_group"></v-select>
+   <category_budget
+     v-bind:a_budget="a_budget"
+     v-bind:error_message="error_message_budget"
+     v-model="a_budget"
+   />
+    <v-select
+      :clearable="true"
+      :items="a_groups"
+      label="Группа"
+      v-model="k_category_group"
+      :value="k_category_group"
+    ></v-select>
     <button_save_form id_form="category_add"/>
   </v-form>
 </template>
@@ -36,11 +46,11 @@ export default {
   },
   data() {
     return {
-      a_budget: {'is_percent': 0, 'm_budget': 0},
+      a_budget: {'is_percent': false, 'm_budget': 0},
       a_groups: [],
       a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
-      error_message_budget: '',
       error_message_name: '',
+      error_message_budget: '',
       k_category_group: '',
       loading: true,
       text_category: '',
@@ -48,13 +58,25 @@ export default {
   },
 
   mounted() {
-    groupsApi.get().then(a_response => {
-      a_response.data.forEach((a_group) => {
+    Promise.all([groupsApi.get(), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
+      const a_category_info = a_response[1].data;
+
+      this.a_budget.is_percent = a_category_info.m_budget_percent !== 0 ? 1 : 0
+      this.a_budget.m_budget = a_category_info.m_budget_percent || a_category_info.m_budget_float
+      this.a_icon.s_icon_color = a_category_info.s_icon_color
+      this.a_icon.s_icon_class = a_category_info.s_icon_class
+      this.text_category = a_category_info.text_category;
+
+      a_response[0].data.forEach((a_group) => {
         this.a_groups.push({
-          'text': a_group['text_group'],
-          'value': a_group['k_category_group']
+          'text': a_group.text_group,
+          'value': a_group.k_category_group,
         })
       });
+
+      if(a_category_info.k_category_group)
+        this.k_category_group = a_category_info.k_category_group
+
       this.loading = false
     });
   },
@@ -84,7 +106,7 @@ export default {
       if(!this.$refs.form.validate())
         return;
 
-      categoryApi.post({
+      categoryApi.put(this.$route.params.k_category, {
         is_income: 0,
         k_category_group: this.k_category_group,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
