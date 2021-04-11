@@ -16,9 +16,9 @@
 <script>
 
 import button_save_form from '@/components/ButtonSaveForm'
-import email from '@/components/field/Email'
+import email from '@/components/profile/Email'
 import loader from '@/components/Loader'
-import name from '@/components/field/Name'
+import name from '@/components/profile/Name'
 import {mapState, mapMutations} from 'vuex'
 
 import profileApi from '@/api/profile'
@@ -78,10 +78,9 @@ export default {
         name: this.name,
         email: this.email
       }).then((res) => {
-        console.log(res);
         this.setName(this.name)
         this.setEmail(this.email)
-        // this.$router.go(-1)
+        this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

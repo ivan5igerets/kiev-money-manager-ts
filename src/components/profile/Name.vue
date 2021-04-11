@@ -1,5 +1,6 @@
 <template>
   <v-text-field
+    aria-autocomplete="none"
     :error-messages="error_message"
     :rules="rules"
     :value="name"
@@ -15,8 +16,8 @@ export default {
   data() {
     return {
       rules: [
-        value => !!value || 'Поле не может быть пустым.',
-        value => (value && value.length >= 2) || 'Минимальная длинна 2 символа.'
+        value => !!value || 'Поле не может быть пустым',
+        value => (value && value.length >= 2) || 'Минимальная длинна 2 символа'
       ],
     }
   },

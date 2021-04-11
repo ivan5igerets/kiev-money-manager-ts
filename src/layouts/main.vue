@@ -125,7 +125,6 @@ export default {
 
   methods: {
     moveTo(route) {
-      console.log('шо ты?', route);
       setTimeout(() => {
         this.selectedItem = null
         this.drawer = null
