@@ -4,10 +4,9 @@
       <div class="d-flex mr-2">
         <label>
           <input
-            :checked="a_budget.is_percent ? 'checked' : ''"
             class="css-percent-input-radio"
             type="radio"
-            v-on:change="update"
+            v-on:change="change"
             value="0"
             v-model.number="is_percent"
           >
@@ -16,11 +15,10 @@
         </label>
         <label>
           <input
-            :checked="a_budget.is_percent ? 'checked' : ''"
             class="css-percent-input-radio"
             type="radio"
             value="1"
-            v-on:change="update"
+            v-on:change="change"
             v-model.number="is_percent"
           >
           <span class="radio"></span>
@@ -35,7 +33,7 @@
           aria-autocomplete="none"
           label="Бюджет"
           type="number"
-          v-on:input="update"
+          v-on:input="change"
           v-model.number="m_budget"
         >
         </v-text-field>
@@ -59,8 +57,8 @@
 
     data() {
       return {
-        is_percent: 0,
-        m_budget: 0,
+        is_percent: this.a_budget.is_percent,
+        m_budget: this.a_budget.m_budget,
         valid: true,
         rules: [
           value => {
@@ -72,7 +70,7 @@
     },
 
     methods: {
-      update() {
+      change() {
         this.$refs.form.validate()
         this.$emit('input', {'m_budget': this.m_budget, 'is_percent': Boolean(this.is_percent)})
       }

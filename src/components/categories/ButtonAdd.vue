@@ -32,7 +32,7 @@ export default {
     sheet: false,
     tiles: [
       {icon: 'mdi-view-list', to: 'CategoryAdd', title: 'Добавить категорию'},
-      {icon: 'mdi-folder', to: 'CategoryAdd', title: 'Добавить группу'},
+      {icon: 'mdi-folder', to: 'CategoryGroupAdd', title: 'Добавить группу'},
     ],
   }),
 }
