@@ -1,5 +1,9 @@
 import axios from '@/api/axios'
 
+const destroy = k_category => {
+  return axios.delete('api/category-item/'+k_category)
+}
+
 const get = k_category => {
   return axios.get('api/category-item/'+k_category)
 }
@@ -13,6 +17,7 @@ const put = (k_category, parameters) => {
 }
 
 export default {
+  destroy,
   get,
   post,
   put,

@@ -23,6 +23,12 @@
       :value="k_category_group"
     ></v-select>
     <button_save_form id_form="category_add"/>
+    <delete_dialog_window
+      v-model="is_delete"
+      v-bind:is_open="is_delete"
+      v-bind:k_category="$route.params.k_category"
+      v-bind:text_category="text_category"
+    />
   </v-form>
 </template>
 
@@ -31,6 +37,7 @@ import button_save_form from '@/components/ButtonSaveForm'
 import category_budget from '@/components/categories/edit/Budget'
 import category_icon from '@/components/categories/edit/Icon'
 import category_name from '@/components/categories/edit/Name'
+import delete_dialog_window from '@/components/categories/edit/category/DeleteDialogWindow'
 import loader from '@/components/Loader'
 
 import categoryApi from '@/api/category'
@@ -42,13 +49,22 @@ export default {
     category_budget,
     category_icon,
     category_name,
+    delete_dialog_window,
     loader,
   },
+
+  created() {
+    this.$root.$on('delete-item', (value) => {
+      this.is_delete=value
+    });
+  },
+
   data() {
     return {
       a_budget: {'is_percent': false, 'm_budget': 0},
       a_groups: [],
-      a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
+      is_delete: false,
+      a_icon: {},
       error_message_name: '',
       error_message_budget: '',
       k_category_group: '',

@@ -77,7 +77,7 @@ const routes: Array<RouteConfig> = [
     meta: {
       is_back: true,
       title: 'Редактирование категории',
-      layout: 'mainn'
+      layout: 'edit'
     },
     component: () => import('../views/categories/category/CategoryEdit.vue')
   },
@@ -97,7 +97,7 @@ const routes: Array<RouteConfig> = [
     meta: {
       is_back: true,
       title: 'Редактирование группы',
-      layout: 'mainn'
+      layout: 'edit'
     },
     component: () => import('../views/categories/group/GroupEdit.vue')
   },

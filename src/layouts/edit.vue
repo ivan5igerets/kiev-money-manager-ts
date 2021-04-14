@@ -1,0 +1,39 @@
+<template>
+  <v-app id="inspire">
+    <v-app-bar app>
+      <v-btn icon @click="back">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <div class="d-flex align-center flex-grow-1">
+        <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+        <v-icon class="ml-auto" color="red lighten-1" @click="deleteItem">mdi-delete</v-icon>
+      </div>
+    </v-app-bar>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+
+export default {
+  methods: {
+    back() {
+      this.$router.go(-1)
+    },
+
+    deleteItem() {
+      this.$root.$emit('delete-item', true)
+    }
+  },
+}
+</script>
+
+<style>
+
+.v-icon.v-icon::after {
+  display: none !important;
+}
+
+</style>

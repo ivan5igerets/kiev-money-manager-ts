@@ -21,11 +21,18 @@
       v-model="a_categories"
     ></v-select>
     <button_save_form id_form="category_add"/>
+    <delete_dialog_window
+        v-model="is_delete"
+        v-bind:is_open="is_delete"
+        v-bind:k_category_group="$route.params.k_category_group"
+        v-bind:text_group="text_group"
+    />
   </v-form>
 </template>
 
 <script>
 import button_save_form from '@/components/ButtonSaveForm'
+import delete_dialog_window from '@/components/categories/edit/group/DeleteDialogWindow'
 import group_budget from '@/components/categories/edit/Budget'
 import group_icon from '@/components/categories/edit/Icon'
 import group_name from '@/components/categories/edit/Name'
@@ -37,21 +44,30 @@ import groupCategoriesApi from '@/api/groupCategories'
 export default {
   components: {
     button_save_form,
+    delete_dialog_window,
     group_icon,
     group_name,
     loader,
     group_budget,
   },
+
+  created() {
+    this.$root.$on('delete-item', (value) => {
+      this.is_delete=value
+    });
+  },
+
   data() {
     return {
       a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
       a_budget: {'is_percent': 0, 'm_budget': 0},
       a_categories: [],
       a_categories_select: [],
-      a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
+      a_icon: {},
       error_message_budget: '',
-      error_message_name: '',
       error_message_category: '',
+      error_message_name: '',
+      is_delete: false,
       loading: true,
       text_group: '',
     }

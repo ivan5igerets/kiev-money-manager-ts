@@ -12,13 +12,15 @@ const auth = namespace('auth')
 
 import authApi from '@/api/auth'
 
-import empty from '@/layouts/empty.vue'
 import additional from '@/layouts/additional.vue'
+import edit from '@/layouts/edit.vue'
+import empty from '@/layouts/empty.vue'
 import mainn from '@/layouts/main.vue'
 
 @Component({
   components: {
     empty,
+    edit,
     additional,
     mainn,
   }

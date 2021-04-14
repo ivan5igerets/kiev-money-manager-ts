@@ -67,7 +67,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title v-text="'logout'"></v-list-item-title>
+                  <v-list-item-title v-text="'Выход'"></v-list-item-title>
                 </v-list-item-content>
 
               </v-list-item>
