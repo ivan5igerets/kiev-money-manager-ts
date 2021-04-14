@@ -13,79 +13,194 @@
 
     <v-divider></v-divider>
 
-    <v-tabs-items v-model="tab">
+    <loader v-if="loading" />
+    <v-tabs-items v-else v-model="tab">
         <v-tab-item>
-          шо ты 1
 
-          <v-list>
-
-             <!-- list item -->
-            <!-- <v-list-item>
-              <v-list-item-icon>
-                <v-icon>mdi-home</v-icon>
-              </v-list-item-icon>
-      
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item> -->
+          <v-list
+            v-if="spending.groups.length"
+          >
+            <v-subheader> Группы </v-subheader>
 
             <v-list-group
-              :value="true"
-              prepend-icon="mdi-account-circle"
+              v-for="(group, k_category_group) in spending.groups"
+              :key="k_category_group"
               no-action
+              flat
             >
 
-              <template v-slot:activator>
-                <v-list-item-title>Users</v-list-item-title>
+              <template class="template" v-slot:activator>
+                <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: group.s_icon_class, 
+                      s_icon_color: group.s_icon_color
+                    }" />
+                <v-list-item-title> {{ group.text_group }} </v-list-item-title>
               </template>
 
               <v-list-item
-                v-for="([title, icon], i) in admins"
-                :key="i"
+                v-for="(item, k_category) in group.a_category"
+                :key="k_category"
                 link
               >
                 <v-list-item-icon>
-                  <v-icon v-text="icon"></v-icon>
+                  <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: item.s_icon_class, 
+                      s_icon_color: item.s_icon_color
+                    }" 
+                  />
                 </v-list-item-icon>
               
-                <v-list-item-title v-text="title"></v-list-item-title>
+                <v-list-item-title v-text="item.text_category"></v-list-item-title>
+
+                <v-list-item-action>
+                  <v-btn
+                   @click.prevent="removeListItem(item.k_category)"
+                   icon
+                  >
+                    <v-icon color="grey lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
 
               </v-list-item>
 
             </v-list-group>
 
-            <v-list-group
-              no-action
-            >
-              <template v-slot:activator>
-                <v-list-item-content>
-                  <v-list-item-title>Actions</v-list-item-title>
-                </v-list-item-content>
-              </template>
-    
+          </v-list>
+
+          <v-list
+            v-if="income.categories.length"
+          >
+            <v-subheader> Категории </v-subheader>
+
+            <v-list-item-group color="primary">
+            
               <v-list-item
-                v-for="([title, icon], i) in cruds"
-                :key="i"
-                link
+                v-for="(item, k_category) in spending.categories"
+                :key="k_category"
               >
-                <v-list-item-title v-text="title"></v-list-item-title>
-    
                 <v-list-item-icon>
-                  <v-icon v-text="icon"></v-icon>
+                  <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: item.s_icon_class, 
+                      s_icon_color: item.s_icon_color
+                    }" />
                 </v-list-item-icon>
-              </v-list-item>
-            </v-list-group>
 
+                <!-- <v-list-item-title> -->
+                  <v-list-item-title v-text="item.text_category"></v-list-item-title>
+                <!-- </v-list-item-title> -->
+
+                <v-list-item-action>
+                  <v-btn
+                   @click.prevent="removeListItem(item.k_category)"
+                   icon>
+                    <v-icon color="grey lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+
+              </v-list-item>
+
+            </v-list-item-group>
+            
           </v-list>
 
         </v-tab-item>
         
         <v-tab-item>
-          шо ты 2
+          <v-list
+            v-if="income.groups.length"
+          >
+            <v-subheader> Группы </v-subheader>
 
+            <v-list-group
+              v-for="(group, k_category_group) in income.groups"
+              :key="k_category_group"
+              no-action
+              flat
+            >
+
+              <template class="template" v-slot:activator>
+                <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: group.s_icon_class, 
+                      s_icon_color: group.s_icon_color
+                    }" />
+                <v-list-item-title> {{ group.text_group }} </v-list-item-title>
+              </template>
+
+              <v-list-item
+                v-for="(item, k_category) in group.a_category"
+                :key="k_category"
+                link
+              >
+                <v-list-item-icon>
+                  <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: item.s_icon_class, 
+                      s_icon_color: item.s_icon_color
+                    }" 
+                  />
+                </v-list-item-icon>
+              
+                <v-list-item-title v-text="item.text_category"></v-list-item-title>
+
+                <v-list-item-action>
+                  <v-btn
+                   @click.prevent="removeListItem(item.k_category)"
+                   icon
+                  >
+                    <v-icon color="grey lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+
+              </v-list-item>
+
+            </v-list-group>
+
+          </v-list>
+
+          <v-list
+            v-if="income.categories.length"
+          >
+            <v-subheader> Категории </v-subheader>
+
+            <v-list-item-group color="primary">
+            
+              <v-list-item
+                v-for="(item, k_category) in income.categories"
+                :key="k_category"
+              >
+                <v-list-item-icon>
+                  <category_icon 
+                    v-bind:a_icon="{ 
+                      s_icon_class: item.s_icon_class, 
+                      s_icon_color: item.s_icon_color
+                    }" />
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text_category"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-btn
+                   @click.prevent="removeListItem(item.k_category)"
+                   icon
+                  >
+                    <v-icon color="grey lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+
+              </v-list-item>
+
+            </v-list-item-group>
+            
+          </v-list>
         </v-tab-item>
-      </v-tabs-items>
+    </v-tabs-items>
 
-    <!-- Список котегорий -->
 
   <button_add />
   </div>
@@ -96,12 +211,23 @@
 import button_add from '@/components/categories/ButtonAdd'
 import groupsApi from '../../api/groups'
 import categoriesApi from '../../api/categories'
+import category_icon from '@/components/categories/edit/Icon'
+import loader from '@/components/Loader'
 
 export default {
   
   data() {
     return {
       tab: null,
+      loading: false,
+      income: {
+        groups: [],
+        categories: [],
+      },
+      spending: {
+        groups: [],
+        categories: [],
+      },
       admins: [
         ['Management', 'mdi-account-multiple-outline'],
         ['Settings', 'mdi-cog-outline'],
@@ -121,27 +247,52 @@ export default {
 
   methods: {
     getData() {
+      this.loading = true;
 
       groupsApi.get()
       .then(res => {
         console.log('groups',res.data);
+
+        res.data.forEach(el => {
+          if(el.is_income) {
+            this.income.groups.push(el)
+          } else {
+            this.spending.groups.push(el)
+          }
+        });
+        this.loading = false;
       })
       .catch(err => {
         console.log(err);
+        this.loading = false;
       })
 
       categoriesApi.get()
       .then(res => {
-        console.log('single categories',res.data);
+        res.data.forEach(el => {
+          if(el.is_income) {
+            this.income.categories.push(el)
+          } else {
+            this.spending.categories.push(el)
+          }
+        });
+        this.loading = false;
       })
       .catch(err => {
         console.log(err);
+        this.loading = false;
       })
+    },
+
+    removeListItem(id) {
+      console.log(id);
     }
   },
 
   components: {
-    button_add
+    button_add,
+    category_icon,
+    loader,
   }
 }
 
@@ -153,6 +304,10 @@ export default {
   // height: 30px;
   width: 100%;
   box-shadow: 0 0 3px 2px rgba(0,0,0,0.25);
+}
+
+.tamplate {
+  height: 400px;
 }
 
 </style>
