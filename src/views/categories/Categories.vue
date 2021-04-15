@@ -42,6 +42,7 @@
                 v-for="(item, k_category) in group.a_category"
                 :key="k_category"
                 link
+                @click="edit(item.k_category)"
               >
                 <v-list-item-icon>
                   <category_icon 
@@ -56,7 +57,7 @@
 
                 <v-list-item-action>
                   <v-btn
-                   @click.prevent="removeListItem(item.k_category)"
+                   v-on:click.stop="removeListItem(item.k_category, item.text_category)"
                    icon
                   >
                     <v-icon color="grey lighten-1">mdi-close</v-icon>
@@ -79,6 +80,7 @@
               <v-list-item
                 v-for="(item, k_category) in spending.categories"
                 :key="k_category"
+                @click="edit(item.k_category)"
               >
                 <v-list-item-icon>
                   <category_icon 
@@ -94,7 +96,7 @@
 
                 <v-list-item-action>
                   <v-btn
-                   @click.prevent="removeListItem(item.k_category)"
+                   v-on:click.stop="removeListItem(item.k_category, item.text_category)"
                    icon>
                     <v-icon color="grey lighten-1">mdi-close</v-icon>
                   </v-btn>
@@ -148,7 +150,7 @@
 
                 <v-list-item-action>
                   <v-btn
-                   @click.prevent="removeListItem(item.k_category)"
+                   v-on:click.stop="removeListItem(item.k_category, item.text_category)"
                    icon
                   >
                     <v-icon color="grey lighten-1">mdi-close</v-icon>
@@ -186,7 +188,7 @@
 
                 <v-list-item-action>
                   <v-btn
-                   @click.prevent="removeListItem(item.k_category)"
+                   v-on:click.stop="removeListItem(item.k_category, item.text_category)"
                    icon
                   >
                     <v-icon color="grey lighten-1">mdi-close</v-icon>
@@ -201,6 +203,13 @@
         </v-tab-item>
     </v-tabs-items>
 
+    <delete_dialog_window
+      v-model="is_delete"
+      v-bind:is_open="is_delete"
+      v-bind:k_category="category_id"
+      v-bind:text_category="category_title"
+    />
+
 
   <button_add />
   </div>
@@ -213,6 +222,7 @@ import groupsApi from '../../api/groups'
 import categoriesApi from '../../api/categories'
 import category_icon from '@/components/categories/edit/Icon'
 import loader from '@/components/Loader'
+import delete_dialog_window from '@/components/categories/edit/category/DeleteDialogWindow'
 
 export default {
   
@@ -220,6 +230,9 @@ export default {
     return {
       tab: null,
       loading: false,
+      is_delete: false,
+      category_id: '',
+      category_title: '',
       income: {
         groups: [],
         categories: [],
@@ -239,6 +252,12 @@ export default {
         ['Delete', 'mdi-delete'],
       ],
     }
+  },
+
+  created() {
+    this.$root.$on('delete-item', (value) => {
+      this.is_delete=value
+    });
   },
 
   mounted() {
@@ -284,8 +303,17 @@ export default {
       })
     },
 
-    removeListItem(id) {
-      console.log(id);
+    removeListItem(id, title) {
+      // event.stopPropagation();
+      console.log('remove',id);
+      this.is_delete = true;
+      this.category_id = id + '';
+      this.category_title = title;
+    },
+
+    edit(id) {
+      console.log('edit',id);
+      this.$router.push({ name: 'CategoryEdit', params: {k_category: id+''}})
     }
   },
 
@@ -293,6 +321,7 @@ export default {
     button_add,
     category_icon,
     loader,
+    delete_dialog_window,
   }
 }
 

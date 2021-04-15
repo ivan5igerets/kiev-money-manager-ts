@@ -29,15 +29,23 @@
       </div>
     </div>
 
+        <div>
+
+          <div class="list-header">
+            <div>дата</div>
+            <div>Доходы</div>
+            <div>Затраты</div>
+          </div>
+
           <v-list
-            v-if="length"
+            v-if="testArr.length"
           >
-            <v-subheader> Категории </v-subheader>
+            <!-- <v-subheader> Категории </v-subheader> -->
 
             <v-list-item-group color="primary">
             
               <v-list-item
-                v-for="(item, k_category) in spending.categories"
+                v-for="(item, k_category) in testArr"
                 :key="k_category"
               >
                 <v-list-item-icon>
@@ -63,6 +71,7 @@
             </v-list-item-group>
             
           </v-list>
+        </div>
 
     <button_add />  
   </div>
@@ -72,15 +81,24 @@
 
 <script>
 import button_add from '@/components/categories/ButtonAdd'
+import category_icon from '@/components/categories/edit/Icon'
 
 export default {
   components: {
-    button_add
+    button_add,
+    category_icon,
   },
 
   data() {
     return {
-
+      testArr: [
+        {
+          text_category: 'шо-то там',
+          s_icon_class: 'mdi-cellphone-basic', 
+          s_icon_color: '#f44336FF',
+          k_category: 1,
+        },
+      ],
     }
   },
 }
@@ -88,6 +106,12 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+.list-header {
   display: flex;
   justify-content: space-around;
   position: relative;

@@ -74,6 +74,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/category-edit/:k_category',
     name: 'CategoryEdit',
+    props: true,
     meta: {
       is_back: true,
       title: 'Редактирование категории',
