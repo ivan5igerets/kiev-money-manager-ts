@@ -135,6 +135,7 @@
               <v-list-item
                 v-for="(item, k_category) in group.a_category"
                 :key="k_category"
+                @click="edit(item.k_category)"
                 link
               >
                 <v-list-item-icon>
@@ -173,6 +174,7 @@
               <v-list-item
                 v-for="(item, k_category) in income.categories"
                 :key="k_category"
+                @click="edit(item.k_category)"
               >
                 <v-list-item-icon>
                   <category_icon 
@@ -200,6 +202,7 @@
             </v-list-item-group>
             
           </v-list>
+
         </v-tab-item>
     </v-tabs-items>
 
@@ -220,7 +223,7 @@
 import button_add from '@/components/categories/ButtonAdd'
 import groupsApi from '../../api/groups'
 import categoriesApi from '../../api/categories'
-import category_icon from '@/components/categories/edit/Icon'
+import category_icon from '@/components/categories/IconShow'
 import loader from '@/components/Loader'
 import delete_dialog_window from '@/components/categories/edit/category/DeleteDialogWindow'
 
