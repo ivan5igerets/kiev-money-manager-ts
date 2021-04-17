@@ -29,12 +29,16 @@
               flat
             >
 
-              <template class="template" v-slot:activator>
-                <category_icon 
+              <template 
+                class="template" 
+                v-slot:activator
+              >
+                <category_icon
                     v-bind:a_icon="{ 
                       s_icon_class: group.s_icon_class, 
                       s_icon_color: group.s_icon_color
-                    }" />
+                    }" 
+                  />
                 <v-list-item-title> {{ group.text_group }} </v-list-item-title>
               </template>
 
@@ -232,6 +236,7 @@ export default {
   data() {
     return {
       tab: null,
+      timer: null,
       loading: false,
       is_delete: false,
       category_id: '',
@@ -317,6 +322,19 @@ export default {
     edit(id) {
       console.log('edit',id);
       this.$router.push({ name: 'CategoryEdit', params: {k_category: id+''}})
+    },
+
+    mousePressed(id) {
+      console.log('mouse down');
+      this.timer = setTimeout(() => {
+        console.log('edit works');
+        this.edit(id);
+      }, 500)
+    },
+
+    mouseUp() {
+      console.log('mouse up');
+      clearTimeout(this.timer)
     }
   },
 

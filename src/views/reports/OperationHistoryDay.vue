@@ -29,23 +29,26 @@
       </div>
     </div>
 
-        <div>
+    <div 
+      class="day"
+      v-for="(day, i) in days"
+      :key="i"  
+    >
 
           <div class="list-header">
-            <div>дата</div>
-            <div>Доходы</div>
-            <div>Затраты</div>
+            <div class="item"> 16/04 Пт </div>
+            <div class="right-part">
+              <div class="item"> <span class="grey-small-text"> Доходы </span> <span class="income"> 20000 </span> </div>
+              <div class="item"> <span class="grey-small-text"> Затраты </span> <span class="spending"> 10000 </span> </div>
+            </div>
           </div>
 
-          <v-list
-            v-if="testArr.length"
-          >
-            <!-- <v-subheader> Категории </v-subheader> -->
+          <v-list>
 
             <v-list-item-group color="primary">
             
               <v-list-item
-                v-for="(item, k_category) in testArr"
+                v-for="(item, k_category) in day"
                 :key="k_category"
               >
                 <v-list-item-icon>
@@ -59,11 +62,7 @@
                   <v-list-item-title v-text="item.text_category"></v-list-item-title>
 
                 <v-list-item-action>
-                  <v-btn
-                   @click.prevent="removeListItem(item.k_category)"
-                   icon>
-                    <v-icon color="grey lighten-1">mdi-close</v-icon>
-                  </v-btn>
+                  <span :class="{ income: item.is_income, spending: !item.is_income  }"> {{ item.m_sum }} </span>
                 </v-list-item-action>
 
               </v-list-item>
@@ -82,6 +81,7 @@
 <script>
 import button_add from '@/components/categories/ButtonAdd'
 import category_icon from '@/components/categories/edit/Icon'
+import historyApi from '@/api/history'
 
 export default {
   components: {
@@ -91,30 +91,90 @@ export default {
 
   data() {
     return {
-      testArr: [
-        {
-          text_category: 'шо-то там',
-          s_icon_class: 'mdi-cellphone-basic', 
-          s_icon_color: '#f44336FF',
-          k_category: 1,
-        },
-      ],
+      days: [],
+      date: '2021-04-01',
     }
   },
+
+  mounted() {
+
+    historyApi.day({
+      dl_filter: this.date
+    })
+    .then(res => {
+      // console.log('day res',res.data);
+
+      this.sortByDate(res.data)
+      
+      console.log('days',this.days);
+
+    })
+    .catch(err => {
+      console.log('day err', err.response.data.errors);
+    })
+
+  },
+
+  methods: {
+
+    sortByDate(operations) {
+      this.days = operations.reduce((_, cur) => {
+                      if(_[cur.dl_operation]) {
+                          _[cur.dl_operation].push(cur);
+                  } else {
+                      _[cur.dl_operation] = [cur];
+                  }
+                  return _;
+                  }, {})
+    },
+
+  }
+
 }
 </script>
 
 <style lang="scss" scoped>
+
+.day {
+  // border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
 .header {
   display: flex;
   justify-content: space-around;
   position: relative;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .list-header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   position: relative;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-top: 20px;
+  padding: 5px;
+
+  .right-part {
+    display: flex;
+  }
+
+  .item {
+    text-align: center;
+    margin: 0 5px;
+  }
+}
+
+.grey-small-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #B6B6B6;
+
 }
 
 .indicator-box {
