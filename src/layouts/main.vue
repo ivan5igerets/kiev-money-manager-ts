@@ -1,45 +1,22 @@
-
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-        v-model="drawer"
-        app
-        width="300"
-    >
-
+    <v-navigation-drawer v-model="drawer" app width="300">
       <div class="top-part">
-
         <img src="../assets/images/logo2.png" alt="">
-
         <div class="user-info">
-
-          <div class="field"> {{ name }} </div>
-          <div class="field"> {{ email }} </div>
-
+          <div class="field">{{name}}</div>
+          <div class="field">{{email}}</div>
         </div>
-
       </div>
-
       <div class="body-part">
-
-        <v-list
-          flat
-        >
-          <v-list-item-group
-            v-model="selectedItem"
-            color="primary"
-          >
+        <v-list flat>
+          <v-list-item-group v-model="selectedItem" color="primary">
             <v-list-item
               v-for="(item, i) in items"
               @click="moveTo(item.route)"
               :key="i"
             >
-              <!-- <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon> -->
-
               <v-list-item-avatar width="30" min-width="30">
-                <!-- <img :src="item.icon" alt=""> -->
                 <v-img :src="item.icon" height="30" width="30" min-width="30"></v-img>
               </v-list-item-avatar>
 
@@ -50,50 +27,44 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
-
         <div class="footer">
           <v-divider></v-divider>
-
-          <v-list
-            flat
-          >
-            <v-list-item-group
-              color="red"
-            >
+          <v-list flat>
+            <v-list-item-group color="red">
               <v-list-item @click="logout">
-        
                 <v-list-item-avatar>
                   <v-img src="../assets/images/logout.png"></v-img>
                 </v-list-item-avatar>
-
                 <v-list-item-content>
                   <v-list-item-title v-text="'Выход'"></v-list-item-title>
                 </v-list-item-content>
-
               </v-list-item>
             </v-list-item-group>
           </v-list>
         </div>
-
       </div>
-
     </v-navigation-drawer>
-
     <v-app-bar app>
       <v-btn v-if="$route.meta.is_back" icon @click="back">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
-
       <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
     </v-app-bar>
-
-    <v-main>
+    <v-sheet id="scroll-area" class="overflow-y-auto" max-height="90vh" v-if="$route.meta.is_nav_menu">
+      <v-main>
+        <router-view></router-view>
+      </v-main>
+    </v-sheet>
+    <v-main v-else>
       <router-view></router-view>
-
     </v-main>
-
-    <v-bottom-navigation grow color="primary" v-if="$route.meta.is_nav_menu">
+    <v-bottom-navigation
+      grow color="primary"
+      v-if="$route.meta.is_nav_menu"
+      croll-target="#scroll-area"
+      fixed
+    >
       <v-btn :to="{name: 'OperationHistoryDay'}">
         <span>Главная</span>
         <v-icon>mdi-credit-card</v-icon>
@@ -207,7 +178,8 @@ export default {
 
   color: #000000;
 }
-// .v-list__tile__content{ 
-//   text-align: left;
-// }
+
+.scroll-area {
+  max-height: 400px;
+}
 </style>

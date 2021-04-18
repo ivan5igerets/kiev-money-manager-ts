@@ -75,8 +75,7 @@ export default {
 
   mounted() {
     const a_group_categories_promise = groupCategoriesApi.get({
-      is_income: 0,
-      k_category_group: this.$route.params.k_category_group,
+      k_category_group: this.$route.params.k_category_group
     });
 
     Promise.all([groupApi.get(this.$route.params.k_category_group), a_group_categories_promise]).then(a_response => {

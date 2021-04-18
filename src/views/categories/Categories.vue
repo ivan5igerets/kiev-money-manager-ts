@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="css-categories">
     <v-tabs grow v-model="tab">
       <v-tab>Затраты</v-tab>
       <v-tab>Доходы</v-tab>
@@ -7,7 +7,7 @@
     <v-divider></v-divider>
     <loader v-if="loading" />
     <v-tabs-items v-else v-model="tab">
-      <v-tab-item>
+      <v-tab-item v-if="spending.groups.length || spending.categories.length">
         <v-list v-if="spending.groups.length">
           <v-subheader>Группы</v-subheader>
           <group_list v-bind:a_group_list="spending.groups" />
@@ -17,18 +17,24 @@
           <category_list v-bind:a_category_list="spending.categories" />
         </v-list>
       </v-tab-item>
-      <v-tab-item>
-          <v-list v-if="income.groups.length">
-            <v-subheader>Группы</v-subheader>
-            <group_list v-bind:a_group_list="income.groups" />
-          </v-list>
-          <v-list v-if="income.categories.length">
-            <v-subheader>Категории</v-subheader>
-            <category_list v-bind:a_category_list="income.categories" />
-          </v-list>
-        </v-tab-item>
+      <v-tab-item class="mt-2 text-center" v-else>
+        Нет ни одной категориий
+      </v-tab-item>
+      <v-tab-item v-if="income.groups.length || income.categories.length">
+        <v-list v-if="income.groups.length">
+          <v-subheader>Группы</v-subheader>
+          <group_list v-bind:a_group_list="income.groups" />
+        </v-list>
+        <v-list v-if="income.categories.length">
+          <v-subheader>Категории</v-subheader>
+          <category_list v-bind:a_category_list="income.categories" />
+        </v-list>
+      </v-tab-item>
+      <v-tab-item class="mt-2 text-center" v-else>
+        Нет ни одной категориий
+      </v-tab-item>
     </v-tabs-items>
-  <button_add />
+  <button_add v-bind:is_income="tab"/>
   </div>
 </template>
 
@@ -51,7 +57,7 @@ export default {
 
   data() {
     return {
-      tab: null,
+      tab: 0,
       loading: true,
       income: {
         categories: [],
@@ -85,3 +91,11 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.css-categories {
+  .v-list-item__action {
+    min-width: 0!important;
+    margin-right: 12px!important;
+  }
+}
+</style>

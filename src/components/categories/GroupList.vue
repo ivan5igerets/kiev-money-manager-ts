@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="css-category-list">
     <v-list-group
       v-for="(a_group, i_index) in a_group_list"
       :key="i_index"
@@ -40,7 +40,7 @@
               @click.stop="categoryShowDeleteDialog(a_category.k_category, a_category.text_category, a_group.k_category_group)"
               icon
             >
-              <v-icon color="red lighten-1">mdi-close</v-icon>
+              <v-icon color="red">mdi-close</v-icon>
             </v-btn>
           </v-list-item-action>
       </v-list-item>
@@ -159,8 +159,10 @@ export default {
 }
 </script>
 
-<style>
-.v-list-group__header__append-icon {
-  display: none;
+<style lang="scss">
+.css-category-list {
+  .v-list-group__header__append-icon {
+    display: none !important;
+  }
 }
 </style>

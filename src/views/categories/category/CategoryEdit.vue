@@ -74,7 +74,7 @@ export default {
   },
 
   mounted() {
-    Promise.all([groupsApi.get(), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
+    Promise.all([groupsApi.get({k_category: this.$route.params.k_category}), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
       const a_category_info = a_response[1].data;
 
       this.a_budget.is_percent = a_category_info.m_budget_percent !== 0 ? 1 : 0
