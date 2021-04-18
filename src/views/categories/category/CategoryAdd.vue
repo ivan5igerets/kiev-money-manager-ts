@@ -93,7 +93,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories'})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

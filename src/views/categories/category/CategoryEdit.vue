@@ -18,16 +18,16 @@
     <v-select
       :clearable="true"
       :items="a_groups"
+      :value="k_category_group"
       label="Группа"
       v-model="k_category_group"
-      :value="k_category_group"
     ></v-select>
     <button_save_form id_form="category_add"/>
     <delete_dialog_window
-      v-model="is_delete"
+      event_name="delete-item"
+      v-bind:callbackSubmit="categoryDelete"
       v-bind:is_open="is_delete"
-      v-bind:k_category="$route.params.k_category"
-      v-bind:text_category="text_category"
+      v-bind:text_title="'Удалить категорию ' + text_category + '?'"
     />
   </v-form>
 </template>
@@ -37,7 +37,7 @@ import button_save_form from '@/components/ButtonSaveForm'
 import category_budget from '@/components/categories/edit/Budget'
 import category_icon from '@/components/categories/edit/Icon'
 import category_name from '@/components/categories/edit/Name'
-import delete_dialog_window from '@/components/categories/edit/category/DeleteDialogWindow'
+import delete_dialog_window from '@/components/DeleteDialogWindow'
 import loader from '@/components/Loader'
 
 import categoryApi from '@/api/category'
@@ -54,8 +54,8 @@ export default {
   },
 
   created() {
-    this.$root.$on('delete-item', (value) => {
-      this.is_delete=value
+    this.$root.$on('delete-item', is_delete => {
+      this.is_delete = is_delete
     });
   },
 
@@ -98,6 +98,12 @@ export default {
   },
 
   methods: {
+    categoryDelete() {
+      categoryApi.destroy(this.$route.params.k_category).then(() => {
+        this.$router.push({name: 'Categories'})
+      })
+    },
+
     errorReset() {
       this.error_message_budget = '';
       this.error_message_name = '';

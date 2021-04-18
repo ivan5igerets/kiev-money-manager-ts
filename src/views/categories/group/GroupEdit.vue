@@ -22,10 +22,10 @@
     ></v-select>
     <button_save_form id_form="category_add"/>
     <delete_dialog_window
-        v-model="is_delete"
-        v-bind:is_open="is_delete"
-        v-bind:k_category_group="$route.params.k_category_group"
-        v-bind:text_group="text_group"
+      v-bind:callbackAfterDelete="callbackAfterDelete"
+      v-bind:is_open="is_delete"
+      v-bind:k_category_group="$route.params.k_category_group"
+      v-bind:text_group="text_group"
     />
   </v-form>
 </template>
@@ -45,15 +45,15 @@ export default {
   components: {
     button_save_form,
     delete_dialog_window,
+    group_budget,
     group_icon,
     group_name,
     loader,
-    group_budget,
   },
 
   created() {
-    this.$root.$on('delete-item', (value) => {
-      this.is_delete=value
+    this.$root.$on('delete-item', is_delete => {
+      this.is_delete = is_delete
     });
   },
 
@@ -100,6 +100,10 @@ export default {
   },
 
   methods: {
+    callbackAfterDelete() {
+      this.$router.push({name: 'Categories'})
+    },
+
     errorReset() {
       this.error_message_budget = '';
       this.error_message_name = '';
@@ -137,7 +141,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_group: this.text_group
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories'})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)
