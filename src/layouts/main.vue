@@ -51,7 +51,13 @@
       <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
     </v-app-bar>
-    <v-sheet id="scroll-area" class="overflow-y-auto" max-height="90vh" v-if="$route.meta.is_nav_menu">
+    <v-sheet
+      class="overflow-y-auto"
+      id="scroll-area"
+      max-height="90vh"
+      v-if="$route.meta.is_nav_menu"
+      v-on:scroll.passive="scroll"
+    >
       <v-main>
         <router-view></router-view>
       </v-main>
@@ -107,6 +113,9 @@ export default {
     },
     logout() {
       this.$router.push({name: 'Auth'})
+    },
+    scroll(o_event) {
+      this.$root.$emit('scroll-content', o_event)
     }
   },
 

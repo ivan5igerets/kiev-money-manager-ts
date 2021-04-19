@@ -59,10 +59,11 @@ export default {
 
   data() {
     return {
-      a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
       a_budget: {'is_percent': 0, 'm_budget': 0},
       a_categories: [],
+      a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
       a_categories_select: [],
+      a_group_info: [],
       a_icon: {},
       error_message_budget: '',
       error_message_category: '',
@@ -79,14 +80,14 @@ export default {
     });
 
     Promise.all([groupApi.get(this.$route.params.k_category_group), a_group_categories_promise]).then(a_response => {
-      const a_group_info = a_response[0].data
+      this.a_group_info = a_response[0].data
 
-      this.a_categories = a_group_info.a_category
-      this.a_budget.is_percent = a_group_info.m_budget_percent !== 0 ? 1 : 0
-      this.a_budget.m_budget = a_group_info.m_budget_percent || a_group_info.m_budget_float
-      this.a_icon.s_icon_color = a_group_info.s_icon_color
-      this.a_icon.s_icon_class = a_group_info.s_icon_class
-      this.text_group = a_group_info.text_group
+      this.a_categories = this.a_group_info.a_category
+      this.a_budget.is_percent = this.a_group_info.m_budget_percent !== 0 ? 1 : 0
+      this.a_budget.m_budget = this.a_group_info.m_budget_percent || this.a_group_info.m_budget_float
+      this.a_icon.s_icon_color = this.a_group_info.s_icon_color
+      this.a_icon.s_icon_class = this.a_group_info.s_icon_class
+      this.text_group = this.a_group_info.text_group
 
       a_response[1].data.forEach((a_group) => {
         this.a_categories_select.push({
@@ -100,7 +101,7 @@ export default {
 
   methods: {
     callbackAfterDelete() {
-      this.$router.push({name: 'Categories'})
+      this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
     },
 
     errorReset() {
@@ -133,14 +134,13 @@ export default {
 
       groupApi.put(this.$route.params.k_category_group, {
         a_category: this.a_categories,
-        is_income: 0,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
         m_budget_percent: this.a_budget.is_percent ? this.a_budget.m_budget : 0,
         s_icon_class: this.a_icon.s_icon_class,
         s_icon_color: this.a_icon.s_icon_color,
         text_group: this.text_group
       }).then(() => {
-        this.$router.push({name: 'Categories'})
+        this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

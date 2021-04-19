@@ -2,7 +2,7 @@
   <div>
     <v-bottom-sheet v-model="is_open">
       <template v-slot:activator="{on, attrs}">
-        <v-btn class="mx-2 button-add" fab color="primary" v-bind="attrs" v-on="on">
+        <v-btn class="mx-2 button-add" fab color="primary" v-bind="attrs" v-on="on" v-show="is_button_show">
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
       </template>
@@ -37,11 +37,19 @@ export default {
 
   data: () => ({
     is_open: false,
+    is_button_show: true,
     a_buttons: [
       {icon: 'mdi-view-list', to: 'CategoryAdd', text_title: 'Добавить категорию'},
       {icon: 'mdi-folder', to: 'GroupAdd', text_title: 'Добавить группу'},
     ],
   }),
+
+  created() {
+    this.$root.$on('scroll-content', o_event => {
+      console.log(o_event.target.scrollTop === 0)
+      this.is_button_show = o_event.target.scrollTop === 0
+    })
+  },
 }
 
 </script>
