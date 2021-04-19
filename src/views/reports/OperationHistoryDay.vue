@@ -4,8 +4,8 @@
 
     <div class="header">
       <div class="indicator-box">
-        <div> Доходы </div>
-        <div class="income"> 20000 </div>
+        <div> Доход </div>
+        <div class="income"> {{ monthlyIncome }} </div>
       </div>
 
       <v-divider
@@ -15,8 +15,9 @@
       
       <div class="indicator-box">
         <div> Затраты </div>
-        <div class="spending"> 10000 </div>
+        <div class="spending"> {{ monthlySpanding }} </div>
       </div>
+
 
       <v-divider
         inset
@@ -25,25 +26,28 @@
 
       <div class="indicator-box">
         <div> Баланс </div>
-        <div class="balance"> 20000 </div>
+        <div class="balance"> {{ monthlyIncome - monthlySpanding }} </div>
       </div>
     </div>
 
+
+    <loader v-if="loading" />
     <div 
+      v-else
       class="day"
       v-for="(day, i) in days"
       :key="i"  
     >
 
           <div class="list-header">
-            <div class="item"> 16/04 Пт </div>
+            <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
             <div class="right-part">
-              <div class="item"> <span class="grey-small-text"> Доходы </span> <span class="income"> 20000 </span> </div>
-              <div class="item"> <span class="grey-small-text"> Затраты </span> <span class="spending"> 10000 </span> </div>
+              <div class="item"> <span class="grey-small-text"> Доход </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
+              <div class="item"> <span class="grey-small-text"> Затраты </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
             </div>
           </div>
 
-          <v-list>
+          <v-list dense >
 
             <v-list-item-group color="primary">
             
@@ -80,37 +84,50 @@
 
 <script>
 import button_add from '@/components/categories/ButtonAdd'
-import category_icon from '@/components/categories/edit/Icon'
+import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
+import loader from '@/components/Loader'
 
 export default {
   components: {
     button_add,
     category_icon,
+    loader,
   },
 
   data() {
     return {
+      loading: false,
       days: [],
       date: '2021-04-01',
+      // operationOfTheDay: [],
+      monthlyIncome: 0,
+      monthlySpanding: 0,
     }
   },
 
   mounted() {
 
+    this.loading = true;
     historyApi.day({
       dl_filter: this.date
     })
     .then(res => {
-      // console.log('day res',res.data);
-
+      this.countSumOfMonthlyTransactions(res.data)
       this.sortByDate(res.data)
       
+      // console.log('day res',res.data);
       console.log('days',this.days);
+      console.log('date formating', this.dateFormating( res.data[0].dl_operation ));
 
+      this.loading = false;
+      // [...this.days].map(e =>{ return e[1];}).slice().sort(function(a, b) {
+      //   return (new Date(b) - new Date(a)); 
+      // });
     })
     .catch(err => {
       console.log('day err', err.response.data.errors);
+      this.loading = false;
     })
 
   },
@@ -127,6 +144,39 @@ export default {
                   return _;
                   }, {})
     },
+
+    countSumOfMonthlyTransactions(arr) {
+        arr.forEach(el => {
+          if (el.is_income) {
+            this.monthlyIncome += el.m_sum;
+          } else {
+            this.monthlySpanding += el.m_sum;
+          }
+        });
+    },
+
+    countSumOfDayTransactions(arr, flag) {
+      return arr.reduce( (total, day) => {
+        if (day.is_income === flag) {
+          return total + day.m_sum;
+        } 
+        return total;
+      }, 0 )
+    }, 
+
+    sumOfDaysIncome(arr) {
+      return this.countSumOfDayTransactions(arr, 1);
+    },
+
+    sumOfDaysSpanding(arr) {
+      return this.countSumOfDayTransactions(arr, 0);
+    },
+
+    dateFormating(dateStr) {
+      const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+      const date = new Date(dateStr);
+      return `${date.getDate()}/${date.getMonth() + 1} ${ daysOfWeek[date.getDay()]}`;
+    }
 
   }
 
