@@ -48,7 +48,7 @@ export default {
   },
 
   mounted() {
-    groupsApi.get().then(a_response => {
+    groupsApi.get({is_income: this.$route.params.is_income}).then(a_response => {
       a_response.data.forEach((a_group) => {
         this.a_groups.push({
           'text': a_group['text_group'],
@@ -85,7 +85,7 @@ export default {
         return;
 
       categoryApi.post({
-        is_income: 0,
+        is_income: this.$route.params.is_income,
         k_category_group: this.k_category_group,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
         m_budget_percent: this.a_budget.is_percent ? this.a_budget.m_budget : 0,
@@ -93,7 +93,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories', params: {is_income: this.$route.params.is_income}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

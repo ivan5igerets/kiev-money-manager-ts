@@ -32,12 +32,16 @@ export default {
   },
 
   props: {
+    callbackAfterDelete: {
+      type: Function,
+      required: true,
+    },
     is_open: {
       type: Boolean,
       required: true,
     },
     k_category_group: {
-      type: String,
+      type: Number,
       required: true,
     },
     text_group: {
@@ -58,8 +62,8 @@ export default {
       groupApi.destroy(this.k_category_group, {
         is_remove_category: Number(this.is_remove_category)
       }).then(() => {
-        this.update(false)
-        this.$router.go(-1)
+        this.$root.$emit('delete-item', false)
+        this.callbackAfterDelete()
       })
     }
   }

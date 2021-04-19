@@ -18,16 +18,16 @@
     <v-select
       :clearable="true"
       :items="a_groups"
+      :value="k_category_group"
       label="Группа"
       v-model="k_category_group"
-      :value="k_category_group"
     ></v-select>
     <button_save_form id_form="category_add"/>
     <delete_dialog_window
-      v-model="is_delete"
+      event_name="delete-item"
+      v-bind:callbackSubmit="categoryDelete"
       v-bind:is_open="is_delete"
-      v-bind:k_category="$route.params.k_category"
-      v-bind:text_category="text_category"
+      v-bind:text_title="'Удалить категорию ' + text_category + '?'"
     />
   </v-form>
 </template>
@@ -37,7 +37,7 @@ import button_save_form from '@/components/ButtonSaveForm'
 import category_budget from '@/components/categories/edit/Budget'
 import category_icon from '@/components/categories/edit/Icon'
 import category_name from '@/components/categories/edit/Name'
-import delete_dialog_window from '@/components/categories/edit/category/DeleteDialogWindow'
+import delete_dialog_window from '@/components/DeleteDialogWindow'
 import loader from '@/components/Loader'
 
 import categoryApi from '@/api/category'
@@ -54,19 +54,20 @@ export default {
   },
 
   created() {
-    this.$root.$on('delete-item', (value) => {
-      this.is_delete=value
+    this.$root.$on('delete-item', is_delete => {
+      this.is_delete = is_delete
     });
   },
 
   data() {
     return {
       a_budget: {'is_percent': false, 'm_budget': 0},
+      a_category_info: {},
       a_groups: [],
-      is_delete: false,
       a_icon: {},
-      error_message_name: '',
       error_message_budget: '',
+      error_message_name: '',
+      is_delete: false,
       k_category_group: '',
       loading: true,
       text_category: '',
@@ -74,14 +75,14 @@ export default {
   },
 
   mounted() {
-    Promise.all([groupsApi.get(), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
-      const a_category_info = a_response[1].data;
+    Promise.all([groupsApi.get({k_category: this.$route.params.k_category}), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
+      this.a_category_info = a_response[1].data;
 
-      this.a_budget.is_percent = a_category_info.m_budget_percent !== 0 ? 1 : 0
-      this.a_budget.m_budget = a_category_info.m_budget_percent || a_category_info.m_budget_float
-      this.a_icon.s_icon_color = a_category_info.s_icon_color
-      this.a_icon.s_icon_class = a_category_info.s_icon_class
-      this.text_category = a_category_info.text_category;
+      this.a_budget.is_percent = this.a_category_info.m_budget_percent !== 0 ? 1 : 0
+      this.a_budget.m_budget = this.a_category_info.m_budget_percent || this.a_category_info.m_budget_float
+      this.a_icon.s_icon_color = this.a_category_info.s_icon_color
+      this.a_icon.s_icon_class = this.a_category_info.s_icon_class
+      this.text_category = this.a_category_info.text_category;
 
       a_response[0].data.forEach((a_group) => {
         this.a_groups.push({
@@ -90,14 +91,20 @@ export default {
         })
       });
 
-      if(a_category_info.k_category_group)
-        this.k_category_group = a_category_info.k_category_group
+      if(this.a_category_info.k_category_group)
+        this.k_category_group = this.a_category_info.k_category_group
 
       this.loading = false
     });
   },
 
   methods: {
+    categoryDelete() {
+      categoryApi.destroy(this.$route.params.k_category).then(() => {
+        this.$router.push({name: 'Categories', params: {is_income: this.a_category_info['is_income']}})
+      })
+    },
+
     errorReset() {
       this.error_message_budget = '';
       this.error_message_name = '';
@@ -123,7 +130,6 @@ export default {
         return;
 
       categoryApi.put(this.$route.params.k_category, {
-        is_income: 0,
         k_category_group: this.k_category_group,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
         m_budget_percent: this.a_budget.is_percent ? this.a_budget.m_budget : 0,
@@ -131,7 +137,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories', params: {is_income: this.a_category_info['is_income']}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

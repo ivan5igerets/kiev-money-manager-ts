@@ -22,10 +22,10 @@
     ></v-select>
     <button_save_form id_form="category_add"/>
     <delete_dialog_window
-        v-model="is_delete"
-        v-bind:is_open="is_delete"
-        v-bind:k_category_group="$route.params.k_category_group"
-        v-bind:text_group="text_group"
+      v-bind:callbackAfterDelete="callbackAfterDelete"
+      v-bind:is_open="is_delete"
+      v-bind:k_category_group="$route.params.k_category_group"
+      v-bind:text_group="text_group"
     />
   </v-form>
 </template>
@@ -45,24 +45,25 @@ export default {
   components: {
     button_save_form,
     delete_dialog_window,
+    group_budget,
     group_icon,
     group_name,
     loader,
-    group_budget,
   },
 
   created() {
-    this.$root.$on('delete-item', (value) => {
-      this.is_delete=value
+    this.$root.$on('delete-item', is_delete => {
+      this.is_delete = is_delete
     });
   },
 
   data() {
     return {
-      a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
       a_budget: {'is_percent': 0, 'm_budget': 0},
       a_categories: [],
+      a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
       a_categories_select: [],
+      a_group_info: [],
       a_icon: {},
       error_message_budget: '',
       error_message_category: '',
@@ -75,19 +76,18 @@ export default {
 
   mounted() {
     const a_group_categories_promise = groupCategoriesApi.get({
-      is_income: 0,
-      k_category_group: this.$route.params.k_category_group,
+      k_category_group: this.$route.params.k_category_group
     });
 
     Promise.all([groupApi.get(this.$route.params.k_category_group), a_group_categories_promise]).then(a_response => {
-      const a_group_info = a_response[0].data
+      this.a_group_info = a_response[0].data
 
-      this.a_categories = a_group_info.a_category
-      this.a_budget.is_percent = a_group_info.m_budget_percent !== 0 ? 1 : 0
-      this.a_budget.m_budget = a_group_info.m_budget_percent || a_group_info.m_budget_float
-      this.a_icon.s_icon_color = a_group_info.s_icon_color
-      this.a_icon.s_icon_class = a_group_info.s_icon_class
-      this.text_group = a_group_info.text_group
+      this.a_categories = this.a_group_info.a_category
+      this.a_budget.is_percent = this.a_group_info.m_budget_percent !== 0 ? 1 : 0
+      this.a_budget.m_budget = this.a_group_info.m_budget_percent || this.a_group_info.m_budget_float
+      this.a_icon.s_icon_color = this.a_group_info.s_icon_color
+      this.a_icon.s_icon_class = this.a_group_info.s_icon_class
+      this.text_group = this.a_group_info.text_group
 
       a_response[1].data.forEach((a_group) => {
         this.a_categories_select.push({
@@ -100,6 +100,10 @@ export default {
   },
 
   methods: {
+    callbackAfterDelete() {
+      this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
+    },
+
     errorReset() {
       this.error_message_budget = '';
       this.error_message_name = '';
@@ -130,14 +134,13 @@ export default {
 
       groupApi.put(this.$route.params.k_category_group, {
         a_category: this.a_categories,
-        is_income: 0,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
         m_budget_percent: this.a_budget.is_percent ? this.a_budget.m_budget : 0,
         s_icon_class: this.a_icon.s_icon_class,
         s_icon_color: this.a_icon.s_icon_color,
         text_group: this.text_group
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)
