@@ -14,6 +14,7 @@
      v-bind:a_budget="a_budget"
      v-bind:error_message="error_message_budget"
      v-model="a_budget"
+     v-show="is_budget_show"
    />
     <v-select
       :clearable="true"
@@ -22,7 +23,7 @@
       label="Группа"
       v-model="k_category_group"
     ></v-select>
-    <button_save_form id_form="category_add"/>
+    <button_save_form id_form="category_add" />
     <delete_dialog_window
       event_name="delete-item"
       v-bind:callbackSubmit="categoryDelete"
@@ -42,6 +43,7 @@ import loader from '@/components/Loader'
 
 import categoryApi from '@/api/category'
 import groupsApi from '@/api/groups'
+import userApi from '@/api/auth'
 
 export default {
   components: {
@@ -67,6 +69,7 @@ export default {
       a_icon: {},
       error_message_budget: '',
       error_message_name: '',
+      is_budget_show: false,
       is_delete: false,
       k_category_group: '',
       loading: true,
@@ -75,10 +78,14 @@ export default {
   },
 
   mounted() {
-    Promise.all([groupsApi.get({k_category: this.$route.params.k_category}), categoryApi.get(this.$route.params.k_category)]).then(a_response => {
+    Promise.all([
+      groupsApi.get({k_category: this.$route.params.k_category}),
+      categoryApi.get(this.$route.params.k_category),
+      userApi.getUser()
+    ]).then(a_response => {
       this.a_category_info = a_response[1].data;
 
-      this.a_budget.is_percent = this.a_category_info.m_budget_percent !== 0 ? 1 : 0
+      this.a_budget.is_percent = Number(this.a_category_info.m_budget_percent !== 0)
       this.a_budget.m_budget = this.a_category_info.m_budget_percent || this.a_category_info.m_budget_float
       this.a_icon.s_icon_color = this.a_category_info.s_icon_color
       this.a_icon.s_icon_class = this.a_category_info.s_icon_class
@@ -94,6 +101,7 @@ export default {
       if(this.a_category_info.k_category_group)
         this.k_category_group = this.a_category_info.k_category_group
 
+      this.is_budget_show = a_response[2].data.setups.enable_budget_mode
       this.loading = false
     });
   },

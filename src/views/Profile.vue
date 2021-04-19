@@ -77,7 +77,7 @@ export default {
       profileApi.updateProfile({
         name: this.name,
         email: this.email
-      }).then((res) => {
+      }).then(() => {
         this.setName(this.name)
         this.setEmail(this.email)
         this.$router.go(-1)

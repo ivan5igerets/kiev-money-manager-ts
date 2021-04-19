@@ -10,7 +10,12 @@
         v-model="text_group"
       />
     </div>
-    <group_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
+    <group_budget
+      v-bind:a_budget="a_budget"
+      v-bind:error_message="error_message_budget"
+      v-model="a_budget"
+      v-show="is_budget_show"
+    />
     <v-select
       :items="a_categories_select"
       :rules="a_categories_rules"
@@ -31,6 +36,7 @@ import loader from '@/components/Loader'
 
 import groupApi from '@/api/group'
 import categoriesApi from '@/api/categories'
+import userApi from '@/api/auth'
 
 export default {
   components: {
@@ -43,25 +49,28 @@ export default {
   data() {
     return {
       a_categories_rules: [value => value.length > 0 || 'Поле не может быть пустым'],
-      a_budget: {'is_percent': 0, 'm_budget': 0},
+      a_budget: {'is_percent': false, 'm_budget': 0},
       a_categories: [],
       a_categories_select: [],
       a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
       error_message_budget: '',
       error_message_name: '',
+      is_budget_show: false,
       loading: true,
       text_group: '',
     }
   },
 
   mounted() {
-    categoriesApi.get({is_income: this.$route.params.is_income}).then(a_response => {
-      a_response.data.forEach((a_group) => {
+    Promise.all([categoriesApi.get({is_income: this.$route.params.is_income}), userApi.getUser()]).then(a_response => {
+      a_response[0].data.forEach((a_group) => {
         this.a_categories_select.push({
           'text': a_group['text_category'],
           'value': a_group['k_category']
         })
       });
+
+      this.is_budget_show = a_response[1].data.setups.enable_budget_mode
       this.loading = false
     });
   },

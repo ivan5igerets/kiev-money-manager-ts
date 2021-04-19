@@ -10,7 +10,12 @@
         v-model="text_category"
       />
     </div>
-    <category_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
+    <category_budget
+      v-bind:a_budget="a_budget"
+      v-bind:error_message="error_message_budget"
+      v-model="a_budget"
+      v-show="is_budget_show"
+    />
     <v-select :clearable="true" :items="a_groups" label="Группа" v-model="k_category_group"></v-select>
     <button_save_form id_form="category_add"/>
   </v-form>
@@ -25,6 +30,7 @@ import loader from '@/components/Loader'
 
 import categoryApi from '@/api/category'
 import groupsApi from '@/api/groups'
+import userApi from '@/api/auth'
 
 export default {
   components: {
@@ -41,6 +47,7 @@ export default {
       a_icon: {'s_icon_class': 'mdi-food', 's_icon_color': '#f44336FF'},
       error_message_budget: '',
       error_message_name: '',
+      is_budget_show: false,
       k_category_group: '',
       loading: true,
       text_category: '',
@@ -48,8 +55,9 @@ export default {
   },
 
   mounted() {
-    groupsApi.get({is_income: this.$route.params.is_income}).then(a_response => {
-      a_response.data.forEach((a_group) => {
+    Promise.all([userApi.getUser(), groupsApi.get({is_income: this.$route.params.is_income})]).then(a_response => {
+      this.is_budget_show = a_response[0].data.setups.enable_budget_mode
+      a_response[1].data.forEach((a_group) => {
         this.a_groups.push({
           'text': a_group['text_group'],
           'value': a_group['k_category_group']
