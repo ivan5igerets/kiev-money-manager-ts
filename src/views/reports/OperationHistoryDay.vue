@@ -66,7 +66,7 @@
                   <v-list-item-title v-text="item.text_category"></v-list-item-title>
 
                 <v-list-item-action>
-                  <span :class="{ income: item.is_income, spending: !item.is_income  }"> {{ item.m_sum }} </span>
+                  <span :class="{ income: item.is_income, spending: !item.is_income || item.m_sum < 0 }"> {{ item.m_sum }} </span>
                 </v-list-item-action>
 
               </v-list-item>
@@ -76,21 +76,21 @@
           </v-list>
         </div>
 
-    <button_add />  
+    <!-- <button_add />   -->
   </div>
 
   
 </template>
 
 <script>
-import button_add from '@/components/categories/ButtonAdd'
+// import button_add from '@/components/categories/ButtonAdd'
 import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
 import loader from '@/components/Loader'
 
 export default {
   components: {
-    button_add,
+    // button_add,
     category_icon,
     loader,
   },
@@ -100,7 +100,6 @@ export default {
       loading: false,
       days: [],
       date: '2021-04-01',
-      // operationOfTheDay: [],
       monthlyIncome: 0,
       monthlySpanding: 0,
     }
@@ -114,16 +113,8 @@ export default {
     })
     .then(res => {
       this.countSumOfMonthlyTransactions(res.data)
-      this.sortByDate(res.data)
-      
-      // console.log('day res',res.data);
-      console.log('days',this.days);
-      console.log('date formating', this.dateFormating( res.data[0].dl_operation ));
-
+      this.sortByDate(res.data);
       this.loading = false;
-      // [...this.days].map(e =>{ return e[1];}).slice().sort(function(a, b) {
-      //   return (new Date(b) - new Date(a)); 
-      // });
     })
     .catch(err => {
       console.log('day err', err.response.data.errors);
@@ -135,7 +126,7 @@ export default {
   methods: {
 
     sortByDate(operations) {
-      this.days = operations.reduce((_, cur) => {
+      const daysTemp = operations.reduce((_, cur) => {
                       if(_[cur.dl_operation]) {
                           _[cur.dl_operation].push(cur);
                   } else {
@@ -143,6 +134,19 @@ export default {
                   }
                   return _;
                   }, {})
+                  
+
+      const keys = Object.keys(daysTemp);
+      keys.sort(function(a, b) {
+        return (new Date(b) - new Date(a));
+      })
+
+      let k;
+      for (let i = 0; i < keys.length; i++) {
+        k = keys[i];
+        console.log(k, ':', daysTemp[k]);
+        this.days.push(daysTemp[k])
+      }
     },
 
     countSumOfMonthlyTransactions(arr) {
