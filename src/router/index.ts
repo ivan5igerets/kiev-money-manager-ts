@@ -65,9 +65,9 @@ const routes: Array<RouteConfig> = [
     path: '/category-add',
     name: 'CategoryAdd',
     meta: {
-      is_back: true,
+      is_edit: false,
       title: 'Добавить категорию',
-      layout: 'mainn'
+      layout: 'edit'
     },
     component: () => import('../views/categories/category/CategoryAdd.vue')
   },
@@ -76,7 +76,6 @@ const routes: Array<RouteConfig> = [
     name: 'CategoryEdit',
     props: true,
     meta: {
-      is_back: true,
       title: 'Редактирование категории',
       layout: 'edit'
     },
@@ -86,9 +85,9 @@ const routes: Array<RouteConfig> = [
     path: '/group-add',
     name: 'GroupAdd',
     meta: {
-      is_back: true,
+      is_edit: false,
       title: 'Добавить группу',
-      layout: 'mainn'
+      layout: 'edit'
     },
     component: () => import('../views/categories/group/GroupAdd.vue')
   },
@@ -111,6 +110,16 @@ const routes: Array<RouteConfig> = [
       layout: 'mainn'
     },
     component: () => import('../views/reports/OperationHistoryDay.vue')
+  },
+  {
+    path: '/operation-add',
+    name: 'OperationAdd',
+    meta: {
+      is_edit: false,
+      title: 'Добавить операцию',
+      layout: 'edit'
+    },
+    component: () => import('../views/operation/OperationAdd.vue')
   },
 ]
 

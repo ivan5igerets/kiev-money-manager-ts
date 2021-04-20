@@ -75,24 +75,23 @@
             
           </v-list>
         </div>
-
-    <!-- <button_add />   -->
+     <operation_button_add />
   </div>
 
   
 </template>
 
 <script>
-// import button_add from '@/components/categories/ButtonAdd'
+import operation_button_add from '@/components/operations/ButtonsAdd'
 import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
 import loader from '@/components/Loader'
 
 export default {
   components: {
-    // button_add,
     category_icon,
     loader,
+    operation_button_add,
   },
 
   data() {
