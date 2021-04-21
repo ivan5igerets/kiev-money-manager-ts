@@ -28,7 +28,7 @@
           <v-tab-item>
             <v-card flat>
               <v-card-text>
-                <v-row v-for="(a_icons, i_row) in a_icon_rows" class="ma-1" justify="center" :key="i_row" dense="1">
+                <v-row v-for="(a_icons, i_row) in a_icon_rows" class="ma-1" justify="space-around" :key="i_row" dense="1">
                   <v-avatar
                     v-for="s_icon in a_icons"
                     :color="icon_select === s_icon ? 'primary' : 'grey'"
