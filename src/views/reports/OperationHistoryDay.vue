@@ -30,6 +30,35 @@
       </div>
     </div>
 
+      <div class="datepicker">
+
+        <v-menu
+          v-model="isDateOpen"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="date"
+              label="Месяц"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="date"
+            type="month"
+            @input="changeDate"
+          ></v-date-picker>
+        </v-menu>
+
+      </div>
+
 
     <loader v-if="loading" />
     <div 
@@ -42,8 +71,8 @@
           <div class="list-header">
             <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
             <div class="right-part">
-              <div class="item"> <span class="grey-small-text"> Доход: </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
-              <div class="item"> <span class="grey-small-text"> Затраты: </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
+              <div class="item" v-if="sumOfDaysIncome(day)"> <span class="grey-small-text"> Доход: </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
+              <div class="item" v-if="sumOfDaysSpanding(day)"> <span class="grey-small-text"> Затраты: </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
             </div>
           </div>
 
@@ -98,7 +127,8 @@ export default {
     return {
       loading: false,
       days: [],
-      date: '2021-04-01',
+      date: '',
+      isDateOpen: false,
       monthlyIncome: 0,
       monthlySpanding: 0,
     }
@@ -106,23 +136,34 @@ export default {
 
   mounted() {
 
-    this.loading = true;
-    historyApi.day({
-      dl_filter: this.date
-    })
-    .then(res => {
-      this.countSumOfMonthlyTransactions(res.data)
-      this.sortByDate(res.data);
-      this.loading = false;
-    })
-    .catch(err => {
-      console.log('day err', err.response.data.errors);
-      this.loading = false;
-    })
+    this.initCurrentData();
+    this.getOperations();
 
   },
 
+  // watch: {
+  //   date: function() {
+
+  //   }
+  // },
+
   methods: {
+
+    getOperations() {
+      this.loading = true;
+      historyApi.day({
+        dl_filter: this.date + '-01'
+      })
+      .then(res => {
+        this.countSumOfMonthlyTransactions(res.data)
+        this.sortByDate(res.data);
+        this.loading = false;
+      })
+      .catch(err => {
+        console.log('day err', err.response.data.errors);
+        this.loading = false;
+      })
+    },
 
     sortByDate(operations) {
       const daysTemp = operations.reduce((_, cur) => {
@@ -178,8 +219,27 @@ export default {
     dateFormating(dateStr) {
       const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
       const date = new Date(dateStr);
-      return `${date.getDate()}/${date.getMonth() + 1} ${ daysOfWeek[date.getDay()]}`;
-    }
+      return `${this.pad(date.getDate())}/${this.pad(date.getMonth() + 1)} ${ daysOfWeek[date.getDay()]}`;
+    },
+
+    initCurrentData() {
+      const tempDate = new Date();
+      this.date = `${tempDate.getFullYear()}-${this.pad(tempDate.getMonth() + 1)}`
+    },
+
+    pad(num) {
+      if(num < 10) {
+        return '0' + num;
+      }
+      return num;
+    },
+
+
+    changeDate() {
+      console.log('date', this.date);
+      this.isDateOpen = false;
+      this.getOperations();
+    },
 
   }
 
@@ -198,6 +258,14 @@ export default {
   justify-content: space-around;
   position: relative;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.datepicker {
+  // width: calc(100% - 20px);
+  height: 50px;
+  padding: 0 10px;
+  margin-top: 10px;
+  // background: chocolate;
 }
 
 .list-header {
