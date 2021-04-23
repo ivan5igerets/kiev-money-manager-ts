@@ -6,7 +6,7 @@
       </v-btn>
       <div class="d-flex align-center flex-grow-1">
         <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
-        <v-icon class="ml-auto" color="red lighten-1" @click="deleteItem">mdi-delete</v-icon>
+        <v-icon class="ml-auto" color="red lighten-1" @click="deleteItem" v-if="is_edit">mdi-delete</v-icon>
       </div>
     </v-app-bar>
     <v-main>
@@ -18,6 +18,12 @@
 <script>
 
 export default {
+  data() {
+    return {
+      is_edit: this.$route.meta.is_edit ?? true
+    }
+  },
+
   methods: {
     back() {
       this.$router.go(-1)

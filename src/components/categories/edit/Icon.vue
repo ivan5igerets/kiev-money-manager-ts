@@ -16,7 +16,7 @@
             <v-btn text @click="save">Сохранить</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <div class="ma-4 d-flex justify-center align-center">
+        <div class="d-flex justify-center align-center mt-2 pb-2 css-icon-select">
           <v-avatar :color="color_select" v-model="color_select" size="64">
             <v-icon dark>{{icon_select}}</v-icon>
           </v-avatar>
@@ -28,12 +28,12 @@
           <v-tab-item>
             <v-card flat>
               <v-card-text>
-                <v-row v-for="(a_icons, i_row) in a_icon_rows" class="ma-1" justify="start" :key="i_row">
+                <v-row v-for="(a_icons, i_row) in a_icon_rows" class="ma-1" justify="space-around" :key="i_row" dense="1">
                   <v-avatar
                     v-for="s_icon in a_icons"
                     :color="icon_select === s_icon ? 'primary' : 'grey'"
                     :key="s_icon"
-                    class="ma-4"
+                    class="mr-4 ma-2"
                     @click="icon_select=s_icon"
                     v-model="icon_select"
                   >
@@ -80,8 +80,13 @@ export default {
       color_select: this.a_icon.s_icon_color,
       icon_select: this.a_icon.s_icon_class,
       a_icon_rows: [
-        ['mdi-food', 'mdi-train-car', 'mdi-cellphone-basic', 'mdi-gift-outline'],
-        ['mdi-youtube-subscription', 'mdi-home']
+        ['mdi-food', 'mdi-food-variant', 'mdi-food-croissant', 'mdi-food-fork-drink'],
+        ['mdi-youtube-subscription', 'mdi-headphones', 'mdi-cellphone-basic', 'mdi-laptop'],
+        ['mdi-hanger', 'mdi-gift-outline', 'mdi-google-controller', 'mdi-nintendo-game-boy'],
+        ['mdi-car', 'mdi-train-car', 'mdi-airplane', 'mdi-fuel'],
+        ['mdi-school', 'mdi-home-city', 'mdi-water', 'mdi-guitar-acoustic'],
+        ['mdi-bottle-tonic-plus', 'mdi-animation', 'mdi-home-variant-outline', 'mdi-water-pump'],
+        ['mdi-cash-multiple', 'mdi-credit-card-outline', 'mdi-currency-usd', 'mdi-cash-100'],
       ]
     }
   },
@@ -99,5 +104,8 @@ export default {
 <style>
   .v-color-picker__dot {
     display: none;
+  }
+  .css-icon-select {
+    border-bottom: 1px solid #0000006b;
   }
 </style>

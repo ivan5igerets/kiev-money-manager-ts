@@ -10,7 +10,12 @@
         v-model="text_group"
       />
     </div>
-    <group_budget v-bind:a_budget="a_budget" v-bind:error_message="error_message_budget" v-model="a_budget"/>
+    <group_budget
+      v-bind:a_budget="a_budget"
+      v-bind:error_message="error_message_budget"
+      v-model="a_budget"
+      v-show="is_budget_show"
+    />
     <v-select
       :error-messages="error_message_category"
       :items="a_categories_select"
@@ -40,6 +45,7 @@ import loader from '@/components/Loader'
 
 import groupApi from '@/api/group'
 import groupCategoriesApi from '@/api/groupCategories'
+import userApi from '@/api/auth'
 
 export default {
   components: {
@@ -68,6 +74,7 @@ export default {
       error_message_budget: '',
       error_message_category: '',
       error_message_name: '',
+      is_budget_show: false,
       is_delete: false,
       loading: true,
       text_group: '',
@@ -75,11 +82,11 @@ export default {
   },
 
   mounted() {
-    const a_group_categories_promise = groupCategoriesApi.get({
-      k_category_group: this.$route.params.k_category_group
-    });
-
-    Promise.all([groupApi.get(this.$route.params.k_category_group), a_group_categories_promise]).then(a_response => {
+    Promise.all([
+      groupApi.get(this.$route.params.k_category_group),
+      groupCategoriesApi.get({k_category_group: this.$route.params.k_category_group}),
+      userApi.getUser()
+    ]).then(a_response => {
       this.a_group_info = a_response[0].data
 
       this.a_categories = this.a_group_info.a_category
@@ -95,6 +102,8 @@ export default {
           'value': a_group['k_category']
         })
       });
+
+      this.is_budget_show = a_response[2].data.setups.enable_budget_mode
       this.loading = false
     });
   },

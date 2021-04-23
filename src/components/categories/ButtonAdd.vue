@@ -46,7 +46,6 @@ export default {
 
   created() {
     this.$root.$on('scroll-content', o_event => {
-      console.log(o_event.target.scrollTop === 0)
       this.is_button_show = o_event.target.scrollTop === 0
     })
   },
