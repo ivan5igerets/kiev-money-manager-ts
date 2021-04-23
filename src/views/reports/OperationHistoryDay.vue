@@ -42,8 +42,8 @@
           <div class="list-header">
             <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
             <div class="right-part">
-              <div class="item"> <span class="grey-small-text"> Доход </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
-              <div class="item"> <span class="grey-small-text"> Затраты </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
+              <div class="item"> <span class="grey-small-text"> Доход: </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
+              <div class="item"> <span class="grey-small-text"> Затраты: </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
             </div>
           </div>
 
