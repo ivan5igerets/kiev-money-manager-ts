@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    Promise.all([userApi.getUser(), groupsApi.get({is_income: this.$route.params.is_income})]).then(a_response => {
+    Promise.all([userApi.getUser(), groupsApi.get({is_income: this.$route.query.is_income})]).then(a_response => {
       this.is_budget_show = a_response[0].data.setups.enable_budget_mode
       a_response[1].data.forEach((a_group) => {
         this.a_groups.push({
@@ -93,7 +93,7 @@ export default {
         return;
 
       categoryApi.post({
-        is_income: this.$route.params.is_income,
+        is_income: this.$route.query.is_income,
         k_category_group: this.k_category_group,
         m_budget_float: this.a_budget.is_percent ? 0 : this.a_budget.m_budget,
         m_budget_percent: this.a_budget.is_percent ? this.a_budget.m_budget : 0,
@@ -101,7 +101,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.push({name: 'Categories', params: {is_income: this.$route.params.is_income}})
+        this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

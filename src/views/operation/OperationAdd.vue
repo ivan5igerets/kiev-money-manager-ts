@@ -25,7 +25,7 @@ export default {
   },
 
   mounted() {
-    operationApi.categoriesGet({is_income: this.$route.params.is_income}).then((a_response) => {
+    operationApi.categoriesGet({is_income: this.$route.query.is_income}).then((a_response) => {
       this.a_categories = a_response.data
       this.loading = false
     })

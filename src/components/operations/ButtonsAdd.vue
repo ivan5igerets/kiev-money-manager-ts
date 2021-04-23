@@ -30,7 +30,7 @@ export default {
 
   methods: {
     openOperationAddPage(is_income) {
-      this.$router.push({name: 'OperationAdd', params: {is_income: is_income}})
+      this.$router.push({name: 'OperationAdd', query: {is_income: is_income}})
     }
   },
 

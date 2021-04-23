@@ -11,7 +11,7 @@
           v-for="a_button in a_buttons"
           :key="a_button.to"
           @click="is_open = false"
-          :to="{name: a_button.to, params: {is_income: is_income}}"
+          :to="{name: a_button.to, query: {is_income: is_income}}"
         >
           <v-list-item-avatar>
             <v-avatar size="32px" tile>

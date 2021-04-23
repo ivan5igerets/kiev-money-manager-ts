@@ -110,7 +110,7 @@ export default {
 
   methods: {
     callbackAfterDelete() {
-      this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
+      this.$router.push({name: 'Categories', query: {is_income: this.a_group_info['is_income']}})
     },
 
     errorReset() {
@@ -149,7 +149,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_group: this.text_group
       }).then(() => {
-        this.$router.push({name: 'Categories', params: {is_income: this.a_group_info['is_income']}})
+        this.$router.push({name: 'Categories', query: {is_income: this.a_group_info['is_income']}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

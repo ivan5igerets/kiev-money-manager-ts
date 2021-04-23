@@ -109,7 +109,7 @@ export default {
   methods: {
     categoryDelete() {
       categoryApi.destroy(this.$route.params.k_category).then(() => {
-        this.$router.push({name: 'Categories', params: {is_income: this.a_category_info['is_income']}})
+        this.$router.push({name: 'Categories', query: {is_income: this.a_category_info['is_income']}})
       })
     },
 
@@ -145,7 +145,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.push({name: 'Categories', params: {is_income: this.a_category_info['is_income']}})
+        this.$router.go(-1)
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)

@@ -57,7 +57,7 @@ export default {
 
   data() {
     return {
-      tab: this.$route.params.is_income ?? 0,
+      tab: Number(this.$route.query.is_income ?? 0),
       loading: true,
       income: {
         categories: [],

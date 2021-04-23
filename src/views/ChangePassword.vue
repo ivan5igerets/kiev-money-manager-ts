@@ -88,7 +88,7 @@ export default class ChangePassword extends Vue {
         "password_new": this.newPassword,
         "password_new_confirmation": this.newPassword2,
       })
-      .then(res => {
+      .then(() => {
         this.$router.go(-1)
       })
       .catch(err => {
