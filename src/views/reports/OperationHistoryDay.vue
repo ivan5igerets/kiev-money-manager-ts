@@ -133,7 +133,7 @@ export default {
         this.loading = false;
       })
       .catch(err => {
-        console.log('day err', err.response.data.errors);
+        // console.log('day err', err.response.data.errors);
         this.loading = false;
       })
     },
@@ -157,7 +157,7 @@ export default {
       let k;
       for (let i = 0; i < keys.length; i++) {
         k = keys[i];
-        console.log(k, ':', daysTemp[k]);
+        // console.log(k, ':', daysTemp[k]);
         this.days.push(daysTemp[k])
       }
     },
@@ -210,7 +210,7 @@ export default {
 
     changeDate(date) {
       this.date = date
-      console.log('date', this.date);
+      // console.log('date', this.date);
       this.getOperations();
     },
 
