@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="overflow-y-auto" id="category-list-container">
     <v-card-text>
       <div class="css-category-list-grid">
         <div class="ma-2 text-center" v-for="a_category in a_categories" :key="a_category.k_category">

@@ -4,11 +4,12 @@
       :rounded="true"
       class="css-operation-sum"
       readonly
-      value="1235"></v-text-field>
+      value="1000000"></v-text-field>
     <v-text-field
       :rounded="true"
       class="css-operation-comment"
       placeholder="Комментарий"
+      :maxlength="COMMENT_MAX_LENGTH"
       prepend-inner-icon="mdi-lead-pencil"
     ></v-text-field>
     <div class="css-calculate-grid">
@@ -65,9 +66,10 @@ export default {
     const text_date = o_date_now.getFullYear()+'-'+(o_date_now.getMonth()+1)+'-'+o_date_now.getDate();
 
     return {
+      COMMENT_MAX_LENGTH: 60,
+      is_calender_open: false,
       o_date: this.dateObject(text_date),
       text_date: text_date,
-      is_calender_open: false,
     }
   },
 
@@ -137,10 +139,14 @@ export default {
 
 .css-operation-sum {
   position: absolute;
-  padding-top: 2px;
+  padding-top: 5px;
   width: 100%;
   text-align: right;
   border-bottom: 0!important;
+
+  .v-input__slot {
+    padding-right: 10px!important;
+  }
 
   input {
     text-align: right;
@@ -151,6 +157,7 @@ export default {
   padding-top: 5px;
   border-radius: 0;
   height: 45px;
+  width: 75%;
   border-bottom: 0!important;
 }
 
