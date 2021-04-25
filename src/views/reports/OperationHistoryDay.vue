@@ -89,6 +89,7 @@ import operation_button_add from '@/components/operations/ButtonsAdd'
 import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
 import loader from '@/components/Loader'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -109,12 +110,15 @@ export default {
   },
 
   mounted() {
-
     this.initCurrentData();
     this.getOperations();
-
     this.$root.$on('change-date', this.changeDate)
+  },
 
+  computed: {
+    ...mapState('date',{
+      month: 'month',
+    })
   },
 
   methods: {
@@ -196,8 +200,13 @@ export default {
     },
 
     initCurrentData() {
-      const tempDate = new Date();
-      this.date = `${tempDate.getFullYear()}-${this.pad(tempDate.getMonth() + 1)}`
+      if (!this.month) {
+        const tempDate = new Date();
+        this.date = `${tempDate.getFullYear()}-${this.pad(tempDate.getMonth() + 1)}`
+      } else {
+        this.date = this.month;
+      }
+
     },
 
     pad(num) {
