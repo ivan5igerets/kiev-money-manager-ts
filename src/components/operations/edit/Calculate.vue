@@ -4,18 +4,17 @@
       :rounded="true"
       class="css-operation-sum"
       readonly
-      value="1000000"></v-text-field>
+      :value="text_number_display"></v-text-field>
     <v-text-field
       :rounded="true"
       class="css-operation-comment"
       placeholder="Комментарий"
       :maxlength="COMMENT_MAX_LENGTH"
-      prepend-inner-icon="mdi-lead-pencil"
-    ></v-text-field>
+      prepend-inner-icon="mdi-lead-pencil"></v-text-field>
     <div class="css-calculate-grid">
-      <div class="css-calculate-button">7</div>
-      <div class="css-calculate-button">8</div>
-      <div class="css-calculate-button">9</div>
+      <div class="css-calculate-button" @click="numberSet(7)">7</div>
+      <div class="css-calculate-button" @click="numberSet(8)">8</div>
+      <div class="css-calculate-button" @click="numberSet(9)">9</div>
       <div class="css-calculate-button css-calculate-button-date">
         <v-dialog ref="dialog" v-model="is_calender_open">
           <template v-slot:activator="{ on, attrs }">
@@ -28,24 +27,27 @@
         <v-date-picker locale="ru-RU" v-model="text_date" @input="dateSelect"></v-date-picker>
         </v-dialog>
       </div>
-      <div class="css-calculate-button">4</div>
-      <div class="css-calculate-button">5</div>
-      <div class="css-calculate-button">6</div>
-      <div class="css-calculate-button">
+      <div class="css-calculate-button" @click="numberSet(4)">4</div>
+      <div class="css-calculate-button" @click="numberSet(5)">5</div>
+      <div class="css-calculate-button" @click="numberSet(6)">6</div>
+      <div class="css-calculate-button" @click="operatorSet('+')">
         <v-icon>mdi-plus</v-icon>
       </div>
-      <div class="css-calculate-button">1</div>
-      <div class="css-calculate-button">2</div>
-      <div class="css-calculate-button">3</div>
-      <div class="css-calculate-button">
+      <div class="css-calculate-button" @click="numberSet(1)">1</div>
+      <div class="css-calculate-button" @click="numberSet(2)">2</div>
+      <div class="css-calculate-button" @click="numberSet(3)">3</div>
+      <div class="css-calculate-button" @click="operatorSet('-')">
         <v-icon>mdi-minus</v-icon>
       </div>
-      <div class="css-calculate-button">.</div>
-      <div class="css-calculate-button">0</div>
-      <div class="css-calculate-button">
+      <div class="css-calculate-button" @click="numberSet('.')">.</div>
+      <div class="css-calculate-button" @click="numberSet(0)">0</div>
+      <div class="css-calculate-button" @click="clear()">
         <v-icon>mdi-backspace-outline</v-icon>
       </div>
-      <div class="css-calculate-button css-button-save">
+      <div class="css-calculate-button css-button-save" @click="calculate()" v-if="text_operator">
+        <v-icon>mdi-equal</v-icon>
+      </div>
+      <div class="css-calculate-button css-button-save" v-else>
         <v-icon>mdi-check-circle-outline</v-icon>
       </div>
     </div>
@@ -70,6 +72,10 @@ export default {
       is_calender_open: false,
       o_date: this.dateObject(text_date),
       text_date: text_date,
+      text_number_a: '',
+      text_number_b: '',
+      text_number_display: 0,
+      text_operator: null
     }
   },
 
@@ -88,6 +94,83 @@ export default {
       this.o_date = this.dateObject(text_date)
       this.text_date = text_date
       this.is_calender_open = false
+    },
+    
+    operatorSet(operator) {
+      if(this.text_operator)
+        this.calculate()
+
+      this.text_operator = operator
+      this.text_number_display += operator
+    },
+
+    numberValidate(text_current_number, i_new_number){
+      const text_number = text_current_number+i_new_number
+      const regex = /^\d{1,8}(\.|\.\d{1,2}?)?$/;
+      return text_number.match(regex) !== null
+    },
+
+    numberSet(i_number){
+      if(this.text_operator === null){
+        if(!this.numberValidate(this.text_number_a, i_number))
+          return;
+
+        this.text_number_a += i_number;
+        this.text_number_display = this.text_number_a;
+      }
+      else{
+        if(!this.numberValidate(this.text_number_b, i_number))
+          return;
+
+        this.text_number_b += i_number;
+        this.text_number_display += i_number;
+      }
+
+      console.log(this.text_number_a, this.text_number_b)
+    },
+
+    calculate(){
+      const f_number_a = this.text_number_a ? parseFloat(this.text_number_a) : 0;
+      const f_number_b = this.text_number_b ? parseFloat(this.text_number_b) : 0;
+      let f_number_temp = 0
+      switch(this.text_operator){
+        case '+':
+          f_number_temp = f_number_a + f_number_b;
+          break;
+        case '-':
+          f_number_temp = f_number_a - f_number_b;
+          break;
+        case '*':
+          f_number_temp = f_number_a * f_number_b;
+          break;
+        case '/':
+          f_number_temp = f_number_a / f_number_b;
+          break;
+      }
+      this.text_number_display = f_number_temp;
+      this.text_number_a = '' + f_number_temp + '';
+      this.text_number_b = '';
+      this.text_operator = null;
+    },
+
+    clear(){
+      if(!this.text_number_display)
+        return;
+
+      const i_current_number_length = this.text_number_display.length;
+      const last_char = this.text_number_display.substring(i_current_number_length - 1, i_current_number_length)
+
+      if(last_char === this.text_operator)
+        this.text_operator = null
+      else if(this.text_number_b)
+        this.text_number_b = this.text_number_b.substring(0, this.text_number_b.length - 1)
+      else
+        this.text_number_a = this.text_number_a.substring(0, this.text_number_a.length - 1)
+
+      if(i_current_number_length === 1)
+        this.text_number_display = 0
+      else
+        this.text_number_display = this.text_number_display.substring(0, i_current_number_length - 1)
     }
   }
 }

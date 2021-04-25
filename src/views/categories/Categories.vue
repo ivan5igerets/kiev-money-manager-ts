@@ -95,7 +95,7 @@ export default {
 .css-categories {
   .v-list-item__action {
     min-width: 0!important;
-    margin-right: 12px!important;
+    margin-right: 14px!important;
   }
 }
 </style>
