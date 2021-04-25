@@ -44,18 +44,27 @@ export default {
     },
 
     created() {
-      const tempDate = new Date();
-      this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
+      this.initDate();
     },
 
     methods: {
         changeDate() {
-            // console.log('date', this.date);
             this.isDateOpen = false;
-
-            // тут нужно имитить в рут и передавать дату
             this.$root.$emit('change-date', this.date)
         },
+
+        initDate() {
+          const tempDate = new Date();
+          this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
+        },
+    },
+
+    watch: {
+      $route: function(newUrl) {
+        if (newUrl.name !== 'Diagram' && newUrl.name !== 'OperationHistoryDay') {
+          this.initDate();
+        }
+      }
     },
 
     computed: {
@@ -63,8 +72,6 @@ export default {
             const month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 
             'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             const simpleArr = this.date.split('-');
-
-            console.log(this.date);
 
             return month[+simpleArr[1]-1]
         }
@@ -76,7 +83,6 @@ export default {
 .datepicker {
   width: 110px;
   height: 30px;
-//   padding: 0 10px;
 }
 
 </style>
