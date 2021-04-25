@@ -107,7 +107,8 @@ const routes: Array<RouteConfig> = [
     meta: {
       is_nav_menu: true,
       title: 'Главная',
-      layout: 'mainn'
+      layout: 'mainn',
+      isNeedDate: true,
     },
     component: () => import('../views/reports/OperationHistoryDay.vue')
   },

@@ -30,35 +30,9 @@
       </div>
     </div>
 
-      <div class="datepicker">
-
-        <v-menu
-          v-model="isDateOpen"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="date"
-              label="Месяц"
-              prepend-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="date"
-            type="month"
-            @input="changeDate"
-          ></v-date-picker>
-        </v-menu>
-
+      <div class="list-placeholder" v-if="!days.length && !loading">
+        В этом месяце нет записей
       </div>
-
 
     <loader v-if="loading" />
     <div 
@@ -128,7 +102,7 @@ export default {
       loading: false,
       days: [],
       date: '',
-      isDateOpen: false,
+      // isDateOpen: false,
       monthlyIncome: 0,
       monthlySpanding: 0,
     }
@@ -139,18 +113,17 @@ export default {
     this.initCurrentData();
     this.getOperations();
 
+    this.$root.$on('change-date', this.changeDate)
+
   },
-
-  // watch: {
-  //   date: function() {
-
-  //   }
-  // },
 
   methods: {
 
     getOperations() {
       this.loading = true;
+      this.days = [];
+      this.monthlyIncome = 0;
+      this.monthlySpanding = 0;
       historyApi.day({
         dl_filter: this.date + '-01'
       })
@@ -235,9 +208,9 @@ export default {
     },
 
 
-    changeDate() {
+    changeDate(date) {
+      this.date = date
       console.log('date', this.date);
-      this.isDateOpen = false;
       this.getOperations();
     },
 
@@ -266,6 +239,12 @@ export default {
   padding: 0 10px;
   margin-top: 10px;
   // background: chocolate;
+}
+
+.list-placeholder {
+  text-align: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .list-header {
