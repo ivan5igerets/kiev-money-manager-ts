@@ -43,9 +43,14 @@ export default {
         }
     },
 
+    created() {
+      const tempDate = new Date();
+      this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
+    },
+
     methods: {
         changeDate() {
-            console.log('date', this.date);
+            // console.log('date', this.date);
             this.isDateOpen = false;
 
             // тут нужно имитить в рут и передавать дату
@@ -58,6 +63,8 @@ export default {
             const month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 
             'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             const simpleArr = this.date.split('-');
+
+            console.log(this.date);
 
             return month[+simpleArr[1]-1]
         }

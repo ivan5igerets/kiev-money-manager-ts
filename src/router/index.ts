@@ -126,7 +126,7 @@ const routes: Array<RouteConfig> = [
     path: '/diagram',
     name: 'Diagram',
     meta: {
-      is_edit: false,
+      is_nav_menu: true,
       title: 'График',
       layout: 'mainn',
       isNeedDate: true,
