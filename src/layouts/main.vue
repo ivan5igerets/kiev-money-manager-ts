@@ -50,6 +50,10 @@
       </v-btn>
       <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+
+      <v-spacer />
+
+      <MonthPicker />
     </v-app-bar>
     <v-sheet
       class="overflow-y-auto"
@@ -89,8 +93,14 @@
 
 <script>
 import {mapState} from 'vuex'
+import MonthPicker from '@/components/operations/MonthPicker'
 
 export default {
+
+  components: {
+    MonthPicker
+  },
+
   data: () => ({ 
     drawer: null,
     selectedItem: null,
