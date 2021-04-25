@@ -35,6 +35,9 @@
 </template>
 
 <script>
+
+import {mapMutations} from 'vuex'
+
 export default {
     data() {
         return {
@@ -50,17 +53,28 @@ export default {
     methods: {
         changeDate() {
             this.isDateOpen = false;
+            this.setMonth(this.date);
             this.$root.$emit('change-date', this.date)
         },
 
         initDate() {
           const tempDate = new Date();
           this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
+          this.setMonth(this.date)
         },
+
+        ...mapMutations({
+          setMonth: "date/setMonth",
+        }),
     },
 
     watch: {
       $route: function(newUrl) {
+        if (newUrl.name == 'OperationHistoryDay') {
+          this.changeDate();
+          // console.log('change data');
+        }
+
         if (newUrl.name !== 'Diagram' && newUrl.name !== 'OperationHistoryDay') {
           this.initDate();
         }

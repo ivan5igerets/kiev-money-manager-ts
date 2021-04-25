@@ -5,7 +5,7 @@
         </h1>
     <v-tabs grow v-model="tab">
         <v-tab>Затраты</v-tab>
-        <v-tab>Доходы</v-tab>
+        <v-tab>Доход</v-tab>
     </v-tabs>
     </div>
 </template>
