@@ -83,7 +83,7 @@
         <span>Категории</span>
         <v-icon>mdi-view-list</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{name: 'Diagram'}">
         <span>Диаграмма</span>
         <v-icon>mdi-chart-arc</v-icon>
       </v-btn>

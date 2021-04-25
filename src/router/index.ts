@@ -122,6 +122,17 @@ const routes: Array<RouteConfig> = [
     },
     component: () => import('../views/operation/OperationAdd.vue')
   },
+  {
+    path: '/diagram',
+    name: 'Diagram',
+    meta: {
+      is_edit: false,
+      title: 'График',
+      layout: 'mainn',
+      isNeedDate: true,
+    },
+    component: () => import('../views/diagram/Diagram.vue')
+  },
 ]
 
 const router = new VueRouter({
