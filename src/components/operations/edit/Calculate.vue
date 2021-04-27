@@ -8,10 +8,10 @@
     <v-text-field
       :maxlength="COMMENT_MAX_LENGTH"
       :rounded="true"
-      :value="text_comment"
+      :value="text_operation"
       class="css-operation-comment"
       placeholder="Комментарий"
-      v-model="text_comment"
+      v-model="text_operation"
       prepend-inner-icon="mdi-lead-pencil"></v-text-field>
     <div class="css-calculate-grid">
       <div class="css-calculate-button" @click="numberSet(7)">7</div>
@@ -80,7 +80,11 @@ export default {
     },
     m_sum: {
       type: Number,
-      required: true,
+      required: false,
+    },
+    text_comment: {
+      type: String,
+      required: false,
     }
   },
 
@@ -92,10 +96,10 @@ export default {
       is_calender_open: false,
       is_sum_zero: false,
       o_date: this.dateObject(this.dl_operation),
-      text_comment: '',
-      text_number_a: '',
+      text_operation: this.text_comment ?? '',
+      text_number_a: this.m_sum ? this.m_sum.toString() : '',
       text_number_b: '',
-      text_number_display: 0,
+      text_number_display: this.m_sum.toString() ?? 0,
       text_operator: null
     }
   },
@@ -211,7 +215,7 @@ export default {
       this.$emit('operation_save', {
         'dl_operation': this.dl_date,
         'm_sum': m_sum,
-        'text_comment': this.text_comment
+        'text_comment': this.text_operation
       })
     }
   }

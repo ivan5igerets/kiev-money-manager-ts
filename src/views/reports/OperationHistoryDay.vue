@@ -55,6 +55,7 @@
             <v-list-item-group color="primary">
             
               <v-list-item
+                :to="{ name: 'OperationEdit', params: {k_operation: item.k_operation}}"
                 v-for="(item, k_category) in day"
                 :key="k_category"
               >

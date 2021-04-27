@@ -1,5 +1,6 @@
 <template>
-  <v-card flat class="overflow-y-auto" id="category-list-container">
+  <loader v-if="loading"/>
+  <v-card flat class="overflow-y-auto" id="category-list-container" v-else>
     <v-card-text>
       <div class="css-category-list-grid">
         <div class="ma-2 text-center" v-for="a_category in a_categories" :key="a_category.k_category">
@@ -27,29 +28,47 @@
 </template>
 
 <script>
+import loader from '@/components/Loader'
+
+import operationApi from '@/api/operation'
+
 export default {
+  components: {loader},
   props: {
-    a_categories: {
-      type: Array,
+    is_income: {
+      type: Number,
       required: true
+    },
+    k_category: {
+      type: Number,
+      required: false
     }
   },
 
   data() {
     return {
-      k_category_select: 0
+      a_categories: [],
+      k_category_select: this.k_category,
+      loading: true,
     }
   },
 
   methods: {
     categoryAdd() {
-      this.$router.push({name: 'CategoryAdd', query: {is_income: this.$route.query.is_income}});
+      this.$router.push({name: 'CategoryAdd', query: {is_income: this.is_income}});
     },
 
     categorySelect(value) {
       this.k_category_select = value
       this.$emit('category_select', value)
     }
+  },
+
+  mounted() {
+    operationApi.categoriesGet({is_income: this.is_income}).then((a_response) => {
+      this.a_categories = a_response.data
+      this.loading = false
+    })
   }
 }
 

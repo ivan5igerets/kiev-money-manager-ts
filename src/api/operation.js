@@ -5,7 +5,7 @@ const categoriesGet = parameters => {
 }
 
 const destroy = k_operation => {
-  return axios.get('api/operation-item/'+k_operation)
+  return axios.delete('api/operation-item/'+k_operation)
 }
 
 const get = k_operation => {
