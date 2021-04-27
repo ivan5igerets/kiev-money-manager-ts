@@ -66,7 +66,7 @@
                     }" />
                 </v-list-item-icon>
 
-                  <v-list-item-title v-text="item.text_category"></v-list-item-title>
+                  <v-list-item-title v-text="item.text_comment ? item.text_comment : item.text_category"></v-list-item-title>
 
                 <v-list-item-action>
                   <span :class="{ income: item.is_income, spending: !item.is_income || item.m_sum < 0 }"> {{ item.m_sum }} </span>

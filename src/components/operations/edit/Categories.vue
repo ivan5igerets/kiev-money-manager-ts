@@ -48,7 +48,7 @@ export default {
 
     categorySelect(value) {
       this.k_category_select = value
-      this.$emit('category_select', true)
+      this.$emit('category_select', value)
     }
   }
 }

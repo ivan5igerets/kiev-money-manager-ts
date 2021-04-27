@@ -6,10 +6,12 @@
       readonly
       :value="text_number_display"></v-text-field>
     <v-text-field
+      :maxlength="COMMENT_MAX_LENGTH"
       :rounded="true"
+      :value="text_comment"
       class="css-operation-comment"
       placeholder="Комментарий"
-      :maxlength="COMMENT_MAX_LENGTH"
+      v-model="text_comment"
       prepend-inner-icon="mdi-lead-pencil"></v-text-field>
     <div class="css-calculate-grid">
       <div class="css-calculate-button" @click="numberSet(7)">7</div>
@@ -17,14 +19,14 @@
       <div class="css-calculate-button" @click="numberSet(9)">9</div>
       <div class="css-calculate-button css-calculate-button-date">
         <v-dialog ref="dialog" v-model="is_calender_open">
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{on, attrs}">
             <div v-bind="attrs" v-on="on">
               <div class="css-date-month-operation">
                 {{o_date.i_month}}/{{o_date.i_day}}</div>
               <div class="css-year-operation">{{o_date.i_year}}</div>
             </div>
           </template>
-        <v-date-picker locale="ru-RU" v-model="text_date" @input="dateSelect"></v-date-picker>
+        <v-date-picker locale="ru-RU" v-model="dl_date" @input="dateSelect"></v-date-picker>
         </v-dialog>
       </div>
       <div class="css-calculate-button" @click="numberSet(4)">4</div>
@@ -47,31 +49,50 @@
       <div class="css-calculate-button css-button-save" @click="calculate()" v-if="text_operator">
         <v-icon>mdi-equal</v-icon>
       </div>
-      <div class="css-calculate-button css-button-save" v-else>
+      <div class="css-calculate-button css-button-save" v-else @click="save()">
         <v-icon>mdi-check-circle-outline</v-icon>
       </div>
     </div>
+    <v-snackbar
+      :absolute="true"
+      :timeout="2000"
+      class="mb-16"
+      transition="scroll-y-reverse-transition"
+      v-model="is_sum_zero"
+    >
+      Введите сумму операции
+    </v-snackbar>
   </div>
 </template>
 
 <script>
+import {CoreDate} from '/src/date/CoreDate.js'
+
 export default {
   props: {
     is_show: {
       type: Boolean,
       required: true,
+    },
+    dl_operation: {
+      type: String,
+      required: true,
+    },
+    m_sum: {
+      type: Number,
+      required: true,
     }
   },
 
   data() {
-    const o_date_now = new Date();
-    const text_date = o_date_now.getFullYear()+'-'+(o_date_now.getMonth()+1)+'-'+o_date_now.getDate();
-
     return {
       COMMENT_MAX_LENGTH: 60,
+      dl_date: this.dl_operation,
+      f_sum_operation: 0,
       is_calender_open: false,
-      o_date: this.dateObject(text_date),
-      text_date: text_date,
+      is_sum_zero: false,
+      o_date: this.dateObject(this.dl_operation),
+      text_comment: '',
       text_number_a: '',
       text_number_b: '',
       text_number_display: 0,
@@ -80,19 +101,18 @@ export default {
   },
 
   methods: {
-    dateObject(text_date) {
-      const o_date = new Date(text_date);
-      const i_month = o_date.getMonth() + 1;
+    dateObject(dl_date) {
+      const a_date = CoreDate.toArray(dl_date);
       return {
-        'i_day': o_date.getDate(),
-        'i_month': i_month < 10 ? '0'+i_month : i_month,
-        'i_year': o_date.getFullYear()
+        'i_day': a_date[2],
+        'i_month': a_date[1],
+        'i_year': a_date[0]
       }
     },
 
-    dateSelect(text_date) {
-      this.o_date = this.dateObject(text_date)
-      this.text_date = text_date
+    dateSelect(dl_date) {
+      this.o_date = this.dateObject(dl_date)
+      this.dl_date = dl_date
       this.is_calender_open = false
     },
     
@@ -104,13 +124,13 @@ export default {
       this.text_number_display += operator
     },
 
-    numberValidate(text_current_number, i_new_number){
+    numberValidate(text_current_number, i_new_number) {
       const text_number = text_current_number+i_new_number
       const regex = /^\d{1,8}(\.|\.\d{1,2}?)?$/;
       return text_number.match(regex) !== null
     },
 
-    numberSet(i_number){
+    numberSet(i_number) {
       if(this.text_operator === null){
         if(!this.numberValidate(this.text_number_a, i_number))
           return;
@@ -118,39 +138,38 @@ export default {
         this.text_number_a += i_number;
         this.text_number_display = this.text_number_a;
       }
-      else{
+      else {
         if(!this.numberValidate(this.text_number_b, i_number))
           return;
 
         this.text_number_b += i_number;
         this.text_number_display += i_number;
       }
-
-      console.log(this.text_number_a, this.text_number_b)
     },
 
-    calculate(){
+    calculate() {
       const f_number_a = this.text_number_a ? parseFloat(this.text_number_a) : 0;
       const f_number_b = this.text_number_b ? parseFloat(this.text_number_b) : 0;
-      let f_number_temp = 0
       switch(this.text_operator){
         case '+':
-          f_number_temp = f_number_a + f_number_b;
+          this.f_sum_operation = f_number_a + f_number_b;
           break;
         case '-':
-          f_number_temp = f_number_a - f_number_b;
+          this.f_sum_operation = f_number_a - f_number_b;
           break;
         case '*':
-          f_number_temp = f_number_a * f_number_b;
+          this.f_sum_operation = f_number_a * f_number_b;
           break;
         case '/':
-          f_number_temp = f_number_a / f_number_b;
+          this.f_sum_operation = f_number_a / f_number_b;
           break;
       }
-      this.text_number_display = f_number_temp;
-      this.text_number_a = '' + f_number_temp + '';
+      this.text_number_display = this.f_sum_operation.toString();
+      if(this.text_number_a || this.f_sum_operation !== 0)
+        this.text_number_a = '' + this.f_sum_operation + '';
       this.text_number_b = '';
       this.text_operator = null;
+      this.is_sum_zero = false
     },
 
     clear(){
@@ -167,10 +186,33 @@ export default {
       else
         this.text_number_a = this.text_number_a.substring(0, this.text_number_a.length - 1)
 
-      if(i_current_number_length === 1)
+      if(i_current_number_length === 1) {
         this.text_number_display = 0
-      else
+        this.f_sum_operation = 0
+      }
+      else {
         this.text_number_display = this.text_number_display.substring(0, i_current_number_length - 1)
+      }
+    },
+
+    save() {
+      let m_sum = 0;
+      if(this.f_sum_operation)
+        m_sum = this.f_sum_operation
+      else if(this.text_number_a)
+        m_sum = this.text_number_a
+
+      if(m_sum === 0)
+      {
+        this.is_sum_zero = true
+        return false;
+      }
+
+      this.$emit('operation_save', {
+        'dl_operation': this.dl_date,
+        'm_sum': m_sum,
+        'text_comment': this.text_comment
+      })
     }
   }
 }
