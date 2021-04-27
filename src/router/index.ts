@@ -126,7 +126,7 @@ const routes: Array<RouteConfig> = [
     path: '/operation-edit/:k_operation',
     name: 'OperationEdit',
     meta: {
-      title: 'Редактировать операцию',
+      title: 'Редактирование операции',
       layout: 'edit'
     },
     component: () => import('../views/operation/OperationEdit.vue')

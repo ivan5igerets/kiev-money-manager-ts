@@ -14,7 +14,6 @@
 <script>
 import calculate from '@/components/operations/edit/Calculate'
 import categories from '@/components/operations/edit/Categories'
-import loader from '@/components/Loader'
 
 import operationApi from '@/api/operation'
 
@@ -23,8 +22,7 @@ import {CoreDate} from '/src/date/CoreDate.js'
 export default {
   components: {
     calculate,
-    categories,
-    loader
+    categories
   },
 
   data() {
