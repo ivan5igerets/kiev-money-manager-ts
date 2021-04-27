@@ -62,7 +62,7 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'OperationHistoryDay'})
       }).fail((o_error) => {
         console.log(o_error)
       });

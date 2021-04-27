@@ -73,7 +73,7 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'OperationHistoryDay'})
       }).fail((o_error) => {
         console.log(o_error)
       });
@@ -88,7 +88,6 @@ export default {
 
   mounted() {
     operationApi.get(this.$route.params.k_operation).then(o_response => {
-      console.log(o_response)
       this.dl_operation = o_response.data.dl_operation
       this.is_income = o_response.data.is_income
       this.k_category = o_response.data.k_category

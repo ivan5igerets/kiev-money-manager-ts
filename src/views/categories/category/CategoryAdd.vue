@@ -1,6 +1,6 @@
 <template>
   <loader v-if="loading" />
-  <v-form v-else ref="form" class="pa-4" id="category_add" @submit="save" lazy-validation>
+  <v-form v-else ref="form" class="pa-4" id="category_add" @submit.prevent="save" lazy-validation>
     <div class="d-flex justify-center align-center">
       <category_icon v-bind:a_icon="a_icon" />
       <category_name
@@ -101,7 +101,7 @@ export default {
         s_icon_color: this.a_icon.s_icon_color,
         text_category: this.text_category
       }).then(() => {
-        this.$router.go(-1)
+        this.$router.push({name: 'Categories', query: {is_income: this.$route.query.is_income}})
       })
       .catch(o_response => {
         this.errorShow(o_response.response.data.errors)
