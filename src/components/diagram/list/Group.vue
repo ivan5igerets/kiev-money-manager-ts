@@ -1,5 +1,5 @@
 <template>
-    <div class="css-group-list">
+    <div class="css-diagram-group-list">
     <v-list-group no-action flat>
         <template v-slot:activator>
 
@@ -76,30 +76,36 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-// .css-group-list {
+.css-diagram-group-list {
   .v-list-group__header__append-icon {
-    display: none !important;
+    min-width: 0!important;
+    margin-left: 0!important;
   }
+
   .v-list-item__action {
     padding-right: 2px!important;
   }
-// }
 
-.item {
+  .v-list-group__header {
+    flex-direction: row-reverse !important;
+  }
+
+  .item {
     display: flex;
-}
+  }
 
-.main-part {
+  .main-part {
     width: 100%;
     // align-items: ;
     // background: chartreuse;
-}
+  }
 
-.text {
+  .text {
     display: flex;
     justify-content: space-between;
     margin-bottom: 6px;
+  }
 }
 </style>
