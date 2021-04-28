@@ -131,7 +131,7 @@ const routes: Array<RouteConfig> = [
       layout: 'mainn',
       isNeedDate: true,
     },
-    component: () => import('../views/diagram/Diagram.vue')
+    component: () => import('../views/diagram/DiagramPage.vue')
   },
 ]
 
