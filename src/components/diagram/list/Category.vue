@@ -4,28 +4,13 @@
         <v-list-item>
             <v-list-item-content>
               <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
+                <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div>Категрия</div>
-                        <div> 1027397 </div>
+                        <div> {{ data.text_category }} </div>
+                        <div> {{ data.m_sum }} </div>
                     </div>
-                    <v-progress-linear value="15"></v-progress-linear>
-                </div> 
-              </div>
-            </v-list-item-content> 
-        </v-list-item>
-        
-        <v-list-item>
-            <v-list-item-content>
-              <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
-                <div class="main-part">
-                    <div class="text">
-                        <div>Категрия</div>
-                        <div> 1027397 </div>
-                    </div>
-                    <v-progress-linear value="15"></v-progress-linear>
+                    <v-progress-linear :value="data.m_sum_percent"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 
@@ -43,6 +28,8 @@ export default {
   components: {
     category_icon,
   },
+
+  props: ['data'],
 
   data() {
     return {

@@ -9,8 +9,21 @@
 
         <loader v-if="loading" />
         <v-tabs-items v-else v-model="tab">
-            <v-tab-item> <Diagram v-if="tab === 0" key="1" />  </v-tab-item>
-            <v-tab-item> <Diagram v-if="tab === 1" key="2" />  </v-tab-item>
+            <v-tab-item> 
+                <Diagram 
+                    v-if="tab === 0" 
+                    key="1" 
+                    :data="spending"
+                />  
+            </v-tab-item>
+            
+            <v-tab-item> 
+                <Diagram 
+                    v-if="tab === 1" 
+                    key="2" 
+                    :data="income"
+                />  
+            </v-tab-item>
         </v-tabs-items>
     </div>
 </template>
@@ -30,7 +43,9 @@ export default {
         return {
             tab: null,
             loading: !true,
-            date: '2021-04'
+            date: '2021-04',
+            income: [],
+            spending: [],
         }
     },
 
@@ -45,11 +60,20 @@ export default {
             })
             .then(res => {
                 console.log(res.data);
+                this.sortByType(res.data)
             })
             .catch(err => {
                 console.log(err);
             })
         },
+
+        sortByType(arr) {
+            arr.forEach(el => {
+                el.is_income ? this.income.push(el) : this.spending.push(el)
+            });
+
+        },
+
     },
 }
 </script>

@@ -5,13 +5,13 @@
 
             <v-list-item-content>
               <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
+                <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> Группа </div>
-                        <div> 1027397 </div>
+                        <div> {{ data.text_group }} </div>
+                        <div> {{ data.m_sum }} </div>
                     </div>
-                    <v-progress-linear value="15"></v-progress-linear>
+                    <v-progress-linear :value="data.m_sum_percent"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 
@@ -33,50 +33,21 @@
             </v-menu> -->
         </template>
 
-        <v-list-item>
+        <v-list-item v-for="item in data.a_category" :key="item.id">
             <v-list-item-content>
               <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
+                <category_icon v-bind:a_icon="{s_icon_class: item.s_icon_class, s_icon_color: item.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div>Категрия</div>
-                        <div> 1027397 </div>
+                        <div> {{ item.text_category }} </div>
+                        <div> {{ item.m_sum }} </div>
                     </div>
-                    <v-progress-linear value="15"></v-progress-linear>
+                    <v-progress-linear :value="item.m_sum_percent"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 
         </v-list-item>
         
-        <v-list-item>
-            <v-list-item-content>
-              <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
-                <div class="main-part">
-                    <div class="text">
-                        <div>Категрия</div>
-                        <div> 1027397 </div>
-                    </div>
-                    <v-progress-linear value="15"></v-progress-linear>
-                </div> 
-              </div>
-            </v-list-item-content> 
-        </v-list-item>
-        
-        <v-list-item>
-            <v-list-item-content>
-              <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: 'mdi-food', s_icon_color: '#f44336FF'}"/>
-                <div class="main-part">
-                    <div class="text">
-                        <div>Категрия</div>
-                        <div> 1027397 </div>
-                    </div>
-                    <v-progress-linear value="15"></v-progress-linear>
-                </div> 
-              </div>
-            </v-list-item-content> 
-        </v-list-item>
       
     </v-list-group>
     </div>
@@ -89,6 +60,12 @@ import category_icon from '@/components/categories/IconShow'
 export default {
   components: {
     category_icon,
+  },
+
+  props: ['data'],
+
+  created() {
+      console.log(this.data);
   },
 
   data() {

@@ -4,8 +4,14 @@
     <v-divider />
     
      <!-- тут должен быть список  -->
-    <category />
-    <group />
+
+    <div v-for="item in data" :key="item.id">
+      <category v-if="item.k_category" :data="item" />
+      <group v-if="item.k_category_group" :data="item" />
+    </div>
+
+    <!-- <category />
+    <group /> -->
 
 
   </div>
@@ -24,11 +30,17 @@ export default {
     group,
   },
 
+  props: ['data'],
+
   data() {
     return {
       power: 50
     }
   },
+
+  // methods: {
+
+  // },
 }
 </script>
 
