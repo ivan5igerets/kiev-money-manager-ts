@@ -136,7 +136,7 @@ const routes: Array<RouteConfig> = [
     name: 'Diagram',
     meta: {
       is_nav_menu: true,
-      title: 'График',
+      title: 'Диаграмма',
       layout: 'mainn',
       isNeedDate: true,
     },

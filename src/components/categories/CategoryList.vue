@@ -84,6 +84,8 @@ export default {
     this.$root.$on('delete-item', is_delete => {
       this.a_category_delete.is_delete = is_delete
     });
+
+    console.log(this.a_category_list);
   },
 }
 </script>

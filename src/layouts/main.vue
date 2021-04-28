@@ -139,6 +139,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .top-part {
   background: #FFD630;
   width: 100%;

@@ -12,7 +12,10 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 export default {
     
     mounted() {
-        am4core.useTheme(am4themes_animated);
+        // am4core.useTheme(am4themes_animated);
+
+        // это должно решить проблемму с выводом ошибки в консоль
+        am4core.options.autoDispose = true;
         // Themes end
 
         // Create chart instance
@@ -57,6 +60,8 @@ export default {
 
         // на компе следующая строка должна работать
         pieSeries.labels.template.disabled = true;
+
+        
 
         // pieSeries.tooltip.disabled = true;
 

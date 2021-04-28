@@ -4,29 +4,24 @@
     <v-divider />
     
      <!-- тут должен быть список  -->
-     <v-list>
-      <v-list-item>
-        <div class="item">
-          <div>icon</div>
-          <div>content</div>
-          <div>action</div>
-        </div>
-      </v-list-item>
+    <category />
+    <group />
 
-     </v-list>
 
   </div>
 </template>
 
 <script>
 import PieChart from '@/components/diagram/charts/PieChart'
-// import category_icon from '@/components/categories/IconShow'
+import category from '@/components/diagram/list/Category'
+import group from '@/components/diagram/list/Group'
 
 
 export default {
   components: {
     PieChart,
-    // category_icon,
+    category,
+    group,
   },
 
   data() {
