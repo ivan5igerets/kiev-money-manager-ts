@@ -11,7 +11,7 @@
                         <div> {{ data.text_group }} </div>
                         <div> {{ data.m_sum }} </div>
                     </div>
-                    <v-progress-linear :value="data.m_sum_percent"></v-progress-linear>
+                    <v-progress-linear :value="data.m_sum_percent" :color="data.s_icon_color"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 
@@ -42,7 +42,7 @@
                         <div> {{ item.text_category }} </div>
                         <div> {{ item.m_sum }} </div>
                     </div>
-                    <v-progress-linear :value="item.m_sum_percent"></v-progress-linear>
+                    <v-progress-linear :value="item.m_sum_percent" :color="item.s_icon_color"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 

@@ -10,7 +10,7 @@
                         <div> {{ data.text_category }} </div>
                         <div> {{ data.m_sum }} </div>
                     </div>
-                    <v-progress-linear :value="data.m_sum_percent"></v-progress-linear>
+                    <v-progress-linear :value="data.m_sum_percent" :color="data.s_icon_color"></v-progress-linear>
                 </div> 
               </div>
             </v-list-item-content> 
