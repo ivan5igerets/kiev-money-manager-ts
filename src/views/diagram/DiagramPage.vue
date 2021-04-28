@@ -55,15 +55,18 @@ export default {
 
     methods: {
         getData() {
+            this.loading = true;
             historyApi.month({
                 dl_filter: this.date + '-01'
             })
             .then(res => {
                 console.log(res.data);
                 this.sortByType(res.data)
+                this.loading = false;
             })
             .catch(err => {
                 console.log(err);
+                this.loading = false;
             })
         },
 

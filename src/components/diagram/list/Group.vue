@@ -8,7 +8,7 @@
                 <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> {{ data.text_group }} </div>
+                        <div> {{ data.text_group }} <span class="percents"> {{ data.m_sum_percent }} % </span> </div>
                         <div> {{ data.m_sum }} </div>
                     </div>
                     <v-progress-linear :value="data.m_sum_percent" :color="data.s_icon_color"></v-progress-linear>
@@ -39,7 +39,7 @@
                 <category_icon v-bind:a_icon="{s_icon_class: item.s_icon_class, s_icon_color: item.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> {{ item.text_category }} </div>
+                        <div> {{ item.text_category }} <span class="percents"> {{ item.m_sum_percent }} % </span> </div>
                         <div> {{ item.m_sum }} </div>
                     </div>
                     <v-progress-linear :value="item.m_sum_percent" :color="item.s_icon_color"></v-progress-linear>
@@ -107,5 +107,16 @@ export default {
     justify-content: space-between;
     margin-bottom: 6px;
   }
+}
+
+.percents {
+  margin-left: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  color: #787676;
 }
 </style>
