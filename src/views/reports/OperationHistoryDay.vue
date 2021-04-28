@@ -55,6 +55,7 @@
             <v-list-item-group color="primary">
             
               <v-list-item
+                :to="{ name: 'OperationEdit', params: {k_operation: item.k_operation}}"
                 v-for="(item, k_category) in day"
                 :key="k_category"
               >
@@ -66,7 +67,7 @@
                     }" />
                 </v-list-item-icon>
 
-                  <v-list-item-title v-text="item.text_category"></v-list-item-title>
+                  <v-list-item-title v-text="item.text_comment ? item.text_comment : item.text_category"></v-list-item-title>
 
                 <v-list-item-action>
                   <span :class="{ income: item.is_income, spending: !item.is_income || item.m_sum < 0 }"> {{ item.m_sum }} </span>

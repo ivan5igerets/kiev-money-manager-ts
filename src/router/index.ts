@@ -123,6 +123,15 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/operation/OperationAdd.vue')
   },
   {
+    path: '/operation-edit/:k_operation',
+    name: 'OperationEdit',
+    meta: {
+      title: 'Редактирование операции',
+      layout: 'edit'
+    },
+    component: () => import('../views/operation/OperationEdit.vue')
+  },
+  {
     path: '/diagram',
     name: 'Diagram',
     meta: {

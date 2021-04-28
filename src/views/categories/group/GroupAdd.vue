@@ -1,6 +1,6 @@
 <template>
   <loader v-if="loading" />
-  <v-form v-else ref="form" class="pa-4" id="category_add" @submit="save" lazy-validation>
+  <v-form v-else ref="form" class="pa-4" id="category_add" @submit.prevent="save" lazy-validation>
     <div class="d-flex justify-center align-center">
       <group_icon v-bind:a_icon="a_icon" />
       <group_name

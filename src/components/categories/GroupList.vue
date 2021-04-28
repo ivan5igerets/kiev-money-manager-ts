@@ -1,11 +1,6 @@
 <template>
-  <div class="css-category-list">
-    <v-list-group
-      v-for="(a_group, i_index) in a_group_list"
-      :key="i_index"
-      no-action
-      flat
-    >
+  <div class="css-group-list">
+    <v-list-group v-for="(a_group, i_index) in a_group_list" :key="i_index" no-action flat>
       <template v-slot:activator>
         <category_icon v-bind:a_icon="{s_icon_class: a_group.s_icon_class, s_icon_color: a_group.s_icon_color}" />
         <v-list-item-title>{{a_group.text_group}}</v-list-item-title>
@@ -160,9 +155,12 @@ export default {
 </script>
 
 <style lang="scss">
-.css-category-list {
+.css-group-list {
   .v-list-group__header__append-icon {
     display: none !important;
+  }
+  .v-list-item__action {
+    padding-right: 2px!important;
   }
 }
 </style>
