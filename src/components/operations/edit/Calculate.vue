@@ -268,7 +268,7 @@ export default {
 
 .css-operation-sum {
   position: absolute;
-  padding-top: 5px;
+  padding-top: 5px !important;
   width: 100%;
   text-align: right;
   border-bottom: 0!important;
@@ -283,7 +283,7 @@ export default {
 }
 
 .css-operation-comment {
-  padding-top: 5px;
+  padding-top: 5px !important;
   border-radius: 0;
   height: 45px;
   width: 75%;

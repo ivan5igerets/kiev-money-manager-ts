@@ -1,39 +1,30 @@
 <template>
   <div>
-    <!-- Тут будет выводиться список операций за день -->
-
     <div class="header">
       <div class="indicator-box">
         <div> Доход </div>
         <div class="income"> {{ monthlyIncome }} </div>
       </div>
-
       <v-divider
         inset
         vertical
       ></v-divider>
-      
       <div class="indicator-box">
         <div> Затраты </div>
         <div class="spending"> {{ monthlySpanding }} </div>
       </div>
-
-
       <v-divider
         inset
         vertical
       ></v-divider>
-
       <div class="indicator-box">
         <div> Баланс </div>
         <div class="balance"> {{ monthlyIncome - monthlySpanding }} </div>
       </div>
     </div>
-
       <div class="list-placeholder" v-if="!days.length && !loading">
         В этом месяце нет записей
       </div>
-
     <loader v-if="loading" />
     <div 
       v-else
@@ -42,7 +33,6 @@
       v-for="(day, i) in days"
       :key="i"
     >
-
           <div class="list-header">
             <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
             <div class="right-part">
@@ -50,41 +40,32 @@
               <div class="item" v-if="sumOfDaysSpanding(day)"> <span class="grey-small-text"> Затраты: </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
             </div>
           </div>
-
           <v-list dense class="css-operation-day">
-
             <v-list-item-group color="primary">
-            
               <v-list-item
                 :to="{name: 'OperationEdit', params: {k_operation: item.k_operation}}"
                 v-for="(item, k_category) in day"
                 :key="k_category"
                 :disabled="Boolean(item.is_system)"
+                class="css-list-item"
               >
-                <v-list-item-icon>
-                  <category_icon 
+                <v-list-item-icon class="css-list-item-icon">
+                  <category_icon
                     v-bind:a_icon="{
                       s_icon_class: item.s_icon_class, 
                       s_icon_color: item.s_icon_color
-                    }" />
+                    }"/>
                 </v-list-item-icon>
-
                   <v-list-item-title v-text="item.text_comment ? item.text_comment : item.text_category"></v-list-item-title>
-
-                <v-list-item-action>
+                <v-list-item-action class="css-item-action">
                   <span :class="{ income: item.is_income, spending: !item.is_income || item.m_sum < 0 }"> {{ item.m_sum }} </span>
                 </v-list-item-action>
-
               </v-list-item>
-
             </v-list-item-group>
-            
           </v-list>
         </div>
      <operation_button_add />
   </div>
-
-  
 </template>
 
 <script>
@@ -162,7 +143,6 @@ export default {
       let k;
       for (let i = 0; i < keys.length; i++) {
         k = keys[i];
-        // console.log(k, ':', daysTemp[k]);
         this.days.push(daysTemp[k])
       }
     },
@@ -220,12 +200,9 @@ export default {
 
     changeDate(date) {
       this.date = date
-      // console.log('date', this.date);
       this.getOperations();
     },
-
   }
-
 }
 </script>
 
@@ -233,6 +210,19 @@ export default {
 
 .day {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.css-list-item {
+  padding: 0 12px !important;
+}
+
+.css-list-item-icon {
+  margin-right: 20px !important;
+}
+
+.css-item-action {
+  margin-left:5px;
+  min-width: auto!important;
 }
 
 .last-day {
@@ -247,11 +237,9 @@ export default {
 }
 
 .datepicker {
-  // width: calc(100% - 20px);
   height: 50px;
   padding: 0 10px;
   margin-top: 10px;
-  // background: chocolate;
 }
 
 .list-placeholder {

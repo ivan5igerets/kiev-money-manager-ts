@@ -63,10 +63,6 @@ export default {
 
     watch: {
       $route: function(newUrl) {
-        if (newUrl.name == 'OperationHistoryDay') {
-          this.changeDate();
-        }
-
         if (newUrl.name !== 'Diagram' && newUrl.name !== 'OperationHistoryDay') {
           this.initDate();
         }

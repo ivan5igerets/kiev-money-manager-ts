@@ -79,10 +79,6 @@ export default class ChangePassword extends Vue {
   private changePassword(): void {
 
     if (this.validation()) {
-      console.log(this.oldPassword);
-      console.log(this.newPassword);
-      console.log(this.newPassword2);
-
       profileApi.changePassword({
         "password_old": this.oldPassword,
         "password_new": this.newPassword,
