@@ -36,8 +36,18 @@
           <div class="list-header">
             <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
             <div class="right-part">
-              <div class="item" v-if="sumOfDaysIncome(day)"> <span class="grey-small-text"> Доход: </span> <span class="income"> {{ sumOfDaysIncome(day) }} </span> </div>
-              <div class="item" v-if="sumOfDaysSpanding(day)"> <span class="grey-small-text"> Затраты: </span> <span class="spending"> {{ sumOfDaysSpanding(day) }} </span> </div>
+              <div class="item" v-if="sumOfDaysIncome(day)">
+                <span class="grey-small-text">
+                  Доход: </span> <span class="income">{{sumOfDaysIncome(day)}}
+              </span> </div>
+              <div class="item" v-if="sumOfDaysSpanding(day)">
+                <span class="grey-small-text">
+                  Затраты: </span> <span class="spending"> {{sumOfDaysSpanding(day)}}
+              </span> </div>
+              <div class="item" v-if="sumOfDaysTransfer(day)">
+                <span class="grey-small-text">
+                  Перенос: </span> <span class="balance"> {{sumOfDaysTransfer(day)}}
+              </span> </div>
             </div>
           </div>
           <v-list dense class="css-operation-day">
@@ -58,7 +68,10 @@
                 </v-list-item-icon>
                   <v-list-item-title v-text="item.text_comment ? item.text_comment : item.text_category"></v-list-item-title>
                 <v-list-item-action class="css-item-action">
-                  <span :class="{ income: item.is_income, spending: !item.is_income || item.m_sum < 0 }"> {{ item.m_sum }} </span>
+                  <span
+                      :class="{transfer:item.is_system, income: item.is_income, spending: !item.is_income || item.m_sum < 0 }">
+                    {{item.m_sum}}
+                  </span>
                 </v-list-item-action>
               </v-list-item>
             </v-list-item-group>
@@ -174,6 +187,15 @@ export default {
       return this.countSumOfDayTransactions(arr, 0);
     },
 
+    sumOfDaysTransfer(arr) {
+      return arr.reduce( (total, day) => {
+        if (day.is_system) {
+          return total + day.m_sum;
+        }
+        return total;
+      }, 0 )
+    },
+
     dateFormating(dateStr) {
       const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
       const date = new Date(dateStr);
@@ -207,6 +229,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+$income: #5ED400;
+$spending: #FF0000;
+$balance: #028BD9;
 
 .day {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
@@ -285,14 +311,18 @@ export default {
 }
 
 .income {
-  color: #5ED400;
+  color: $income;
 }
 
 .spending {
-  color: #FF0000;
+  color: $spending;
+}
+
+.transfer {
+  color: $balance;
 }
 
 .balance {
-  color: #028BD9;
+  color: $balance;
 }
 </style>
