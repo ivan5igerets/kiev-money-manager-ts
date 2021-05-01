@@ -24,7 +24,6 @@ import categories from '@/components/operations/edit/Categories'
 import delete_dialog_window from '@/components/DeleteDialogWindow'
 import loader from '@/components/Loader'
 
-
 import {CoreDate} from '/src/date/CoreDate.js'
 
 import operationApi from '@/api/operation'
@@ -73,8 +72,8 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.push({name: 'OperationHistoryDay'})
-      }).fail((o_error) => {
+        this.$router.push({name: 'OperationHistoryDay', query: {dl_date: a_operation['dl_operation']}})
+      }).catch((o_error) => {
         console.log(o_error)
       });
     },

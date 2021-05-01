@@ -40,17 +40,6 @@ export default {
   methods: {
     categorySelect(k_category) {
       this.k_category = k_category
-
-      const i_calculate_height = 251
-      const i_wrap_height = document.getElementsByClassName('v-main__wrap')[0].offsetHeight
-      const category_list = document.getElementById('category-list-container')
-      const i_category_height = category_list.offsetHeight
-
-      const i_delta = i_wrap_height - i_calculate_height
-      if(i_delta < i_category_height) {
-        const i_height_sub = i_category_height - i_delta
-        category_list.style.height = (i_category_height-i_height_sub)+'px';
-      }
     },
 
     save(a_operation) {
@@ -60,8 +49,8 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.push({name: 'OperationHistoryDay'})
-      }).fail((o_error) => {
+        this.$router.push({name: 'OperationHistoryDay', query: {dl_date: a_operation['dl_operation']}})
+      }).catch((o_error) => {
         console.log(o_error)
       });
     }

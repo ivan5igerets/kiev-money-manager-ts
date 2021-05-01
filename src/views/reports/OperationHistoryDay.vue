@@ -38,8 +38,9 @@
     <div 
       v-else
       class="day"
+      v-bind:class="{'last-day': i === days.length-1}"
       v-for="(day, i) in days"
-      :key="i"  
+      :key="i"
     >
 
           <div class="list-header">
@@ -50,18 +51,19 @@
             </div>
           </div>
 
-          <v-list dense >
+          <v-list dense class="css-operation-day">
 
             <v-list-item-group color="primary">
             
               <v-list-item
-                :to="{ name: 'OperationEdit', params: {k_operation: item.k_operation}}"
+                :to="{name: 'OperationEdit', params: {k_operation: item.k_operation}}"
                 v-for="(item, k_category) in day"
                 :key="k_category"
+                :disabled="Boolean(item.is_system)"
               >
                 <v-list-item-icon>
                   <category_icon 
-                    v-bind:a_icon="{ 
+                    v-bind:a_icon="{
                       s_icon_class: item.s_icon_class, 
                       s_icon_color: item.s_icon_color
                     }" />
@@ -104,7 +106,6 @@ export default {
       loading: false,
       days: [],
       date: '',
-      // isDateOpen: false,
       monthlyIncome: 0,
       monthlySpanding: 0,
     }
@@ -123,7 +124,6 @@ export default {
   },
 
   methods: {
-
     getOperations() {
       this.loading = true;
       this.days = [];
@@ -138,7 +138,7 @@ export default {
         this.loading = false;
       })
       .catch(err => {
-        // console.log('day err', err.response.data.errors);
+        console.log(err);
         this.loading = false;
       })
     },
@@ -232,8 +232,11 @@ export default {
 <style lang="scss" scoped>
 
 .day {
-  // border-bottom: 1px solid #e0e0e0;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.last-day {
+  margin-bottom: 33px;
 }
 
 .header {

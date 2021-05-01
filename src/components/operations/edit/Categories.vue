@@ -61,6 +61,19 @@ export default {
     categorySelect(value) {
       this.k_category_select = value
       this.$emit('category_select', value)
+    },
+
+    categoryHeightResize() {
+      const i_calculate_height = 251
+      const i_wrap_height = document.getElementsByClassName('v-main__wrap')[0].offsetHeight
+      const category_list = document.getElementById('category-list-container')
+      const i_category_height = category_list.offsetHeight
+
+      const i_delta = i_wrap_height - i_calculate_height
+      if(i_delta < i_category_height) {
+        const i_height_sub = i_category_height - i_delta
+        category_list.style.height = (i_category_height-i_height_sub)+'px';
+      }
     }
   },
 
@@ -69,7 +82,12 @@ export default {
       this.a_categories = a_response.data
       this.loading = false
     })
-  }
+  },
+
+  updated() {
+    if(this.k_category_select)
+      this.categoryHeightResize()
+  },
 }
 
 </script>

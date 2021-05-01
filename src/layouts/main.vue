@@ -58,7 +58,7 @@
     <v-sheet
       class="overflow-y-auto"
       id="scroll-area"
-      max-height="90vh"
+      max-height="92vh"
       v-if="$route.meta.is_nav_menu"
       v-on:scroll.passive="scroll"
     >

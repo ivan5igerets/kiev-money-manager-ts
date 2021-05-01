@@ -3,8 +3,7 @@
       v-if="$route.meta.isNeedDate"
       class="datepicker"
     >
-
-        <v-menu
+        <v-dialog
           left
           v-model="isDateOpen"
           :close-on-content-click="false"
@@ -13,15 +12,10 @@
           offset-x
           min-width="auto"
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="month"
-              placeholder="Месяц"
-              prepend-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
+          <template v-slot:activator="{on, attrs}">
+            <div v-bind="attrs" v-on="on" class="d-flex">
+              <div>{{month}}</div><v-icon>mdi-calendar</v-icon>
+            </div>
           </template>
           <v-date-picker
             v-model="date"
@@ -29,12 +23,12 @@
             locale="ru"
             @input="changeDate"
           ></v-date-picker>
-        </v-menu>
-
+        </v-dialog>
     </div>
 </template>
 
 <script>
+import {CoreDate} from '/src/date/CoreDate.js'
 
 import {mapMutations} from 'vuex'
 
@@ -58,8 +52,7 @@ export default {
         },
 
         initDate() {
-          const tempDate = new Date();
-          this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
+          this.date = this.$route.query.dl_date ? this.$route.query.dl_date : CoreDate.now()
           this.setMonth(this.date)
         },
 
@@ -72,7 +65,6 @@ export default {
       $route: function(newUrl) {
         if (newUrl.name == 'OperationHistoryDay') {
           this.changeDate();
-          // console.log('change data');
         }
 
         if (newUrl.name !== 'Diagram' && newUrl.name !== 'OperationHistoryDay') {
@@ -92,11 +84,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.datepicker {
-  width: 110px;
-  height: 30px;
-}
-
-</style>
