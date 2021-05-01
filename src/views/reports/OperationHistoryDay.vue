@@ -86,7 +86,7 @@ import operation_button_add from '@/components/operations/ButtonsAdd'
 import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
 import loader from '@/components/Loader'
-import { mapState } from 'vuex'
+import {mapState} from 'vuex'
 
 export default {
   components: {
