@@ -40,9 +40,9 @@
                 <span class="grey-small-text">
                   Доход: </span> <span class="income">{{sumOfDaysIncome(day)}}
               </span> </div>
-              <div class="item" v-if="sumOfDaysSpanding(day)">
+              <div class="item" v-if="sumOfDaysSpending(day)">
                 <span class="grey-small-text">
-                  Затраты: </span> <span class="spending"> {{sumOfDaysSpanding(day)}}
+                  Затраты: </span> <span class="spending"> {{sumOfDaysSpending(day)}}
               </span> </div>
               <div class="item" v-if="sumOfDaysTransfer(day)">
                 <span class="grey-small-text">
@@ -170,9 +170,9 @@ export default {
         });
     },
 
-    countSumOfDayTransactions(arr, flag) {
+    countSumOfDayTransactions(arr, is_system, is_income) {
       return arr.reduce( (total, day) => {
-        if (day.is_income === flag) {
+        if((is_income !== undefined && day.is_income === is_income && !day.is_system) || is_system && day.is_system) {
           return total + day.m_sum;
         } 
         return total;
@@ -180,20 +180,15 @@ export default {
     }, 
 
     sumOfDaysIncome(arr) {
-      return this.countSumOfDayTransactions(arr, 1);
+      return this.countSumOfDayTransactions(arr, 0, 1);
     },
 
-    sumOfDaysSpanding(arr) {
-      return this.countSumOfDayTransactions(arr, 0);
+    sumOfDaysSpending(arr) {
+      return this.countSumOfDayTransactions(arr, 0, 0);
     },
 
     sumOfDaysTransfer(arr) {
-      return arr.reduce( (total, day) => {
-        if (day.is_system) {
-          return total + day.m_sum;
-        }
-        return total;
-      }, 0 )
+      return this.countSumOfDayTransactions(arr, 1);
     },
 
     dateFormating(dateStr) {
