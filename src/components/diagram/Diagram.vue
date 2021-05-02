@@ -2,18 +2,10 @@
   <div>   
     <PieChart />
     <v-divider />
-    
-     <!-- тут должен быть список  -->
-
     <div v-for="item in data" :key="item.id">
-      <category v-if="item.k_category" :data="item" />
-      <group v-if="item.k_category_group" :data="item" />
+      <category v-if="item.k_category" :data="item" v-bind:enable_budget_mode="enable_budget_mode"/>
+      <group v-if="item.k_category_group" :data="item" v-bind:enable_budget_mode="enable_budget_mode"/>
     </div>
-
-    <!-- <category />
-    <group /> -->
-
-
   </div>
 </template>
 
@@ -22,7 +14,6 @@ import PieChart from '@/components/diagram/charts/PieChart'
 import category from '@/components/diagram/list/Category'
 import group from '@/components/diagram/list/Group'
 
-
 export default {
   components: {
     PieChart,
@@ -30,17 +21,22 @@ export default {
     group,
   },
 
-  props: ['data'],
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+    enable_budget_mode: {
+      type: Boolean,
+      required: true,
+    },
+  },
 
   data() {
     return {
       power: 50
     }
   },
-
-  // methods: {
-
-  // },
 }
 </script>
 

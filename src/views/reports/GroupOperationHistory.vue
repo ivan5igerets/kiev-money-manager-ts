@@ -24,7 +24,7 @@
                     v-bind:i_height="5"
                     v-bind:m_budget="a_category.m_budget"
                     v-bind:m_sum_total="a_category.m_sum"
-                    v-show="a_category.m_budget !== 0"
+                    v-show="a_category.m_budget !== 0 && enable_budget_mode && !a_category.is_income"
                   />
                 </div>
               </div>
@@ -63,6 +63,7 @@ export default {
       a_categories: [],
       a_group: {},
       dl_filter: CoreDate.now(),
+      enable_budget_mode: false,
       k_category_group: this.$route.params.k_category_group,
       loading: true,
       m_budget: 0,
@@ -106,8 +107,9 @@ export default {
       this.a_categories = a_response[0].data
       this.m_sum_total = this.operationSumTotal(this.a_categories)
       this.text_group = a_response[1].data.text_group
+      this.enable_budget_mode = a_response[2].data.setups.enable_budget_mode
 
-      if(a_response[2].data.setups.enable_budget_mode && !a_response[1].data.is_income)
+      if(this.enable_budget_mode && !a_response[1].data.is_income)
       {
         if(a_response[1].data.m_budget_float !== 0)
         {

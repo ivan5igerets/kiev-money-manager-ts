@@ -1,37 +1,38 @@
 <template>
-    <div>
-        <v-tabs grow v-model="tab">
-            <v-tab>Затраты</v-tab>
-            <v-tab>Доход</v-tab>
-        </v-tabs>
+  <loader v-if="loading" />
+  <div v-else>
+    <v-tabs grow v-model="tab">
+      <v-tab>Затраты</v-tab>
+      <v-tab>Доход</v-tab>
+    </v-tabs>
+    <v-divider />
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
+        <Diagram
+            v-if="tab === 0"
+            key="1"
+            :data="spending"
+            v-bind:enable_budget_mode="enable_budget_mode"
+        />
+      </v-tab-item>
 
-        <v-divider />
-
-        <loader v-if="loading" />
-        <v-tabs-items v-else v-model="tab">
-            <v-tab-item> 
-                <Diagram 
-                    v-if="tab === 0" 
-                    key="1" 
-                    :data="spending"
-                />  
-            </v-tab-item>
-            
-            <v-tab-item> 
-                <Diagram 
-                    v-if="tab === 1" 
-                    key="2" 
-                    :data="income"
-                />  
-            </v-tab-item>
-        </v-tabs-items>
-    </div>
+      <v-tab-item>
+        <Diagram
+            v-if="tab === 1"
+            key="2"
+            :data="income"
+            v-bind:enable_budget_mode="enable_budget_mode"
+        />
+      </v-tab-item>
+    </v-tabs-items>
+  </div>
 </template>
 
 <script>
 import loader from '@/components/Loader'
 import Diagram from '@/components/diagram/Diagram'
 import historyApi from '@/api/history'
+import userApi from '@/api/auth'
 
 export default {
     components: {
@@ -42,8 +43,9 @@ export default {
     data() {
         return {
             tab: null,
-            loading: !true,
+            loading: true,
             date: '2021-05',
+            enable_budget_mode: false,
             income: [],
             spending: [],
         }
@@ -55,16 +57,14 @@ export default {
 
     methods: {
         getData() {
-            historyApi.month({
-                dl_filter: this.date + '-01'
-            })
-            .then(res => {
-                console.log(res.data);
-                this.sortByType(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+          Promise.all([historyApi.month({dl_filter: this.date + '-01'}), userApi.getUser()]).then(a_response => {
+            this.sortByType(a_response[0].data)
+            this.enable_budget_mode = Boolean(a_response[1].data.setups.enable_budget_mode)
+            this.loading = false
+          })
+          .catch(err => {
+            console.log(err);
+          })
         },
 
         sortByType(arr) {
