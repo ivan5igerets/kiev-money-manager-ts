@@ -103,7 +103,7 @@ export default {
         })
       });
 
-      this.is_budget_show = a_response[2].data.setups.enable_budget_mode
+      this.is_budget_show = a_response[2].data.setups.enable_budget_mode && !this.a_group_info.is_income
       this.loading = false
     });
   },

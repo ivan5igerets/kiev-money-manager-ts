@@ -14,12 +14,18 @@
             <v-list-item-content>
               <div class="d-flex">
                 <category_icon v-bind:a_icon="a_category.a_icon"/>
-                <div class="width-100 main-part d-flex align-center">
-                  <div class="mr-2">
-                    <div>{{a_category.text_category}}</div>
+                <div class="width-100 align-self-center">
+                  <div class="d-flex">
+                    {{a_category.text_category}}
+                    <div class="grey--text ml-2">{{a_category.m_sum_percent}}%</div>
+                    <div class="ml-auto">{{a_category.m_sum}}</div>
                   </div>
-                  <div class="grey--text">{{a_category.m_sum_percent}}%</div>
-                  <div class="ml-auto">{{a_category.m_sum}}</div>
+                  <group_budget_line_diagram
+                    v-bind:i_height="5"
+                    v-bind:m_budget="a_category.m_budget"
+                    v-bind:m_sum_total="a_category.m_sum"
+                    v-show="a_category.m_budget !== 0"
+                  />
                 </div>
               </div>
             </v-list-item-content>
@@ -35,6 +41,8 @@
 import category_icon from '@/components/categories/IconShow'
 import loader from '@/components/Loader'
 import category_budget from '@/components/reports/CategoryBudget'
+import group_budget_line_diagram from '@/components/reports/CategoryBudgetLineDiagram'
+
 
 import {CoreDate} from '/src/date/CoreDate.js'
 
@@ -46,6 +54,7 @@ export default {
   components: {
     category_budget,
     category_icon,
+    group_budget_line_diagram,
     loader
   },
 

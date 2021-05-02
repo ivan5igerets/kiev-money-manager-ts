@@ -70,7 +70,7 @@ export default {
         })
       });
 
-      this.is_budget_show = a_response[1].data.setups.enable_budget_mode
+      this.is_budget_show = a_response[1].data.setups.enable_budget_mode && !this.$route.query.is_income
       this.loading = false
     });
   },
