@@ -82,10 +82,13 @@ export default {
     budgetPercentCalculate(a_operations) {
       let m_sum_operation_total = 0
       a_operations.forEach((a_operation) => {
-        if(!a_operation.is_income)
+        if(a_operation.is_income)
           m_sum_operation_total += a_operation.m_sum
       })
-      return Math.round(((m_sum_operation_total * (this.a_category.m_budget_percent/100)) + Number.EPSILON)*100) / 100
+
+      return m_sum_operation_total ?
+        Math.round(((m_sum_operation_total * (this.a_category.m_budget_percent/100)) + Number.EPSILON)*100) / 100 :
+        0
     }
   },
 
@@ -110,7 +113,7 @@ export default {
         }
         else if(a_response[1].data.m_budget_percent !== 0)
         {
-          historyApi.day({dl_filter: this.dl_filter}).then((o_response) => {
+          historyApi.day({dl_filter: this.dl_filter, is_income: 1}).then((o_response) => {
             this.m_budget = this.budgetPercentCalculate(o_response.data)
             this.show_budget_statistic = true
             this.loading = false
@@ -135,7 +138,7 @@ export default {
       this.dl_filter = dl_filter
       Promise.all([
         historyApi.categoryOperationHistory(this.$route.params.k_category, {dl_filter: this.dl_filter}),
-        historyApi.day({dl_filter: this.dl_filter})
+        historyApi.day({dl_filter: this.dl_filter, is_income: 1})
       ]).then(o_response => {
         this.a_operations = o_response[0].data
         this.m_sum_total = this.operationSumTotal(this.a_operations)

@@ -23,7 +23,7 @@
 <script>
 import category_line_diagram from '@/components/reports/CategoryBudgetLineDiagram'
 
-export  default {
+export default {
   components: {
     category_line_diagram
   },
@@ -49,7 +49,7 @@ export  default {
 
   methods: {
     sumTotalPercentCalculate(m_sum) {
-      return this.round((m_sum*100) / this.m_budget)
+      return this.m_budget ? this.round((m_sum*100) / this.m_budget) : 0
     },
 
     sumTotalPercentLeft() {
