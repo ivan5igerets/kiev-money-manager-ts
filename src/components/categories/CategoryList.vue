@@ -6,7 +6,7 @@
         :key="i_index"
         @click="categoryEdit(a_category.k_category)"
       >
-        <v-list-item-icon>
+        <v-list-item-icon class="mr-3">
           <category_icon v-bind:a_icon="{s_icon_class: a_category.s_icon_class, s_icon_color: a_category.s_icon_color}"/>
         </v-list-item-icon>
         <v-list-item-title v-text="a_category.text_category"></v-list-item-title>

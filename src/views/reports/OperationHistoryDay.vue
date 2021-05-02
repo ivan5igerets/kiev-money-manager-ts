@@ -59,7 +59,7 @@
                 :disabled="Boolean(item.is_system)"
                 class="css-list-item"
               >
-                <v-list-item-icon class="css-list-item-icon">
+                <v-list-item-icon class="mr-3">
                   <category_icon
                     v-bind:a_icon="{
                       s_icon_class: item.s_icon_class, 
@@ -235,10 +235,6 @@ $balance: #028BD9;
 
 .css-list-item {
   padding: 0 12px !important;
-}
-
-.css-list-item-icon {
-  margin-right: 20px !important;
 }
 
 .css-item-action {
