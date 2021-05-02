@@ -4,7 +4,7 @@
         <v-list-item :to="{name: 'CategoryOperationHistory', params: {k_category: data.k_category}}">
             <v-list-item-content>
               <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
+                <category_icon v-bind:a_icon="data.a_icon"/>
                 <div class="main-part">
                     <div class="text">
                         <div> {{ data.text_category }} </div>

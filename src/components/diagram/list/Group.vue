@@ -40,7 +40,7 @@
         >
             <v-list-item-content>
               <div class="item">
-                <category_icon v-bind:a_icon="{s_icon_class: item.s_icon_class, s_icon_color: item.s_icon_color}"/>
+                <category_icon v-bind:a_icon="item.a_icon"/>
                 <div class="main-part">
                     <div class="text">
                         <div> {{ item.text_category }} </div>
