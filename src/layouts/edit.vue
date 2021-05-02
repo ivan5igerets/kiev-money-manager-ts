@@ -5,7 +5,7 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <div class="d-flex align-center flex-grow-1">
-        <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+        <v-toolbar-title class="pl-0">{{$route.meta.title}}</v-toolbar-title>
         <v-icon class="ml-auto" color="red lighten-1" @click="deleteItem" v-if="is_edit">mdi-delete</v-icon>
       </div>
     </v-app-bar>

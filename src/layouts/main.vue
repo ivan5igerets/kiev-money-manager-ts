@@ -49,7 +49,7 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+      <v-toolbar-title class="pl-0">{{$route.meta.title}}</v-toolbar-title>
 
       <v-spacer />
 
