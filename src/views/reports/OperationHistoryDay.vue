@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <loader v-if="loading" />
+  <div v-else>
     <div class="header">
       <div class="indicator-box">
         <div> Доход </div>
@@ -25,9 +26,7 @@
       <div class="list-placeholder" v-if="!days.length && !loading">
         В этом месяце нет записей
       </div>
-    <loader v-if="loading" />
-    <div 
-      v-else
+    <div
       class="day"
       v-bind:class="{'last-day': i === days.length-1}"
       v-for="(day, i) in days"
