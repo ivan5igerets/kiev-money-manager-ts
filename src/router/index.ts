@@ -142,6 +142,17 @@ const routes: Array<RouteConfig> = [
     },
     component: () => import('../views/diagram/DiagramPage.vue')
   },
+  {
+    path: '/category-operation-history/:k_category',
+    name: 'CategoryOperationHistory',
+    meta: {
+      title: 'История операций',
+      layout: 'mainn',
+      is_back: true,
+      isNeedDate: true,
+    },
+    component: () => import('../views/reports/CategoryOperationHistory.vue')
+  },
 ]
 
 const router = new VueRouter({

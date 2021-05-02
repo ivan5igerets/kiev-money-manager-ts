@@ -16,13 +16,11 @@
             </v-list-item-content> 
         </v-list-item>
       </v-list-item-group>
-
      </v-list>
 </template>
 
 <script>
 import category_icon from '@/components/categories/IconShow'
-
 
 export default {
   components: {

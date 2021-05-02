@@ -72,7 +72,7 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.push({name: 'OperationHistoryDay', query: {dl_date: a_operation['dl_operation']}})
+        this.$router.go(-1)
       }).catch((o_error) => {
         console.log(o_error)
       });
@@ -80,7 +80,7 @@ export default {
 
     operationDelete() {
       operationApi.destroy(this.$route.params.k_operation).then(() => {
-        this.$router.push({name: 'OperationHistoryDay'})
+        this.$router.go(-1)
       })
     }
   },
