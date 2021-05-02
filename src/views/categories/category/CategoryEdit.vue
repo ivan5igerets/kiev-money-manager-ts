@@ -101,7 +101,7 @@ export default {
       if(this.a_category_info.k_category_group)
         this.k_category_group = this.a_category_info.k_category_group
 
-      this.show_budget = a_response[2].data.setups.enable_budget_mode
+      this.show_budget = a_response[2].data.setups.enable_budget_mode && !this.a_category_info.is_income
       this.loading = false
     });
   },

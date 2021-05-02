@@ -7,7 +7,7 @@
       v-bind:text_category="text_category"
       v-bind:show_budget_statistic="show_budget_statistic"
     />
-    <v-list class="mt-4 box-shadow pt-0 pb-0">
+    <v-list class="mt-4 box-shadow pt-0 pb-0" v-if="!!a_operations">
       <v-list-item-group>
         <div :key="i" v-for="(a_operation, i) in a_operations">
           <v-list-item :to="{name: 'OperationEdit', params: {k_operation: a_operation.k_operation}}">
@@ -29,6 +29,7 @@
         </div>
       </v-list-item-group>
     </v-list>
+    <div v-else>Нет не одной операции</div>
   </div>
 </template>
 <script>
@@ -65,8 +66,8 @@ export default {
 
   methods: {
     dateFormat(dl_date) {
-      const a_date = CoreDate.toArray(dl_date);
-      return a_date.reverse().join('/');
+      const a_date = CoreDate.toArray(dl_date)
+      return a_date.reverse().join('/')
     },
 
     operationSumTotal(a_operations) {
@@ -81,7 +82,7 @@ export default {
     budgetPercentCalculate(a_operations) {
       let m_sum_operation_total = 0
       a_operations.forEach((a_operation) => {
-        if(this.a_category.is_income === a_operation.is_income)
+        if(!a_operation.is_income)
           m_sum_operation_total += a_operation.m_sum
       })
       return Math.round(((m_sum_operation_total * (this.a_category.m_budget_percent/100)) + Number.EPSILON)*100) / 100
@@ -99,7 +100,7 @@ export default {
       this.m_sum_total = this.operationSumTotal(this.a_operations)
       this.text_category = a_response[1].data.text_category
 
-      if(a_response[2].data.setups.enable_budget_mode)
+      if(a_response[2].data.setups.enable_budget_mode && !a_response[1].data.is_income)
       {
         if(a_response[1].data.m_budget_float !== 0)
         {
@@ -120,6 +121,11 @@ export default {
           this.show_budget_statistic = false
           this.loading = false
         }
+      }
+      else
+      {
+        this.show_budget_statistic = false
+        this.loading = false
       }
     });
   },

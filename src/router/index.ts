@@ -146,7 +146,7 @@ const routes: Array<RouteConfig> = [
     path: '/category-operation-history/:k_category',
     name: 'CategoryOperationHistory',
     meta: {
-      title: 'История операций',
+      title: 'История операций категории',
       layout: 'mainn',
       is_back: true,
       isNeedDate: true,

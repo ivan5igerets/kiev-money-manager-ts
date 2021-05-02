@@ -33,7 +33,11 @@
             </v-menu> -->
         </template>
 
-        <v-list-item v-for="item in data.a_category" :key="item.id">
+        <v-list-item
+            :key="item.id"
+            :to="{name: 'CategoryOperationHistory', params: {k_category: item.k_category}}"
+            v-for="item in data.a_category"
+        >
             <v-list-item-content>
               <div class="item">
                 <category_icon v-bind:a_icon="{s_icon_class: item.s_icon_class, s_icon_color: item.s_icon_color}"/>
