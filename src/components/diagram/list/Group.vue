@@ -3,7 +3,7 @@
     <v-list-group no-action flat>
         <template v-slot:activator>
 
-            <v-list-item-content>
+            <v-list-item-content @click.stop="openGroupOperationHistory(data.k_category_group)">
               <div class="item">
                 <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
                 <div class="main-part">
@@ -67,6 +67,12 @@ export default {
   },
 
   props: ['data'],
+
+  methods: {
+    openGroupOperationHistory(k_category_group) {
+      this.$router.push({name: 'GroupOperationHistory', params: {k_category_group: k_category_group}})
+    }
+  },
 
   created() {
       console.log(this.data);

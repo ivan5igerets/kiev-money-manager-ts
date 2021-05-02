@@ -153,6 +153,17 @@ const routes: Array<RouteConfig> = [
     },
     component: () => import('../views/reports/CategoryOperationHistory.vue')
   },
+  {
+    path: '/group-operation-history/:k_category_group',
+    name: 'GroupOperationHistory',
+    meta: {
+      title: 'История операций группы',
+      layout: 'mainn',
+      is_back: true,
+      isNeedDate: true,
+    },
+    component: () => import('../views/reports/GroupOperationHistory.vue')
+  },
 ]
 
 const router = new VueRouter({
