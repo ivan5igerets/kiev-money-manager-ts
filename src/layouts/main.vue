@@ -94,6 +94,7 @@
 <script>
 import {mapState} from 'vuex'
 import MonthPicker from '@/components/operations/MonthPicker'
+import {Token} from '/src/session/Token.js';
 
 export default {
 
@@ -122,6 +123,7 @@ export default {
       this.$router.go(-1)
     },
     logout() {
+      Token.reset()
       this.$router.push({name: 'Auth'})
     },
     scroll(o_event) {

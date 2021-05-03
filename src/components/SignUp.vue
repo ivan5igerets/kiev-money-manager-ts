@@ -34,6 +34,7 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
 import authApi from '@/api/auth'
+import {Token} from '/src/session/Token.js';
 
 @Component
 export default class Template extends Vue {
@@ -70,7 +71,7 @@ export default class Template extends Vue {
         })
         .then(res => {
             btn.disabled = false
-            localStorage.setItem('token', res.data.token)
+            Token.set(res.data.token)
             this.$router.push('/')
             })
         .catch(err => {
