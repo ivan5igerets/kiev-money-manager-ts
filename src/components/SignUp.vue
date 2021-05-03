@@ -25,7 +25,7 @@
         </form>
 
         <div>
-            <button form="signUp" ref="button" class="saveForm"> Зарегестрироваться </button>
+            <button form="signUp" ref="button" class="saveForm"> Зарегистрироваться </button>
         </div>
 
     </div>

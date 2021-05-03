@@ -17,6 +17,8 @@ import edit from '@/layouts/edit.vue'
 import empty from '@/layouts/empty.vue'
 import mainn from '@/layouts/main.vue'
 
+import {Token} from '/src/session/Token.js';
+
 @Component({
   components: {
     empty,
@@ -26,13 +28,13 @@ import mainn from '@/layouts/main.vue'
   }
 })
 export default class Template extends Vue {
-  
+
   @auth.Mutation
   private setName!: (newName: string) => void
 
   @auth.Mutation
   private setEmail!: (newName: string) => void
-  
+
   @auth.Mutation
   private loadingToggle!: (newValue: boolean) => void
 
@@ -41,6 +43,9 @@ export default class Template extends Vue {
   }
 
   getUser() {
+    if(!Token.get())
+      return
+
     this.loadingToggle(true);
     authApi.getUser()
     .then(res => {

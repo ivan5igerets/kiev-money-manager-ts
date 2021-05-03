@@ -10,7 +10,7 @@ const ifAuthenticated = (to, from, next) => {
     next()
     return
   }
-  next('/auth')
+  next('/')
 }
 
 const ifNotAuthenticated = (to, from, next) => {

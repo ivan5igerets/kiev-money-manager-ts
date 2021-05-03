@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-navigation-drawer v-model="drawer" app width="300">
       <div class="top-part">
         <img src="../assets/images/logo2.png" alt="">

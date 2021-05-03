@@ -21,6 +21,7 @@
         </v-menu>
       </template>
       <v-list-item
+        class="pl-14"
         v-for="(a_category, k_category) in a_group.a_category"
         :key="k_category"
         @click="categoryEdit(a_category.k_category)"

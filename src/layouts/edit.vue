@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-app-bar app>
       <v-btn icon @click="back">
         <v-icon>mdi-arrow-left</v-icon>
