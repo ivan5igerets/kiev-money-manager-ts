@@ -24,7 +24,7 @@ const ifNotAuthenticated = (to, from, next) => {
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/auth',
+    path: '/',
     name: 'Auth',
     meta: {
       layout: 'empty'
