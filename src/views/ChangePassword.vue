@@ -3,17 +3,17 @@
 
     <form class="changePassForm" id="change_password" @submit.prevent="changePassword">
 
-      <div class="input-wrap">
+      <div class="input-wrap text-center">
         <input type="password" :class="{inp_error: isOldPasswordError}" v-model="oldPassword" name="oldPassword" placeholder="Введите старый пароль" />
         <div v-show="isOldPasswordError" class="errorInputText" ref="passwordErrorText"> {{ oldPasswordErrorText }} </div>  
       </div>
       
-      <div class="input-wrap">
+      <div class="input-wrap text-center">
         <input type="password" :class="{inp_error: isNewPassword2Error}" v-model="newPassword" name="newPassword" placeholder="Введите новый пароль" />
         <div v-show="isNewPasswordError" class="errorInputText" ref="passwordErrorText"> {{ newPasswordErrorText }} </div>  
       </div>
       
-      <div class="input-wrap">
+      <div class="input-wrap text-center">
         <input type="password" :class="{inp_error: isNewPassword2Error}" v-model="newPassword2" name="newPassword2" placeholder="Подтвердите новый пароль" />
         <div v-show="isNewPassword2Error" class="errorInputText" ref="passwordErrorText"> {{ newPassword2ErrorText }} </div>
       </div>
