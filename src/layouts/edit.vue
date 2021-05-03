@@ -19,6 +19,8 @@
 
 export default {
   data() {
+    document.title = this.$route.meta.title || 'Money Manager';
+
     return {
       is_edit: this.$route.meta.is_edit ?? true
     }

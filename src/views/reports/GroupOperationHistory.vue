@@ -62,7 +62,7 @@ export default {
     return {
       a_categories: [],
       a_group: {},
-      dl_filter: CoreDate.now(),
+      dl_filter: CoreDate.systemNow(),
       enable_budget_mode: false,
       k_category_group: this.$route.params.k_category_group,
       loading: true,

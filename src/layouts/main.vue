@@ -101,7 +101,7 @@ export default {
     MonthPicker
   },
 
-  data: () => ({ 
+  data: () => ({
     drawer: null,
     selectedItem: null,
     items: [
@@ -127,6 +127,12 @@ export default {
     scroll(o_event) {
       this.$root.$emit('scroll-content', o_event)
     }
+  },
+
+  watch: {
+    $route(to, from) {
+      document.title = to.meta.title || 'Money Manager';
+    },
   },
 
   computed: {

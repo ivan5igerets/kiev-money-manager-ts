@@ -49,6 +49,7 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
+        CoreDate.systemSet(a_operation['dl_operation'])
         this.$router.go(-1)
       }).catch((o_error) => {
         console.log(o_error)

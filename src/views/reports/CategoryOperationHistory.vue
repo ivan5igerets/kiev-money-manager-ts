@@ -54,7 +54,7 @@ export default {
     return {
       a_category: {},
       a_operations: [],
-      dl_filter: CoreDate.now(),
+      dl_filter: CoreDate.systemNow(),
       k_category: this.$route.params.k_category,
       loading: true,
       m_budget: 0,

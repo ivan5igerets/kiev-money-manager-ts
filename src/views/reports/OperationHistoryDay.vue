@@ -1,6 +1,5 @@
 <template>
-  <loader v-if="loading" />
-  <div v-else>
+  <div>
     <div class="header">
       <div class="indicator-box">
         <div> Доход </div>
@@ -26,11 +25,13 @@
       <div class="list-placeholder" v-if="!days.length && !loading">
         В этом месяце нет записей
       </div>
+    <loader v-if="loading" />
     <div
       class="day"
       v-bind:class="{'last-day': i === days.length-1}"
       v-for="(day, i) in days"
       :key="i"
+      v-else
     >
           <div class="list-header">
             <div class="item"> {{ dateFormating(day[0].dl_operation) }} </div>
@@ -86,6 +87,7 @@ import category_icon from '@/components/categories/IconShow'
 import historyApi from '@/api/history'
 import loader from '@/components/Loader'
 import {mapState} from 'vuex'
+import {CoreDate} from "../../date/CoreDate";
 
 export default {
   components: {
@@ -98,14 +100,13 @@ export default {
     return {
       loading: false,
       days: [],
-      date: '',
+      date: CoreDate.systemNow(),
       monthlyIncome: 0,
       monthlySpanding: 0,
     }
   },
 
   mounted() {
-    this.initCurrentData();
     this.getOperations();
     this.$root.$on('change-date', this.changeDate)
   },
@@ -123,7 +124,7 @@ export default {
       this.monthlyIncome = 0;
       this.monthlySpanding = 0;
       historyApi.day({
-        dl_filter: this.date + '-01'
+        dl_filter: this.date
       })
       .then(res => {
         this.countSumOfMonthlyTransactions(res.data)
@@ -194,16 +195,6 @@ export default {
       const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
       const date = new Date(dateStr);
       return `${this.pad(date.getDate())}/${this.pad(date.getMonth() + 1)} ${ daysOfWeek[date.getDay()]}`;
-    },
-
-    initCurrentData() {
-      if (!this.month) {
-        const tempDate = new Date();
-        this.date = `${tempDate.getFullYear()}-${this.pad(tempDate.getMonth() + 1)}`
-      } else {
-        this.date = this.month;
-      }
-
     },
 
     pad(num) {

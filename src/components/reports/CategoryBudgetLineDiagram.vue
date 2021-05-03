@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-progress-linear
-      :background-color="(m_budget - m_sum_total) > 0 ? '#e0dfdf' : 'red'"
+      :background-color="(m_budget - m_sum_total) >= 0 ? '#e0dfdf' : 'red'"
       :value="budgetValue()"
       class="css-progress-linear"
       color="yellow"

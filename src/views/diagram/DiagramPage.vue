@@ -1,12 +1,12 @@
 <template>
-  <loader v-if="loading" />
-  <div v-else>
+  <div>
     <v-tabs grow v-model="tab">
       <v-tab>Затраты</v-tab>
       <v-tab>Доход</v-tab>
     </v-tabs>
     <v-divider />
-    <v-tabs-items v-model="tab">
+    <loader v-if="loading" />
+    <v-tabs-items v-model="tab" v-else>
       <v-tab-item>
         <Diagram
             v-if="tab === 0"
@@ -33,6 +33,7 @@ import loader from '@/components/Loader'
 import Diagram from '@/components/diagram/Diagram'
 import historyApi from '@/api/history'
 import userApi from '@/api/auth'
+import {CoreDate} from "../../date/CoreDate";
 
 export default {
     components: {
@@ -44,7 +45,7 @@ export default {
         return {
             tab: null,
             loading: true,
-            date: '2021-05',
+            date: CoreDate.systemNow(),
             enable_budget_mode: false,
             income: [],
             spending: [],
@@ -57,7 +58,7 @@ export default {
 
     methods: {
         getData() {
-          Promise.all([historyApi.month({dl_filter: this.date + '-01'}), userApi.getUser()]).then(a_response => {
+          Promise.all([historyApi.month({dl_filter: this.date}), userApi.getUser()]).then(a_response => {
             this.sortByType(a_response[0].data)
             this.enable_budget_mode = Boolean(a_response[1].data.setups.enable_budget_mode)
             this.loading = false

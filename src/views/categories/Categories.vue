@@ -1,12 +1,12 @@
 <template>
-  <loader v-if="loading" />
-  <div class="css-categories" v-else>
+  <div class="css-categories">
     <v-tabs grow v-model="tab">
       <v-tab>Затраты</v-tab>
       <v-tab>Доход</v-tab>
     </v-tabs>
     <v-divider></v-divider>
-    <v-tabs-items v-model="tab">
+    <loader v-if="loading" />
+    <v-tabs-items v-model="tab" v-else>
       <v-tab-item v-if="spending.groups.length || spending.categories.length">
         <v-list v-if="spending.groups.length">
           <v-subheader>Группы</v-subheader>

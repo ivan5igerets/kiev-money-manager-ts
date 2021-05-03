@@ -30,8 +30,6 @@
 <script>
 import {CoreDate} from '/src/date/CoreDate.js'
 
-import {mapMutations} from 'vuex'
-
 export default {
     data() {
         return {
@@ -45,20 +43,16 @@ export default {
     },
 
     methods: {
-        changeDate() {
-            this.isDateOpen = false;
-            this.setMonth(this.date);
-            this.$root.$emit('change-date', this.date)
+        changeDate(dl_date) {
+          this.date = dl_date+'-01'
+          this.isDateOpen = false;
+          CoreDate.systemSet(this.date)
+          this.$root.$emit('change-date', this.date)
         },
 
         initDate() {
-          this.date = this.$route.query.dl_date ? this.$route.query.dl_date : CoreDate.now()
-          this.setMonth(this.date)
+          this.date = CoreDate.systemNow()
         },
-
-        ...mapMutations({
-          setMonth: "date/setMonth",
-        }),
     },
 
     watch: {

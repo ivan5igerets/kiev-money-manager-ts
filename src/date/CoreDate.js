@@ -9,4 +9,16 @@ export class CoreDate {
   static toArray(dl_date) {
     return dl_date.split('-');
   }
+
+  static systemNow() {
+    let dl_date = localStorage.getItem('dl_date')
+    if(!dl_date)
+      dl_date = CoreDate.now()
+
+    return dl_date;
+  }
+
+  static systemSet(dl_date) {
+    localStorage.setItem('dl_date', dl_date)
+  }
 }
