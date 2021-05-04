@@ -1,6 +1,8 @@
 <template>
   <div>   
-    <PieChart />
+    <PieChart 
+      :data="data"
+    />
     <v-divider />
     <div v-for="item in data" :key="item.id">
       <category v-if="item.k_category" :data="item" v-bind:enable_budget_mode="enable_budget_mode"/>

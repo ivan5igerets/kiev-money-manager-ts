@@ -59,6 +59,7 @@ export default {
     methods: {
         getData() {
           Promise.all([historyApi.month({dl_filter: this.date}), userApi.getUser()]).then(a_response => {
+            this.sortBySum(a_response[0].data)
             this.sortByType(a_response[0].data)
             this.enable_budget_mode = Boolean(a_response[1].data.setups.enable_budget_mode)
             this.loading = false
@@ -69,12 +70,16 @@ export default {
         },
 
         sortByType(arr) {
-            arr.forEach(el => {
-                el.is_income ? this.income.push(el) : this.spending.push(el)
-            });
-
+          arr.forEach(el => {
+              el.is_income ? this.income.push(el) : this.spending.push(el)
+          });
         },
 
+        sortBySum(arr) {
+          arr.sort(function(a, b) {
+            return b.m_sum - a.m_sum;
+          })
+        }
     },
 }
 </script>
