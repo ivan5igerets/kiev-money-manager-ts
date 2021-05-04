@@ -135,7 +135,12 @@ export default {
     methods: {
         hiddenLink() {
             const chartTemp = document.getElementById('chartdiv');
-            console.log(chartTemp);
+            let link = chartTemp.firstElementChild;
+
+            for(let i = 0; i < 6; ++i) {
+                link = link.lastElementChild;
+            }
+            link.previousElementSibling.style = "display: none"
         },
     },
 }
