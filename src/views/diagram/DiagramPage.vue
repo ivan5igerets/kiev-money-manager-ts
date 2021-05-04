@@ -8,6 +8,7 @@
     <loader v-if="loading" />
     <v-tabs-items v-model="tab" v-else>
       <v-tab-item>
+        <div class="empty-month" v-if="!loading && spending.length === 0"> В этом месяце нет затрат </div>
         <Diagram
             v-if="tab === 0"
             key="1"
@@ -17,6 +18,7 @@
       </v-tab-item>
 
       <v-tab-item>
+        <div class="empty-month" v-if="!loading && income.length === 0"> В этом месяце нет доходов </div>
         <Diagram
             v-if="tab === 1"
             key="2"
@@ -52,8 +54,18 @@ export default {
         }
     },
 
+    created() {
+      this.$root.$on('change-date', (dl_filter) => {
+        this.date = dl_filter
+        this.loading = true
+        this.income = [];
+        this.spending = [];
+        this.getData();
+      })
+    },
+
     mounted() {
-        this.getData()
+      this.getData()
     },
 
     methods: {
@@ -66,6 +78,7 @@ export default {
           })
           .catch(err => {
             console.log(err);
+            this.loading = false
           })
         },
 
@@ -83,3 +96,11 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.empty-month {
+  text-align: center;
+  align-items: center;
+  margin-top: 30px;
+}
+</style>
