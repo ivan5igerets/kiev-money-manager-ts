@@ -57,7 +57,7 @@ export default class Template extends Vue {
         .then(res => {
             btn.disabled = false
             Token.set(res.data.token)
-            this.$router.push('/operation-history-day')
+          this.$router.push({name: 'OperationHistoryDay'})
             })
         .catch(err => {
             btn.disabled = false
