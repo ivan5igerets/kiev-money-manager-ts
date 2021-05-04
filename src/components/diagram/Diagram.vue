@@ -1,5 +1,5 @@
 <template>
-  <div>   
+  <div class="mb-4">
     <PieChart />
     <v-divider />
     <div v-for="item in data" :key="item.id">

@@ -1,5 +1,5 @@
 <template>
-    <v-list>
+    <v-list class="pa-0">
       <v-list-item-group color="primary">
         <v-list-item :to="{name: 'CategoryOperationHistory', params: {k_category: data.k_category}}">
             <v-list-item-content>
@@ -18,7 +18,7 @@
                     />
                 </div>
               </div>
-            </v-list-item-content> 
+            </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
      </v-list>

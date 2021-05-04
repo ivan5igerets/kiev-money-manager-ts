@@ -1,5 +1,5 @@
 <template>
-    <div class="css-diagram-group-list">
+    <div class="css-diagram-group-list pa-0">
     <v-list-group no-action flat>
         <template v-slot:activator>
 
