@@ -57,7 +57,7 @@ export default class Template extends Vue {
         this.loadingToggle(false);
       })
     .catch(err => {
-      console.log(err.response.data.errors);
+      console.log(err);
       Token.reset()
       this.$router.push('/')
       this.loadingToggle(false);
