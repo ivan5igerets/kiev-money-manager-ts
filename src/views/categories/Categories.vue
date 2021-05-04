@@ -98,6 +98,10 @@ export default {
     margin-right: 14px!important;
   }
 
+  .v-list-item {
+    height: 50px;
+  }
+
   .css-height-category {
     height: 30px !important;
   }
