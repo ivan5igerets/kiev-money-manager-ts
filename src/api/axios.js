@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {Token} from '/src/session/Token.js';
 
-axios.defaults.baseURL = 'http://kiev-money-manager.herokuapp.com/'
+axios.defaults.baseURL = 'https://kiev-money-manager.herokuapp.com/'
 
 axios.interceptors.request.use(config => {
     const token = Token.get()
