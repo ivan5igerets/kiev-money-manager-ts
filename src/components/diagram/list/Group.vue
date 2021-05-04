@@ -12,6 +12,7 @@
                         <div> {{ data.m_sum }} </div>
                     </div>
                   <budget_line_diagram
+                    :color="data.s_icon_color"
                     v-bind:i_height="5"
                     v-bind:m_budget="data.m_budget"
                     v-bind:m_sum_total="data.m_sum"
@@ -52,6 +53,7 @@
                         <div> {{ item.m_sum }} </div>
                     </div>
                     <budget_line_diagram
+                      :color="item.a_icon.s_icon_color"
                       v-bind:i_height="5"
                       v-bind:m_budget="item.m_budget"
                       v-bind:m_sum_total="item.m_sum"

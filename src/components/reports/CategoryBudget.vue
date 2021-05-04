@@ -8,7 +8,7 @@
         <div>{{sumTotalPercentCalculate(m_sum_total)}}%</div>
         <div class="ml-auto">{{sumTotalPercentLeft()}}%</div>
       </div>
-      <category_line_diagram v-bind:m_budget="m_budget" v-bind:m_sum_total="m_sum_total"/>
+      <category_line_diagram :color="color" v-bind:m_budget="m_budget" v-bind:m_sum_total="m_sum_total"/>
       <div class="d-flex">
         <div>Расходов: {{m_sum_total}}</div>
         <div class="ml-auto">
@@ -44,6 +44,11 @@ export default {
     text_category: {
       type: String,
       required: true,
+    },
+    color: {
+      type: String,
+      required: false,
+      default: 'yellow'
     }
   },
 

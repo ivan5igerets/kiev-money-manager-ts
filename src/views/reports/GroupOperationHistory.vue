@@ -2,6 +2,7 @@
   <loader v-if="loading"/>
   <div v-else>
     <category_budget
+      :color="a_group.s_icon_color"
       v-bind:m_budget="m_budget"
       v-bind:m_sum_total="m_sum_total"
       v-bind:text_category="text_group"
@@ -21,6 +22,7 @@
                     <div class="ml-auto">{{a_category.m_sum}}</div>
                   </div>
                   <group_budget_line_diagram
+                    :color="a_category.a_icon.s_icon_color"
                     v-bind:i_height="5"
                     v-bind:m_budget="a_category.m_budget"
                     v-bind:m_sum_total="a_category.m_sum"

@@ -4,7 +4,7 @@
       :background-color="(m_budget - m_sum_total) >= 0 ? '#e0dfdf' : 'red'"
       :value="budgetValue()"
       class="css-progress-linear"
-      color="yellow"
+      :color="color"
       :height="i_height"
     >
     </v-progress-linear>
@@ -25,6 +25,11 @@ export default {
     m_sum_total: {
       type: Number,
       required: true,
+    },
+    color: {
+      type: String,
+      required: false,
+      default:'yellow'
     },
   },
   methods: {

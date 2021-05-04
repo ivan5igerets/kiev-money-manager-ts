@@ -2,6 +2,7 @@
   <loader v-if="loading"/>
   <div v-else>
     <category_budget
+      :color="a_category.s_icon_color"
       v-bind:m_budget="m_budget"
       v-bind:m_sum_total="m_sum_total"
       v-bind:text_category="text_category"
