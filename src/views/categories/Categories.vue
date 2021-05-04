@@ -6,7 +6,7 @@
     </v-tabs>
     <v-divider></v-divider>
     <loader v-if="loading" />
-    <v-tabs-items v-else v-model="tab">
+    <v-tabs-items v-model="tab" v-else>
       <v-tab-item v-if="spending.groups.length || spending.categories.length">
         <v-list v-if="spending.groups.length">
           <v-subheader>Группы</v-subheader>

@@ -1,4 +1,4 @@
-# kiev-money-manager-ts
+# Money Manager
 
 ## Project setup
 ```

@@ -1,24 +1,35 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
+import {Token} from '/src/session/Token.js';
 
 Vue.use(VueRouter)
+
+const ifAuthenticated = (to, from, next) => {
+  const token = Token.get()
+  if (token) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifNotAuthenticated = (to, from, next) => {
+  const token = Token.get()
+  if (token) {
+    next('/operation-history-day')
+    return
+  }
+  next()
+}
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
-    meta: {
-      layout: 'empty'
-    },
-    component: Home
-  },
-  {
-    path: '/auth',
     name: 'Auth',
     meta: {
       layout: 'empty'
     },
+    beforeEnter: ifNotAuthenticated,
     component: () => import('../views/Auth.vue')
   },
   {
@@ -29,6 +40,7 @@ const routes: Array<RouteConfig> = [
       title: 'Настройки',
       layout: 'mainn'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/Settings.vue')
   },
   {
@@ -39,6 +51,7 @@ const routes: Array<RouteConfig> = [
       title: 'Профиль',
       layout: 'mainn'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/Profile.vue')
   },
   {
@@ -49,6 +62,7 @@ const routes: Array<RouteConfig> = [
       title: 'Изменение пароля',
       layout: 'mainn'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/ChangePassword.vue')
   },
   {
@@ -59,6 +73,7 @@ const routes: Array<RouteConfig> = [
       title: 'Категории',
       layout: 'mainn'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/categories/Categories.vue')
   },
   {
@@ -69,6 +84,7 @@ const routes: Array<RouteConfig> = [
       title: 'Добавить категорию',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/categories/category/CategoryAdd.vue')
   },
   {
@@ -79,6 +95,7 @@ const routes: Array<RouteConfig> = [
       title: 'Редактирование категории',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/categories/category/CategoryEdit.vue')
   },
   {
@@ -89,6 +106,7 @@ const routes: Array<RouteConfig> = [
       title: 'Добавить группу',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/categories/group/GroupAdd.vue')
   },
   {
@@ -99,6 +117,7 @@ const routes: Array<RouteConfig> = [
       title: 'Редактирование группы',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/categories/group/GroupEdit.vue')
   },
   {
@@ -110,6 +129,7 @@ const routes: Array<RouteConfig> = [
       layout: 'mainn',
       isNeedDate: true,
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/reports/OperationHistoryDay.vue')
   },
   {
@@ -120,6 +140,7 @@ const routes: Array<RouteConfig> = [
       title: 'Добавить операцию',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/operation/OperationAdd.vue')
   },
   {
@@ -129,6 +150,7 @@ const routes: Array<RouteConfig> = [
       title: 'Редактирование операции',
       layout: 'edit'
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/operation/OperationEdit.vue')
   },
   {
@@ -140,7 +162,32 @@ const routes: Array<RouteConfig> = [
       layout: 'mainn',
       isNeedDate: true,
     },
+    beforeEnter: ifAuthenticated,
     component: () => import('../views/diagram/DiagramPage.vue')
+  },
+  {
+    path: '/category-operation-history/:k_category',
+    name: 'CategoryOperationHistory',
+    meta: {
+      title: 'История операций',
+      layout: 'mainn',
+      is_back: true,
+      isNeedDate: true,
+    },
+    beforeEnter: ifAuthenticated,
+    component: () => import('../views/reports/CategoryOperationHistory.vue')
+  },
+  {
+    path: '/group-operation-history/:k_category_group',
+    name: 'GroupOperationHistory',
+    meta: {
+      title: 'История операций',
+      layout: 'mainn',
+      is_back: true,
+      isNeedDate: true,
+    },
+    beforeEnter: ifAuthenticated,
+    component: () => import('../views/reports/GroupOperationHistory.vue')
   },
 ]
 

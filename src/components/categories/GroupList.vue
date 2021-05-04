@@ -21,12 +21,13 @@
         </v-menu>
       </template>
       <v-list-item
+        class="pl-14"
         v-for="(a_category, k_category) in a_group.a_category"
         :key="k_category"
         @click="categoryEdit(a_category.k_category)"
         link
       >
-        <v-list-item-icon>
+        <v-list-item-icon class="mr-3">
           <category_icon v-bind:a_icon="{s_icon_class: a_category.s_icon_class, s_icon_color: a_category.s_icon_color}"/>
         </v-list-item-icon>
         <v-list-item-title v-text="a_category.text_category"></v-list-item-title>

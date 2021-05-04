@@ -62,7 +62,7 @@
         valid: true,
         rules: [
           value => {
-            const pattern = this.is_percent ? /^(\d{1,2}(\.\d{1,2})?|100)$/ : /^([0-9]|[1-9]((\d{1,8})+)?)(\.\d{1,2})?$/
+            const pattern = this.is_percent ? /^(\d{1,2}(\.\d{1,2})?|100)$/ : /^([0-9]|[1-9]((\d{1,6})+)?)(\.\d{1,2})?$/
             return pattern.test(value) || 'Введена некорректная сумма бюджета'
           }
         ],

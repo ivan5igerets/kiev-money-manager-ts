@@ -130,7 +130,7 @@ export default {
 
     numberValidate(text_current_number, i_new_number) {
       const text_number = text_current_number+i_new_number
-      const regex = /^\d{1,8}(\.|\.\d{1,2}?)?$/;
+      const regex = /^\d{1,6}(\.|\.\d{1,2}?)?$/;
       return text_number.match(regex) !== null
     },
 
@@ -268,7 +268,7 @@ export default {
 
 .css-operation-sum {
   position: absolute;
-  padding-top: 5px;
+  padding-top: 5px !important;
   width: 100%;
   text-align: right;
   border-bottom: 0!important;
@@ -283,7 +283,7 @@ export default {
 }
 
 .css-operation-comment {
-  padding-top: 5px;
+  padding-top: 5px !important;
   border-radius: 0;
   height: 45px;
   width: 75%;

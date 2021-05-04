@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-navigation-drawer v-model="drawer" app width="300">
       <div class="top-part">
         <img src="../assets/images/logo2.png" alt="">
@@ -49,7 +49,7 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{$route.meta.title}}</v-toolbar-title>
+      <v-toolbar-title class="pl-0">{{$route.meta.title}}</v-toolbar-title>
 
       <v-spacer />
 
@@ -58,7 +58,7 @@
     <v-sheet
       class="overflow-y-auto"
       id="scroll-area"
-      max-height="90vh"
+      max-height="92vh"
       v-if="$route.meta.is_nav_menu"
       v-on:scroll.passive="scroll"
     >
@@ -94,6 +94,7 @@
 <script>
 import {mapState} from 'vuex'
 import MonthPicker from '@/components/operations/MonthPicker'
+import {Token} from '/src/session/Token.js';
 
 export default {
 
@@ -101,7 +102,7 @@ export default {
     MonthPicker
   },
 
-  data: () => ({ 
+  data: () => ({
     drawer: null,
     selectedItem: null,
     items: [
@@ -122,11 +123,18 @@ export default {
       this.$router.go(-1)
     },
     logout() {
+      Token.reset()
       this.$router.push({name: 'Auth'})
     },
     scroll(o_event) {
       this.$root.$emit('scroll-content', o_event)
     }
+  },
+
+  watch: {
+    $route(to, from) {
+      document.title = to.meta.title || 'Money Manager';
+    },
   },
 
   computed: {

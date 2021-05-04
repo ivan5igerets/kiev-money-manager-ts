@@ -14,7 +14,7 @@
      v-bind:a_budget="a_budget"
      v-bind:error_message="error_message_budget"
      v-model="a_budget"
-     v-show="is_budget_show"
+     v-show="show_budget"
    />
     <v-select
       :clearable="true"
@@ -69,7 +69,7 @@ export default {
       a_icon: {},
       error_message_budget: '',
       error_message_name: '',
-      is_budget_show: false,
+      show_budget: false,
       is_delete: false,
       k_category_group: '',
       loading: true,
@@ -101,7 +101,7 @@ export default {
       if(this.a_category_info.k_category_group)
         this.k_category_group = this.a_category_info.k_category_group
 
-      this.is_budget_show = a_response[2].data.setups.enable_budget_mode
+      this.show_budget = a_response[2].data.setups.enable_budget_mode && !this.a_category_info.is_income
       this.loading = false
     });
   },

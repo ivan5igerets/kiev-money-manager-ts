@@ -3,8 +3,7 @@
       v-if="$route.meta.isNeedDate"
       class="datepicker"
     >
-
-        <v-menu
+        <v-dialog
           left
           v-model="isDateOpen"
           :close-on-content-click="false"
@@ -13,15 +12,10 @@
           offset-x
           min-width="auto"
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="month"
-              placeholder="Месяц"
-              prepend-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
+          <template v-slot:activator="{on, attrs}">
+            <div v-bind="attrs" v-on="on" class="d-flex">
+              <div>{{month}}</div><v-icon>mdi-calendar</v-icon>
+            </div>
           </template>
           <v-date-picker
             v-model="date"
@@ -29,14 +23,12 @@
             locale="ru"
             @input="changeDate"
           ></v-date-picker>
-        </v-menu>
-
+        </v-dialog>
     </div>
 </template>
 
 <script>
-
-import {mapMutations} from 'vuex'
+import {CoreDate} from '/src/date/CoreDate.js'
 
 export default {
     data() {
@@ -51,30 +43,20 @@ export default {
     },
 
     methods: {
-        changeDate() {
-            this.isDateOpen = false;
-            this.setMonth(this.date);
-            this.$root.$emit('change-date', this.date)
+        changeDate(dl_date) {
+          this.date = dl_date+'-01'
+          this.isDateOpen = false;
+          CoreDate.systemSet(this.date)
+          this.$root.$emit('change-date', this.date)
         },
 
         initDate() {
-          const tempDate = new Date();
-          this.date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}`
-          this.setMonth(this.date)
+          this.date = CoreDate.systemNow()
         },
-
-        ...mapMutations({
-          setMonth: "date/setMonth",
-        }),
     },
 
     watch: {
       $route: function(newUrl) {
-        if (newUrl.name == 'OperationHistoryDay') {
-          this.changeDate();
-          // console.log('change data');
-        }
-
         if (newUrl.name !== 'Diagram' && newUrl.name !== 'OperationHistoryDay') {
           this.initDate();
         }
@@ -92,11 +74,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.datepicker {
-  width: 110px;
-  height: 30px;
-}
-
-</style>

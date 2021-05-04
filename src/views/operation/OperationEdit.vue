@@ -24,7 +24,6 @@ import categories from '@/components/operations/edit/Categories'
 import delete_dialog_window from '@/components/DeleteDialogWindow'
 import loader from '@/components/Loader'
 
-
 import {CoreDate} from '/src/date/CoreDate.js'
 
 import operationApi from '@/api/operation'
@@ -73,15 +72,16 @@ export default {
         m_sum: a_operation['m_sum'],
         text_comment: a_operation['text_comment']
       }).then(() => {
-        this.$router.push({name: 'OperationHistoryDay'})
-      }).fail((o_error) => {
+        CoreDate.systemSet(a_operation['dl_operation'])
+        this.$router.go(-1)
+      }).catch((o_error) => {
         console.log(o_error)
       });
     },
 
     operationDelete() {
       operationApi.destroy(this.$route.params.k_operation).then(() => {
-        this.$router.push({name: 'OperationHistoryDay'})
+        this.$router.go(-1)
       })
     }
   },
