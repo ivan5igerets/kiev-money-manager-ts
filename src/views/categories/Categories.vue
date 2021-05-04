@@ -105,5 +105,9 @@ export default {
   .css-height-category {
     height: 30px !important;
   }
+
+  .v-list-item__icon {
+    margin: 11px 12px 0 0 !important;
+  }
 }
 </style>
