@@ -17,7 +17,7 @@
           <category_list v-bind:a_category_list="spending.categories" />
         </v-list>
       </v-tab-item>
-      <v-tab-item class="mt-2 text-center" v-else>
+      <v-tab-item class="mt-4 text-center" v-else>
         Нет ни одной категориий
       </v-tab-item>
       <v-tab-item v-if="income.groups.length || income.categories.length">
@@ -30,7 +30,7 @@
           <category_list v-bind:a_category_list="income.categories" />
         </v-list>
       </v-tab-item>
-      <v-tab-item class="mt-2 text-center" v-else>
+      <v-tab-item class="mt-4 text-center" v-else>
         Нет ни одной категориий
       </v-tab-item>
     </v-tabs-items>

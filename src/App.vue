@@ -44,7 +44,10 @@ export default class Template extends Vue {
 
   getUser() {
     if(!Token.get())
+    {
+      this.$router.push('/')
       return
+    }
 
     this.loadingToggle(true);
     authApi.getUser()
@@ -54,8 +57,9 @@ export default class Template extends Vue {
         this.loadingToggle(false);
       })
     .catch(err => {
-      console.log(err.response.data.errors);
-      this.$router.push('/auth')
+      console.log(err);
+      Token.reset()
+      this.$router.push('/')
       this.loadingToggle(false);
       })
   }
