@@ -9,11 +9,11 @@
     <v-tabs-items v-model="tab" v-else>
       <v-tab-item v-if="spending.groups.length || spending.categories.length">
         <v-list v-if="spending.groups.length">
-          <v-subheader>Группы</v-subheader>
+          <v-subheader class="css-height-category">Группы</v-subheader>
           <group_list v-bind:a_group_list="spending.groups" />
         </v-list>
         <v-list v-if="spending.categories.length">
-          <v-subheader>Категории</v-subheader>
+          <v-subheader class="css-height-category">Категории</v-subheader>
           <category_list v-bind:a_category_list="spending.categories" />
         </v-list>
       </v-tab-item>
@@ -96,6 +96,18 @@ export default {
   .v-list-item__action {
     min-width: 0!important;
     margin-right: 14px!important;
+  }
+
+  .v-list-item {
+    height: 50px;
+  }
+
+  .css-height-category {
+    height: 30px !important;
+  }
+
+  .v-list-item__icon {
+    margin: 11px 12px 0 0 !important;
   }
 }
 </style>
