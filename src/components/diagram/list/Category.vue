@@ -7,8 +7,9 @@
                 <category_icon v-bind:a_icon="data.a_icon"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> {{ data.text_category }} <span class="percents"> {{ data.m_sum_percent }} % </span> </div>
-                        <div> {{ data.m_sum }} </div>
+                        <div class="css-category-title"> {{ data.text_category }}</div>
+                        <span class="grey--text ml-2"> {{ data.m_sum_percent }} % </span>
+                        <div class="ml-auto"> {{ data.m_sum }} </div>
                     </div>
                     <category_budget_line_diagram
                       :color="data.a_icon.s_icon_color"
@@ -77,7 +78,13 @@ export default {
 
 .text {
     display: flex;
-    justify-content: space-between;
     margin-bottom: 6px;
+}
+
+.css-category-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 155px;
 }
 </style>

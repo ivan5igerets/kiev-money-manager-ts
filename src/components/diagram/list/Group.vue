@@ -8,8 +8,9 @@
                 <category_icon v-bind:a_icon="{s_icon_class: data.s_icon_class, s_icon_color: data.s_icon_color}"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> {{ data.text_group }} <span class="percents"> {{ data.m_sum_percent }} % </span> </div>
-                        <div> {{ data.m_sum }} </div>
+                        <div class="css-group-title"> {{ data.text_group }}</div>
+                        <span class="grey--text ml-2"> {{ data.m_sum_percent }} % </span>
+                        <div class="ml-auto"> {{ data.m_sum }} </div>
                     </div>
                   <budget_line_diagram
                     :color="data.s_icon_color"
@@ -21,22 +22,6 @@
                 </div>
               </div>
             </v-list-item-content> 
-        
-            <!-- <v-menu bottom left>
-                <template v-slot:activator="{on, attrs}">
-                    <v-btn color="grey" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                </template>
-                <v-list>
-                    <v-list-item key="1" >
-                    <v-list-item-title>Редактировать</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item key="2" >
-                    <v-list-item-title>Удалить</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu> -->
         </template>
 
         <v-list-item
@@ -49,8 +34,9 @@
                 <category_icon v-bind:a_icon="item.a_icon"/>
                 <div class="main-part">
                     <div class="text">
-                        <div> {{ item.text_category }}</div>
-                        <div> {{ item.m_sum }} </div>
+                      <div class="css-category-title"> {{ item.text_category }}</div>
+                      <span class="grey--text ml-2"> {{ item.m_sum_percent }} % </span>
+                      <div class="ml-auto"> {{ item.m_sum }} </div>
                     </div>
                     <budget_line_diagram
                       :color="item.a_icon.s_icon_color"
@@ -132,19 +118,21 @@ export default {
 
   .text {
     display: flex;
-    justify-content: space-between;
     margin-bottom: 6px;
   }
 }
 
-.percents {
-  margin-left: 5px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
-  color: #787676;
+.css-group-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+}
+
+.css-category-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 115px;
 }
 </style>

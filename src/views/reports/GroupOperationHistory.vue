@@ -17,7 +17,9 @@
                 <category_icon v-bind:a_icon="a_category.a_icon"/>
                 <div class="width-100 align-self-center">
                   <div class="d-flex">
-                    {{a_category.text_category}}
+                    <div class="css-category-title">
+                      {{a_category.text_category}}
+                    </div>
                     <div class="grey--text ml-2">{{a_category.m_sum_percent}}%</div>
                     <div class="ml-auto">{{a_category.m_sum}}</div>
                   </div>
@@ -163,6 +165,13 @@ export default {
 <style lang="scss" scoped>
 .css-date-operation {
   font-size: 12px;
+}
+
+.css-category-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
 }
 
 </style>

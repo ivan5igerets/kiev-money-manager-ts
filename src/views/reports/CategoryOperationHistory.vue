@@ -17,7 +17,7 @@
                 <category_icon v-bind:a_icon="a_operation.a_icon"/>
                 <div class="width-100 d-flex align-center">
                   <div class="mr-2">
-                    <div>{{a_operation.text_comment ? a_operation.text_comment : a_operation.text_category}}</div>
+                    <div class="css-operation-title">{{a_operation.text_comment ? a_operation.text_comment : a_operation.text_category}}</div>
                     <div class="grey--text 12 css-date-operation">{{dateFormat(a_operation.dl_operation)}}</div>
                   </div>
                   <div class="grey--text">{{a_operation.m_sum_percent}}%</div>
@@ -159,4 +159,10 @@ export default {
   font-size: 12px;
 }
 
+.css-operation-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
 </style>

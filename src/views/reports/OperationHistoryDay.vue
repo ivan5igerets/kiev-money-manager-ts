@@ -111,12 +111,6 @@ export default {
     this.$root.$on('change-date', this.changeDate)
   },
 
-  computed: {
-    ...mapState('date',{
-      month: 'month',
-    })
-  },
-
   methods: {
     getOperations() {
       this.loading = true;

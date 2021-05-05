@@ -80,6 +80,11 @@ export default {
 }
 
 .css-category-title {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 16px;
 }
 
